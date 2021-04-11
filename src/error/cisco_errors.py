@@ -1,0 +1,2 @@
+class GenericCiscoError(Exception):
+    pass
