@@ -19,4 +19,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint --ignore=static `ls -R|grep .py$|xargs`
+        pylint --ignore="*/__init__.py" `ls -R|grep .py$|xargs`
