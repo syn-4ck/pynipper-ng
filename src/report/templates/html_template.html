@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ device_type }} {{ hostname }} Security Report</title>
+        <style>
+            body {font-size: 80%; margin: 0px; padding: 0px; font-family: arial, sans-serif;}
+            .mainbody { background-color: #EFEFEF;}
+            .pagebody {width: 90%; margin: 0px auto; padding: 12px; background-color: #FFFFFF; border: solid 1px rgb(100,100,100);}
+            .command {font-size: 95%; font-family: courier;}
+            caption { caption-side : bottom; font-style : italic; font-size: small; padding-top: 6px;}
+            .table {clear: left; border: solid 1px rgb(150,150,150); empty-cells: show; border-collapse: collapse; background-color: rgb(233,232,244); width: 100%}
+            .table tr {margin: 0px; padding: 0px;}
+            .table td {padding: 2px 7px 2px 7px; border: solid 1px rgb(150,150,150); text-align: left; font-size: small;}
+            .table th {margin: 0px; padding: 2px 7px 2px 7px; border: solid 1px rgb(150,150,150); empty-cells: show; text-align: left; font-size: 100%; background-color: #BEB8FB;}
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    </head>
+
+    <body class="mainbody">
+        <div class="pagebody">
+            <div id="title_header" align="center">
+                <h1>pynipper-ng</h1>
+                <h1>{{ device_type }} Security Report</h1>
+                <h3>of the</h3>
+                <h1>{{ hostname }} {{ device_type }}</h1>
+            </div>
+            <div id="report">
+                <div id="about_div">
+                    <hr>
+                        <h2>1. <a name="AboutThisReport">About This Report</a></h3>
+                        This Cisco Router retail report was produced by Nipper on {{ date }}. The report contains the following sections:<br>
+                        &nbsp;<br>
+                        
+                        <ul>
+                            <li>a security audit report section that details any identified security-related issues. Each security issue includes a description of the issue, its impact, how easy it would be to exploit and a recommendation. The recommendations include, where appropriate, the command(s) to resolve the issue;</li>
+                            <li>a configuration report section that details the configuration settings;</li>
+                            <li>an abbreviations appendix section that expands any abbreviations used within the report;</li>
+                            <li>a common ports appendix section that details the TCP and UDP port numbers for the common services outlined within the report;</li>
+                            <li>an appendix section detailing the logging severity levels used by the logging facility;</li>
+                            <li>a time zones appendix section that details a number of the most commonly used time zones;</li>
+                            <li>an appendix section detailing the software used to produce this report.</li>
+                        </ul>
+    
+
+                </div>
+            </div>
+            <div id="security-issues">
+                <hr>
+                    <h2>2. Security Audit</h2>
+                    <h3>2.1. Introduction</h3>
+                    Nipper performed a security audit of the Cisco Router retail on Saturday 6th February 2021. This section details the findings of the security audit together with the impact and recommendations.
+                    
+                    {% for key, value in issues.items() %}
+                        <h3>{{key}}</h3>
+                        <b>Observation:</b> {{value.observation}}<br/>
+                        <br/>
+                        <b>Impact:</b> {{value.impact}}<br/>
+                        <br/>
+                        <b>Ease:</b> {{value.ease}}<br/>
+                        <br/>
+                        <b>Recommendation:</b> {{value.recommendation}}<br/>
+                        <br/>
+                    {% endfor %}
+                </hr>
+            </div>
+            <div id="security-vulns">
+                <hr>
+                    <h2>3. Vulnerabilities</h2>
+                    <table class="table" id="vulnTable">
+                        <caption>Table 2: Vulnerabilities</caption>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Summary</th>
+                                <th>CVEs</th>
+                                <th>CVSS</th>
+                                <th>URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vuln in vulns %}
+                                <tr>
+                                    <td><b>{{vuln.title}}</b></td>
+                                    <td>{{vuln.summary|safe}}</td>
+                                    <td>{{vuln.cves|join(', ')}}</td>
+                                    <td class="cvssValue">{{vuln.cvss}}</td>
+                                    <td><a href={{vuln.url}}>{{vuln.url}}</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </hr>
+            </div>
+        </div>
+        <script>
+            $('#vulnTable tr td').each(function(){
+                var cellValue = $(this).html();
+                if(!isNaN(parseFloat(cellValue))) {
+                    if (cellValue >= 7) {
+                    $(this).css('background-color','red');
+                    } else {
+                        if (cellValue < 4) {
+                        $(this).css('background-color','green');
+                        } else {
+                        $(this).css('background-color','yellow');
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
