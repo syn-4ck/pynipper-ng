@@ -31,8 +31,10 @@ def get_cisco_ios_version(filename: str) -> str:
         version_number = version[0].re_match_typed(
             r'^version\s+(\S+)', default='')
         if (not regex.search(version_number)):
-            # if i don't know the full IOS version, i get the first one subversion
-            # motivation: report all possible vulns, better report more and false positives
+            # if i don't know the full IOS version,
+            # i get the first one subversion
+            # motivation: report all possible vulns,
+            # better report more and false positives
             version_number = version_number + '(1)'
         return version_number
     else:
@@ -119,7 +121,7 @@ def get_cisco_ios_telnet(filename: str) -> bool:
     transport_disable = parser.find_objects("transport input none")
     ssh_enable = parser.find_objects("transport input ssh")
     telnet_disable = parser.find_objects("no transport input telnet")
-    if (len(transport_disable) > 0 or len(ssh_enable) > 0 or len(telnet_disable) > 0):
+    if (len(transport_disable) > 0 or len(ssh_enable) > 0 or len(telnet_disable) > 0):  # noqa: E501
         return False
     else:
         return True

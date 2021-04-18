@@ -1,4 +1,4 @@
-
+# flake8: noqa
 def display_banner():
     program_banner = "                                 _                                             ____\n" + \
                      "               _ __  _   _ _ __ (_)_ __  _ __   ___ _ __     _ __   __ _      / ->/|\n" + \

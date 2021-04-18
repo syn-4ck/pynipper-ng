@@ -1,6 +1,3 @@
-
-import os
-import sys
 import argparse
 
 from typing import List
@@ -22,16 +19,22 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--device', '-d', help="Device type to analyze",
-                        dest="device_type", action="store", choices=device_type_list, required=True)
+                        dest="device_type", action="store",
+                        choices=device_type_list, required=True)
     parser.add_argument('--input', '-i', help="Device configuration file",
-                        dest="input_file", action="store", type=str, required=True)
+                        dest="input_file", action="store",
+                        type=str, required=True)
     parser.add_argument('--output-filename', '-f', help="Report filename",
-                        dest="output_file", action="store", type=str, default="./report.html")
-    parser.add_argument('--output-type', '-o', help="Report type", dest="output_type",
-                        action="store", choices=report_type_list, default=ReportType.HTML)
+                        dest="output_file", action="store",
+                        type=str, default="./report.html")
+    parser.add_argument('--output-type', '-o', help="Report type",
+                        dest="output_type", action="store",
+                        choices=report_type_list, default=ReportType.HTML)
     parser.add_argument('--configuration', '-c', help="Configuration file",
-                        dest="conf_file", action="store", type=str, default="./common/default.conf")
-    parser.add_argument('--offline', '-x', help="Disable get APIs vulnerabilities data (Cisco API)",
+                        dest="conf_file", action="store", type=str,
+                        default="./common/default.conf")
+    parser.add_argument('--offline', '-x',
+                        help="Disable get APIs vulnerabilities data (Cisco API)",  # noqa: E501
                         dest="offline", action='store_true')
 
     args = parser.parse_args()

@@ -1,6 +1,3 @@
-import array
-
-from .ios_process.cisco_ios_issue import CiscoIOSIssue
 from .ios_process.modules.ssh_module import get_ssh_missconfigurations
 from .ios_process.modules.http_module import get_http_missconfigurations
 

@@ -1,3 +1,4 @@
+# flake8: noqa
 from analyze.cisco.parse_config import parse_cisco_ios_config_file
 from ...ios_process.cisco_ios_issue import CiscoIOSIssue
 
@@ -53,6 +54,7 @@ def get_cisco_ios_ssh_retries(filename: str) -> str:
         return None
 
 # Number of seconds of ssh timeout
+
 
 
 def get_cisco_ios_ssh_timeout(filename: str) -> str:

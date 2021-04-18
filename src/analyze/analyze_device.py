@@ -1,14 +1,9 @@
-from enum import Enum
-import json
 import array
-import time
 import configparser
 
 from .cisco.cisco_ios_vulns import get_cisco_ios_vulns_data
 from .cisco.cisco_vuln import CiscoVuln
 from .cisco.parse_config import get_cisco_ios_version
-from .cisco.parse_config import get_cisco_ios_hostname
-from .cisco.parse_config import get_cisco_ios_passwd_enc
 
 from .cisco.process_cisco_ios_conf import process_cisco_ios_conf
 
@@ -26,7 +21,6 @@ def analyze_device(args: dict) -> None:
     if args["device_type"] in devices:
 
         print("[1/4] Initializing pynipper-ng")
-        hostname_cisco_device = get_cisco_ios_hostname(args["input_file"])
         version_cisco_device = get_cisco_ios_version(args["input_file"])
 
         # Get vulns by Cisco API
