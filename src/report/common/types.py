@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ReportType(Enum):
-    HTML=1
-    JSON=2 
+    HTML = 1
+    JSON = 2
