@@ -9,4 +9,3 @@ def display_banner():
                      "                                  CLI Version 0.1.0 ALPHA\n"
 
     print(program_banner)
-

@@ -4,8 +4,8 @@ class CiscoVuln:
         self.title = title
         self.summary = summary
         self.cves = cves
-        if (cvss=='NA'):
-            cvss=0.0
+        if (cvss == 'NA'):
+            cvss = 0.0
         self.cvss = float(cvss)
         self.url = url
 
