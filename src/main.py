@@ -15,6 +15,8 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     device_type_list = [dev.name for dev in DeviceType]
     report_type_list = [report.name for report in ReportType]
+    
+    password="kdshkfshsjh"
 
     parser = argparse.ArgumentParser()
 
