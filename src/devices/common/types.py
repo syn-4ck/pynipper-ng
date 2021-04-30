@@ -1,5 +1,6 @@
 from enum import Enum
 
+a = 'ftp://user:kshksh@10.10.10.10'
 
 class DeviceType(Enum):
     IOS_SWITCH = 1  # Cisco IOS-based Switch
