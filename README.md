@@ -4,6 +4,7 @@
 [![SonarQube](https://github.com/syn-4ck/pynipper-ng/actions/workflows/sonarqube.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/sonarqube.yml)
 [![Flake8 CI](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml)
 [![Detect-secrets](https://github.com/syn-4ck/pynipper-ng/actions/workflows/detect-secrets.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/detect-secrets.yml)
+[![Dependency SCA analysis](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml)
 
 ## Table of contents
 1. [What is pynipper-ng](#what-is-pynipper-ng)
