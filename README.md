@@ -1,7 +1,7 @@
 # pynipper-ng
 
 [![CodeQL](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml)
-[![SonarQube](https://github.com/syn-4ck/pynipper-ng/actions/workflows/sonarqube.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/sonarqube.yml)
+[![SonarCloud Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pynipper-ng&metric=alert_status)](https://sonarcloud.io/dashboard?id=pynipper-ng)
 [![Flake8 CI](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml)
 [![Detect-secrets](https://github.com/syn-4ck/pynipper-ng/actions/workflows/detect-secrets.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/detect-secrets.yml)
 [![Snyk SCA Analysis](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml)
@@ -9,7 +9,7 @@
 
 ## Table of contents
 1. [What is pynipper-ng](#what-is-pynipper-ng)
-2. [Installation](#installation)
+2. [Install](#install)
 3. [Quickstart](#quickstart)
 4. [More information](#more-information)
 5. [References](#references)
@@ -19,14 +19,22 @@ pynipper-ng is a configuration security analyzer for network devices. The goal o
 
 This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), updated and translated to Python. The project wants to improve the set of rules that detect security misconfigurations of the network devices due to the new architecture (using Python pynipper modules). 
 
-## Installation
+## Install
 
-Soon... To this ALPHA version, please clone this repository and use the src/main.py script.
+### PIP install
+
+Soon.
+
+### Source code install
+
+```BASH
+python setup.py build install
+```
 
 ## Quickstart
 
 ```BASH
-python main.py -d IOS_ROUTER -i ..\tests\test_data\cisco_ios_example.conf -o HTML -f ./report.html -x
+pynipper-ng -d IOS_ROUTER -i tests\test_data\cisco_ios_example.conf -o HTML -f ./report.html -x
 ```
 
 ## More information
