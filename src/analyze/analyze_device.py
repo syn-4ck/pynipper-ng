@@ -7,11 +7,11 @@ from .cisco.parse_config import get_cisco_ios_version
 
 from .cisco.process_cisco_ios_conf import process_cisco_ios_conf
 
-from report.report import generate_html_report, generate_json_report
-from report.common.types import ReportType
+from ..report.report import generate_html_report, generate_json_report
+from ..report.common.types import ReportType
 
-from devices.common.types import DeviceType
-from error.cisco_errors import GenericCiscoError
+from ..devices.common.types import DeviceType
+from ..error.cisco_errors import GenericCiscoError
 
 
 def analyze_device(args: dict) -> None:
