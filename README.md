@@ -1,7 +1,7 @@
 # pynipper-ng
 
 [![CodeQL](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml)
-[![SonarQube](https://github.com/syn-4ck/pynipper-ng/actions/workflows/sonarqube.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/sonarqube.yml)
+[![SonarCloud Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pynipper-ng&metric=alert_status)](https://sonarcloud.io/dashboard?id=pynipper-ng)
 [![Flake8 CI](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml)
 [![Detect-secrets](https://github.com/syn-4ck/pynipper-ng/actions/workflows/detect-secrets.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/detect-secrets.yml)
 [![Snyk SCA Analysis](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml)
