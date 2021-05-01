@@ -6,12 +6,13 @@ import json
 
 TEMPLATE_FILE = "html_template.html"
 
+
 def generate_html_report(filename: str, issues: dict, vulns: array) -> None:
     html_file = open(filename, "w")
 
     date = datetime.datetime.now().date()
 
-    templateLoader = FileSystemLoader( os.path.dirname(os.path.abspath(__file__)) + "/templates" )
+    templateLoader = FileSystemLoader(os.path.dirname(os.path.abspath(__file__)) + "/templates")
 
     env = Environment(
         loader=templateLoader,

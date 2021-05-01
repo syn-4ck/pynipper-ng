@@ -18,7 +18,7 @@ from ..error.files_errors import DeviceConfigurationFileNotFound, PynipperConfig
 
 def analyze_device(args: dict) -> None:
 
-    #Check configuration file exists
+    # Check configuration file exists
     if not os.path.isfile(args["input_file"]):
         raise DeviceConfigurationFileNotFound("ERROR: Device configuration file doesn't exists")
 
@@ -31,7 +31,9 @@ def analyze_device(args: dict) -> None:
 
         # Get vulns by Cisco API
         if not os.path.isfile(args["conf_file"]):
-            raise PynipperConfigurationFileNotFound("ERROR: Pynipper configuration file doesn't exists")
+            raise PynipperConfigurationFileNotFound(
+                "ERROR: Pynipper configuration file doesn't exists"
+            )
         config_file = configparser.ConfigParser()
         config_file.read(args["conf_file"])
         client_id = ""
