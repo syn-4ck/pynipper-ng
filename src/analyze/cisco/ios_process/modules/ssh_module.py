@@ -22,7 +22,7 @@ def _get_cisco_ios_ssh_version(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     ssh_version = parser.find_objects("ip ssh version")
     if (len(ssh_version) > 0):
-        version = host[0].re_match_typed(
+        version = ssh_version[0].re_match_typed(
             r'^ip ssh version\s+(\S+)', default='')
         return version
     else:
@@ -47,7 +47,7 @@ def get_cisco_ios_ssh_retries(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     retries = parser.find_objects("ip ssh authentication-retries")
     if (len(retries) > 0):
-        max_retries = host[0].re_match_typed(
+        max_retries = ssh_version[0].re_match_typed(
             r'^ip ssh authentication-retries\s+(\S+)', default='')
         return max_retries
     else:
@@ -61,7 +61,7 @@ def get_cisco_ios_ssh_timeout(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     timeout = parser.find_objects("ip ssh time-out")
     if (len(timeout) > 0):
-        seconds = host[0].re_match_typed(
+        seconds = ssh_version[0].re_match_typed(
             r'^ip ssh time-out\s+(\S+)', default='')
         return seconds
     else:
@@ -74,7 +74,7 @@ def get_cisco_ios_ssh_interface(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     src_interface = parser.find_objects("ip ssh source-interface")
     if (len(src_interface) > 0):
-        interface = host[0].re_match_typed(
+        interface = ssh_version[0].re_match_typed(
             r'^ip ssh source-interface\s+(\S+)', default='')
         return interface
     else:

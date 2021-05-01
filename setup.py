@@ -18,7 +18,17 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/syn-4ck/pynipper-ng',
     packages=find_packages(),
-    keywords=['analyzer', 'network-analysis', 'network-security', 'configuration-analysis', 'python-tool'],
+    include_package_data=True,
+    package_data={
+        'src.report.templates': ['*.html', '*.js', '*.css']
+    },
+    keywords=[
+        'analyzer',
+        'network-analysis',
+        'network-security',
+        'configuration-analysis',
+        'python-tool'
+    ],
     install_requires=requirements,
     entry_points={
         'console_scripts': [

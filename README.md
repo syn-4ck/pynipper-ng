@@ -21,9 +21,20 @@ This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), update
 
 ## Install
 
+The requirements are:
+
+* Python 3.7.x or latest
+* PIP
+
 ### PIP install
 
-Soon.
+You can install pynipper-ng with PIP using the wheel package linked in each version of the tool.
+
+```BASH
+pip install pynipper_ng-<VERSION>-py3-none-any.whl
+```
+
+It will be in `pypi` registry soon.
 
 ### Source code install
 

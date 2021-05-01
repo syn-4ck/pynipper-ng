@@ -3,16 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{{ device_type }} {{ hostname }} Security Report</title>
-        <style>
-            body {font-size: 80%; margin: 0px; padding: 0px; font-family: arial, sans-serif;}
-            .mainbody { background-color: #EFEFEF;}
-            .pagebody {width: 90%; margin: 0px auto; padding: 12px; background-color: #FFFFFF; border: solid 1px rgb(100,100,100);}
-            .command {font-size: 95%; font-family: courier;}
-            caption { caption-side : bottom; font-style : italic; font-size: small; padding-top: 6px;}
-            .table {clear: left; border: solid 1px rgb(150,150,150); empty-cells: show; border-collapse: collapse; background-color: rgb(233,232,244); width: 100%}
-            .table tr {margin: 0px; padding: 0px;}
-            .table td {padding: 2px 7px 2px 7px; border: solid 1px rgb(150,150,150); text-align: left; font-size: small;}
-            .table th {margin: 0px; padding: 2px 7px 2px 7px; border: solid 1px rgb(150,150,150); empty-cells: show; text-align: left; font-size: 100%; background-color: #BEB8FB;}
+        <style type="text/css">
+            {% include "style.css" %}
         </style>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </head>
@@ -29,7 +21,7 @@
                 <div id="about_div">
                     <hr>
                         <h2>1. <a name="AboutThisReport">About This Report</a></h3>
-                        This Cisco Router retail report was produced by Nipper on {{ date }}. The report contains the following sections:<br>
+                        This Cisco Router {{ hostname }} report was produced by Nipper on {{ date }}. The report contains the following sections:<br>
                         &nbsp;<br>
                         
                         <ul>
@@ -49,7 +41,7 @@
                 <hr>
                     <h2>2. Security Audit</h2>
                     <h3>2.1. Introduction</h3>
-                    Nipper performed a security audit of the Cisco Router retail on Saturday 6th February 2021. This section details the findings of the security audit together with the impact and recommendations.
+                    Nipper performed a security audit of the {{ device_type }} {{ hostname }} on {{ date }}. This section details the findings of the security audit together with the impact and recommendations.
                     
                     {% for key, value in issues.items() %}
                         <h3>{{key}}</h3>
@@ -93,21 +85,8 @@
                 </hr>
             </div>
         </div>
-        <script>
-            $('#vulnTable tr td').each(function(){
-                var cellValue = $(this).html();
-                if(!isNaN(parseFloat(cellValue))) {
-                    if (cellValue >= 7) {
-                    $(this).css('background-color','red');
-                    } else {
-                        if (cellValue < 4) {
-                        $(this).css('background-color','green');
-                        } else {
-                        $(this).css('background-color','yellow');
-                        }
-                    }
-                }
-            });
+        <script type="text/javascript">
+            {% include "impact-color.js" %}
         </script>
     </body>
 </html>
