@@ -1,5 +1,6 @@
 import array
 import configparser
+import os
 
 from .cisco.cisco_ios_vulns import get_cisco_ios_vulns_data
 from .cisco.cisco_vuln import CiscoVuln
@@ -12,9 +13,14 @@ from ..report.common.types import ReportType
 
 from ..devices.common.types import DeviceType
 from ..error.cisco_errors import GenericCiscoError
+from ..error.files_errors import DeviceConfigurationFileNotFound, PynipperConfigurationFileNotFound
 
 
 def analyze_device(args: dict) -> None:
+
+    #Check configuration file exists
+    if not os.path.isfile(args["input_file"]):
+        raise DeviceConfigurationFileNotFound("ERROR: Device configuration file doesn't exists")
 
     # Cisco IOS devices
     devices = DeviceType._member_names_[:3]
@@ -24,6 +30,8 @@ def analyze_device(args: dict) -> None:
         version_cisco_device = get_cisco_ios_version(args["input_file"])
 
         # Get vulns by Cisco API
+        if not os.path.isfile(args["conf_file"]):
+            raise PynipperConfigurationFileNotFound("ERROR: Pynipper configuration file doesn't exists")
         config_file = configparser.ConfigParser()
         config_file.read(args["conf_file"])
         client_id = ""
@@ -72,10 +80,12 @@ def _vulns_get_fields(vulns: str) -> array:
                 raise GenericCiscoError(vulns["errorMessage"])
         except KeyError:
             raise GenericCiscoError(
-                "Unexpected error getting vulns from Cisco API")
+                "Unexpected error getting vulns from Cisco API"
+            )
     except Exception:
         raise GenericCiscoError(
-            "Unexpected error getting vulns from Cisco API")
+            "Unexpected error getting vulns from Cisco API"
+        )
 
     return vulns_array
 

@@ -1,19 +1,23 @@
-from jinja2 import Environment, PackageLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+import os
 import datetime
 import array
 import json
 
+TEMPLATE_FILE = "html_template.html"
 
 def generate_html_report(filename: str, issues: dict, vulns: array) -> None:
     html_file = open(filename, "w")
 
     date = datetime.datetime.now().date()
 
+    templateLoader = FileSystemLoader( os.path.dirname(os.path.abspath(__file__)) + "/templates" )
+
     env = Environment(
-        loader=PackageLoader('report', 'templates'),
+        loader=templateLoader,
         autoescape=select_autoescape(['html', 'xml'])
     )
-    TEMPLATE_FILE = "html_template.html"
+
     template = env.get_template(TEMPLATE_FILE)
 
     text = template.render(
