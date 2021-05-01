@@ -3,10 +3,10 @@ import argparse
 from typing import List
 from typing import Optional
 
-from common.banner import display_banner
-from devices.common.types import DeviceType
-from report.common.types import ReportType
-from analyze.analyze_device import analyze_device
+from .common.banner import display_banner
+from .devices.common.types import DeviceType
+from .report.common.types import ReportType
+from .analyze.analyze_device import analyze_device
 
 
 def main(argv: Optional[List[str]] = None) -> int:

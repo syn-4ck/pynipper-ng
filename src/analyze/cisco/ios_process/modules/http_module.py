@@ -1,5 +1,5 @@
 # flake8: noqa
-from analyze.cisco.parse_config import parse_cisco_ios_config_file
+from ...parse_config import parse_cisco_ios_config_file
 from ...ios_process.cisco_ios_issue import CiscoIOSIssue
 
 # If the device has http configured -> true
