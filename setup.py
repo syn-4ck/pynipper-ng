@@ -10,7 +10,7 @@ requirements = [str(ir.requirement) for ir in install_reqs]
 
 setup(
     name='pynipper-ng',
-    version='0.1.0',
+    version='0.1.1',
     author='Syn-4ck',
     author_email='repoJFM@protonmail.com',
     description='Configuration security analyzer for network devices',
