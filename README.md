@@ -27,7 +27,9 @@ Soon.
 
 ### Source code install
 
-`python setup.py build install`
+```BASH
+python setup.py build install
+```
 
 ## Quickstart
 
