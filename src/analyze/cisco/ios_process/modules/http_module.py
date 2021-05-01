@@ -35,7 +35,7 @@ def get_cisco_ios_http_access_list(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     access_list = parser.find_objects("ip http access-class")
     if (len(access_list) > 0):
-        num = host[0].re_match_typed(
+        num = access_list[0].re_match_typed(
             r'^ip http access-class\s+(\S+)', default='')
         return num
     else:
@@ -48,9 +48,9 @@ def get_cisco_ios_http_auth(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     timeout = parser.find_objects("ip http auth")
     if (len(timeout) > 0):
-        type = host[0].re_match_typed(
+        type = timeout[0].re_match_typed(
             r'^ip http auth(entication)?\s+(\S+)', default='')
-        return seconds.split()[0]
+        return type.split()[0]
     else:
         return None
 
