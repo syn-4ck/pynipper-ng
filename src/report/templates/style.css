@@ -1,0 +1,43 @@
+body {
+    font-size: 80%;
+    margin: 0px;
+    padding: 0px;
+    font-family: arial, sans-serif;
+}
+.mainbody {
+    background-color: #EFEFEF;
+}
+.pagebody {
+    width: 90%;
+    margin: 0px auto;
+    padding: 12px;
+    background-color: #FFFFFF;
+    border: solid 1px rgb(100,100,100);
+}
+.table {
+    clear: left;
+    border: solid 1px rgb(150,150,150);
+    empty-cells: show;
+    border-collapse: collapse;
+    background-color: rgb(233,232,244);
+    width: 100%
+}
+.table tr {
+    margin: 0px;
+    padding: 0px;
+}
+.table td {
+    padding: 2px 7px 2px 7px;
+    border: solid 1px rgb(150,150,150);
+    text-align: left;
+    font-size: small;
+}
+.table th {
+    margin: 0px;
+    padding: 2px 7px 2px 7px;
+    border: solid 1px rgb(150,150,150);
+    empty-cells: show;
+    text-align: left;
+    font-size: 100%;
+    background-color: #BEB8FB;
+}
