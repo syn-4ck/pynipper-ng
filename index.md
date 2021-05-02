@@ -1,5 +1,7 @@
-[![Generic badge](https://img.shields.io/badge/version-0.1.1-green.svg)](https://github.com/syn-4ck/pynipper-ng/releases/tag/v0.1.1-ALPHA)
+[![Generic badge](https://img.shields.io/badge/version-0.1.1-white.svg)](https://github.com/syn-4ck/pynipper-ng/releases/tag/v0.1.1-ALPHA)
 [![Generic badge](https://img.shields.io/badge/contributions-welcome-blue.svg)](https://github.com/syn-4ck/pynipper-ng/pulls)
+[![Generic badge](https://img.shields.io/badge/production-no-red.svg)](https://github.com/syn-4ck/pynipper-ng/releases/tag/v0.1.1-ALPHA)
+[![Generic badge](https://img.shields.io/badge/CI/CD-passed-green.svg)](#contributing)
 
 ## Table of contents
 1. [What is pynipper-ng](#what-is-pynipper-ng)
