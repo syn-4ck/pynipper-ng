@@ -1,4 +1,5 @@
 import argparse
+import os
 
 from typing import List
 from typing import Optional
@@ -32,7 +33,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                         choices=report_type_list, default=ReportType.HTML)
     parser.add_argument('--configuration', '-c', help="Configuration file",
                         dest="conf_file", action="store", type=str,
-                        default="./common/default.conf")
+                        default=os.path.dirname(os.path.abspath(__file__)) + "/common/default.conf")  # noqa: E501
     parser.add_argument('--offline', '-x',
                         help="Disable get APIs vulnerabilities data (Cisco API)",  # noqa: E501
                         dest="offline", action='store_true')

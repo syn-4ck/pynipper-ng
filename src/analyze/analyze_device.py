@@ -7,6 +7,7 @@ from .cisco.cisco_vuln import CiscoVuln
 from .cisco.parse_config import get_cisco_ios_version
 
 from .cisco.process_cisco_ios_conf import process_cisco_ios_conf
+from .cisco.parse_config import get_cisco_ios_hostname
 
 from ..report.report import generate_html_report, generate_json_report
 from ..report.common.types import ReportType
@@ -52,15 +53,18 @@ def analyze_device(args: dict) -> None:
         # Get Cisco report missconfigurations
         print("[3/4] Checking missconfiguration vulnerabilities")
         issues = process_cisco_ios_conf(args["input_file"])
+        data = {}
+        data['hostname'] = get_cisco_ios_hostname(args["input_file"])
+        data['device-type'] = str(args["device_type"])
 
         # Generate report
         print("[4/4] Generating report")
         if args["output_type"] == ReportType._member_names_[0]:
             generate_html_report(args["output_file"],
-                                 issues, vulns_array_sorted)
+                                 issues, vulns_array_sorted, data)
         elif args["output_type"] == ReportType._member_names_[1]:
             generate_json_report(args["output_file"],
-                                 issues, vulns_array_sorted)
+                                 issues, vulns_array_sorted, data)
 
 
 def _vulns_get_fields(vulns: str) -> array:
