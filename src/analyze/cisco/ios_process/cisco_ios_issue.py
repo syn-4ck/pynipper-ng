@@ -16,3 +16,12 @@ class CiscoIOSIssue:
         print("Recommendation: " + self.recommendation)
         print("\n---------------------------------------------------------------------------------------------------")  # noqa: E501
         return("")
+
+    def __dict__(self):
+        d = {}
+        d['title'] = self.title
+        d['observation'] = self.observation
+        d['impact'] = self.impact
+        d['ease'] = self.ease
+        d['recommendation'] = self.recommendation
+        return d

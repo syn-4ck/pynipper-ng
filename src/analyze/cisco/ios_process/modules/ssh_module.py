@@ -43,47 +43,82 @@ def get_cisco_ios_ssh(issues: list, filename: str):
 # Number of max. retries configured to login with ssh
 
 
-def get_cisco_ios_ssh_retries(filename: str) -> str:
+def _get_cisco_ios_ssh_retries(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     retries = parser.find_objects("ip ssh authentication-retries")
     if (len(retries) > 0):
-        max_retries = ssh_version[0].re_match_typed(
+        max_retries = retries[0].re_match_typed(
             r'^ip ssh authentication-retries\s+(\S+)', default='')
         return max_retries
     else:
         return None
 
+def get_cisco_ios_ssh_reties(issues: list, filename: str):
+    retries = _get_cisco_ios_ssh_retries(filename)
+    if (retries is None or retries > 5):
+        ssh_retries_issue = CiscoIOSIssue(
+            "SSH retries misconfiguration",
+            "The SSH service must have a defined number of retries, the recommended is between 0 and 5.",
+            "Set a retries number allows to reduce the bruteforce and dictionary attacks. If a retry number is defined, the attacker can not test with an user multiple passwords.",
+            "This issue improve the hardening of passwords in the network device.",
+            "This can be configured with the following command: ip ssh authentication-retries <retry-number>."
+        )
+        issues.append(ssh_retries_issue)
+
 # Number of seconds of ssh timeout
 
 
 
-def get_cisco_ios_ssh_timeout(filename: str) -> str:
+def _get_cisco_ios_ssh_timeout(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     timeout = parser.find_objects("ip ssh time-out")
     if (len(timeout) > 0):
-        seconds = ssh_version[0].re_match_typed(
+        seconds = timeout[0].re_match_typed(
             r'^ip ssh time-out\s+(\S+)', default='')
-        return seconds
+        return int(seconds)
     else:
         return None
+
+def get_cisco_ios_ssh_timeout(issues: list, filename: str):
+    timeout = _get_cisco_ios_ssh_timeout(filename)
+    if (timeout is None or timeout > 120):
+        ssh_iface_issue = CiscoIOSIssue(
+            "SSH timeout misconfiguration",
+            "The SSH service must have a defined timeout between 0 and 60 seconds.",
+            "Set a timeout allows disable not used or malicious sessions in background.",
+            "This issue only increase the device management security, it is not exploitable.",
+            "This can be configured with the following command: ip ssh time-out <timeout-in-seconds>."
+        )
+        issues.append(ssh_iface_issue)
 
 # Get the source interface
 
 
-def get_cisco_ios_ssh_interface(filename: str) -> str:
+def _get_cisco_ios_ssh_interface(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     src_interface = parser.find_objects("ip ssh source-interface")
     if (len(src_interface) > 0):
-        interface = ssh_version[0].re_match_typed(
+        interface = src_interface[0].re_match_typed(
             r'^ip ssh source-interface\s+(\S+)', default='')
         return interface
     else:
         return None
 
+def get_cisco_ios_ssh_interface(issues: list, filename: str):
+    if (_get_cisco_ios_ssh_interface(filename) is None):
+        ssh_iface_issue = CiscoIOSIssue(
+            "SSH source-interface enabled",
+            "The SSH service must have a controlated set of source interfaces to manage the device",
+            "To reduce bruteforce attacks is usefull have a set of source interfaces, logged and filtered, to access to SSH device management.",
+            "This issue only increase the device management security, it is not exploitable, but it reduce bruteforce attacks.",
+            "This can be configured with the following command: ip ssh source-interface <interface> "
+        )
+        issues.append(ssh_iface_issue)
 
 def get_ssh_missconfigurations(filename: str) -> list:
     issues = []
     get_cisco_ios_ssh(issues, filename)
-    # get_cisco_ios_http_access_list(issues,filename)
-    # get_cisco_ios_http_auth(issues,filename)
+    get_cisco_ios_ssh_timeout(issues, filename)
+    get_cisco_ios_ssh_reties(issues, filename)
+    get_cisco_ios_ssh_interface(issues, filename)
     return issues

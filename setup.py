@@ -20,7 +20,8 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        'src.report.templates': ['*.html', '*.js', '*.css']
+        'src.report.templates': ['*.html', '*.js', '*.css'],
+        'src.common': ['*.conf']
     },
     keywords=[
         'analyzer',
