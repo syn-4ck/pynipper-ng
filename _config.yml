@@ -1,2 +1,6 @@
 theme: jekyll-theme-cayman
 show_downloads: true
+github:
+  zip_url: https://github.com/syn-4ck/pynipper-ng/archive/refs/tags/v0.1.1-ALPHA.zip
+  tar_url: https://github.com/syn-4ck/pynipper-ng/archive/refs/tags/v0.1.1-ALPHA.tar.gz
+  pip_url: https://github.com/syn-4ck/pynipper-ng/releases/download/v0.1.1-ALPHA/pynipper_ng-0.1.1-py3-none-any.whl
