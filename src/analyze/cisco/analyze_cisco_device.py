@@ -4,6 +4,7 @@ import array
 import os
 
 from ..cisco.cisco_api_vulns.cisco_ios_vulns_service import get_cisco_ios_vulns_data
+from ..cisco.cisco_api_vulns.cisco_vuln import CiscoVuln
 from ..cisco.cisco_parser.parse_config import get_cisco_ios_version
 
 from ...error.cisco_errors import GenericCiscoError
