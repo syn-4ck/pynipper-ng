@@ -62,6 +62,7 @@ def analyze_cisco_device(args: array, cisco_devices: array):
             generate_json_report(args["output_file"],
                                  issues, vulns_array_sorted, data)
 
+
 def _vulns_get_fields(vulns: str) -> array:
     vulns_array = []
     try:
