@@ -1,5 +1,6 @@
 from enum import Enum
 
+# TODO: Support to other devices
 
 class DeviceType(Enum):
     IOS_SWITCH = 1  # Cisco IOS-based Switch
