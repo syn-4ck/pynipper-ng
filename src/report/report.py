@@ -14,7 +14,8 @@ def generate_html_report(filename: str, issues: dict, vulns: array, data: dict) 
     device_type = data["device-type"]
     hostname = data["hostname"]
 
-    templateLoader = FileSystemLoader(os.path.dirname(os.path.abspath(__file__)) + "/templates")
+    templateLoader = FileSystemLoader(os.path.dirname(
+        os.path.abspath(__file__)) + "/templates")
 
     env = Environment(
         loader=templateLoader,
@@ -55,7 +56,8 @@ def generate_json_report(filename: str, issues: dict, vulns: array, data: dict) 
         vulns_dict,
         indent=4,
         sort_keys=True,
-        default=lambda x: x.__str__() if isinstance(x, datetime.datetime) else x.__dict__()
+        default=lambda x: x.__str__() if isinstance(
+            x, datetime.datetime) else x.__dict__()
     )
 
     json_file.write(json_text)

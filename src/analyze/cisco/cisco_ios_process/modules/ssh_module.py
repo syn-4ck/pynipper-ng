@@ -1,6 +1,6 @@
 # flake8: noqa
-from ...parse_config import parse_cisco_ios_config_file
-from ...ios_process.cisco_ios_issue import CiscoIOSIssue
+from ...cisco_parser.parse_config import parse_cisco_ios_config_file
+from ...cisco_ios_process.cisco_ios_issue import CiscoIOSIssue
 
 # If the device has ssh configured -> true
 
@@ -53,6 +53,7 @@ def _get_cisco_ios_ssh_retries(filename: str) -> str:
     else:
         return None
 
+
 def get_cisco_ios_ssh_reties(issues: list, filename: str):
     retries = _get_cisco_ios_ssh_retries(filename)
     if (retries is None or retries > 5):
@@ -68,7 +69,6 @@ def get_cisco_ios_ssh_reties(issues: list, filename: str):
 # Number of seconds of ssh timeout
 
 
-
 def _get_cisco_ios_ssh_timeout(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     timeout = parser.find_objects("ip ssh time-out")
@@ -78,6 +78,7 @@ def _get_cisco_ios_ssh_timeout(filename: str) -> str:
         return int(seconds)
     else:
         return None
+
 
 def get_cisco_ios_ssh_timeout(issues: list, filename: str):
     timeout = _get_cisco_ios_ssh_timeout(filename)
@@ -104,6 +105,7 @@ def _get_cisco_ios_ssh_interface(filename: str) -> str:
     else:
         return None
 
+
 def get_cisco_ios_ssh_interface(issues: list, filename: str):
     if (_get_cisco_ios_ssh_interface(filename) is None):
         ssh_iface_issue = CiscoIOSIssue(
@@ -114,6 +116,7 @@ def get_cisco_ios_ssh_interface(issues: list, filename: str):
             "This can be configured with the following command: ip ssh source-interface <interface> "
         )
         issues.append(ssh_iface_issue)
+
 
 def get_ssh_missconfigurations(filename: str) -> list:
     issues = []

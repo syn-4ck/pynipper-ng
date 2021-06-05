@@ -15,9 +15,9 @@
 5. [References](#references)
 
 ## What is pynipper-ng?
-pynipper-ng is a configuration security analyzer for network devices. The goal of this tool is check the vulnerabilities and misconfigurations of routers, firewalls and switches reporting the issues in a simple way.
+pynipper-ng is a **configuration security analyzer for network devices**. The goal of this tool is check the vulnerabilities and misconfigurations of routers, firewalls and switches reporting the issues in a simple way.
 
-This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), updated and translated to Python. The project wants to improve the set of rules that detect security misconfigurations of the network devices due to the new architecture (using Python pynipper modules). 
+This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), updated and translated to Python. The project wants to improve the set of rules that detect security misconfigurations of the network devices due to the new architecture (using Python pynipper modules) and integrate with APIs (like [PSIRT Cisco API](https://developer.cisco.com/docs/psirt/#!overview/overview)) to scan known vulnerabilities. 
 
 ## Install
 
@@ -42,13 +42,46 @@ It will be in `pypi` registry soon.
 python setup.py build install
 ```
 
-## Quickstart
+## Quickstart and options
+
+### Quickly demo
 
 ```BASH
 pynipper-ng -d IOS_ROUTER -i tests\test_data\cisco_ios_example.conf -o HTML -f ./report.html -x
 ```
 
+### Options
+
+| Flag | OPTION        | DESCRIPTION                                                                                                      | MANDATORY? | DEFAULT VALUE |
+|------|---------------|------------------------------------------------------------------------------------------------------------------|------------|--------------|
+| -h   | --help        | Display a help message                                                                                           | NO         | N/A             |
+| -d   | --device      | Device type to analyze (1)                                                                                       | YES        |             |
+| -i   | --input       | Configuration device file to analyze (file contains standard output redirection of `show configuration` command) | YES        |             |
+| -o   | --output-type | Report type (HTML or JSON)                                                                                       | NO         | HTML          |
+| -f   | --output-filename | Report filename                                                                                              | NO         | report.html
+| -x   | --offline         | Disable APIs integration                                                                                     | NO         | N/A             |
+| -c   | --configuration   | Configuration file to pynipper-ng (2)                                                                        | NO         | default.conf    |
+
+
+(1) Check [here](src/devices/README.md) the devices supported
+
+(2) Check [Pynipper-ng configuration file](#config-file) to know more about it.
+
 ## More information
+
+### Pynipper-ng Configuration File
+
+The configuration file is used to define some properties and customize the scans.
+
+#### Pynipper-ng Configuration File: PSIRT Cisco API
+
+To use the PSIRT Cisco API you must provide the API keys. To get it: [https://apiconsole.cisco.com/](https://apiconsole.cisco.com/)
+
+```conf
+[Cisco]
+CLIENT_ID = <your-client-id>
+CLIENT_SECRET = <your-client-secret-token>
+```
 
 ### Contributing
 
@@ -64,17 +97,13 @@ Pynipper-ng detects device configuration weaknesses based on modules. Pynipper m
 
 #### Pynipper modules summary
 
-For Cisco IOS:
-
-| MISCONFIGURATION | CHECKS                                      | MODULE NAME  | LABEL  | NOTE  |
-|------------------|---------------------------------------------|--------------|--------|-------|
-| HTTP MISCONFIG   | Use HTTP admin, ACL and AUTH                | http_module  | http   |       |
-| SSH MISCONFIG    | Use SSH admin, use v2, retries and timeout  | ssh_module   | ssh    |       |
-|                  |                                             |              |        |       |
+Cisco IOS Modules: [check here](src/analyze/cisco/cisco_ios_process/modules/README.md)
 
 #### Implements your modules
 
 You can also implements your modules. Pynipper-ng has not a option to incorporate it by CLI or similar, but contributions are welcome! With a contribution, you can help a lot of users with the same problem and you can improve the community :).
+
+To create your own modules, follow [this guidelines](src/analyze/README.md)
 
 ## References
 [nipper-ng](https://github.com/arpitn30/nipper-ng)

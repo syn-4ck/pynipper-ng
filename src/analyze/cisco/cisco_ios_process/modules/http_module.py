@@ -1,6 +1,6 @@
 # flake8: noqa
-from ...parse_config import parse_cisco_ios_config_file
-from ...ios_process.cisco_ios_issue import CiscoIOSIssue
+from ...cisco_parser.parse_config import parse_cisco_ios_config_file
+from ...cisco_ios_process.cisco_ios_issue import CiscoIOSIssue
 
 # If the device has http configured -> true
 
@@ -41,6 +41,7 @@ def _get_cisco_ios_http_access_list(filename: str) -> str:
     else:
         return None
 
+
 def get_cisco_ios_http_access_list(issues: list, filename: str) -> CiscoIOSIssue:
     if (_get_cisco_ios_http_access_list(filename) is None):
         http_acl_issue = CiscoIOSIssue(
@@ -65,6 +66,7 @@ def _get_cisco_ios_http_auth(filename: str) -> str:
     else:
         return None
 
+
 def get_cisco_ios_http_auth(issues: list, filename: str) -> CiscoIOSIssue:
     if (_get_cisco_ios_http_auth(filename) is None):
         http_auth_issue = CiscoIOSIssue(
@@ -80,6 +82,6 @@ def get_cisco_ios_http_auth(issues: list, filename: str) -> CiscoIOSIssue:
 def get_http_missconfigurations(filename: str) -> list:
     issues = []
     get_cisco_ios_http(issues, filename)
-    get_cisco_ios_http_access_list(issues,filename)
-    get_cisco_ios_http_auth(issues,filename)
+    get_cisco_ios_http_access_list(issues, filename)
+    get_cisco_ios_http_auth(issues, filename)
     return issues
