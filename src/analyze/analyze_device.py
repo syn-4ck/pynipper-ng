@@ -1,4 +1,3 @@
-import array
 import os
 
 from ..devices.common.types import DeviceType
