@@ -1,5 +1,11 @@
 # Cisco Modules
 
+## CIS Benchmarks used
+
+- **CIS Benchmark for Cisco IOS 12 v4.0.0**
+- **CIS Benchmarks for Cisco IOS 15 v4.1.0**
+- **CIS Benchmarks for Cisco IOS 16 v1.1.1**
+
 ## How to create a module
 
 To create a new module, you should create 1 to N checks. Each check needs a `Detector` and a `Vuln creator`. Finally, the module needs a `main function` that calls all `Vuln creator` methods.
