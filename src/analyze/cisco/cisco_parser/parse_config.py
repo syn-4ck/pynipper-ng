@@ -34,7 +34,7 @@ def get_cisco_ios_version(filename: str) -> str:
             # if i don't know the full IOS version,
             # i get the first one subversion
             # motivation: report all possible vulns,
-            # better report more and false positives
+            # better report more and some false positives
             version_number = version_number + '(1)'
         return version_number
     else:
@@ -43,6 +43,7 @@ def get_cisco_ios_version(filename: str) -> str:
 
 # Generic configuration
 # ---------------------
+# TODO: Migrate to specific module
 
 # If the device has NOT a password-encryption policy -> true
 def get_cisco_ios_passwd_enc(filename: str) -> bool:
@@ -112,6 +113,7 @@ def get_cisco_ios_tcp_keep_alives_out(filename: str) -> bool:
 
 # Services configuration
 # -----------------------
+# TODO: Migrate to specific module
 
 # If the device has telnet configured -> true
 
