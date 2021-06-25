@@ -26,11 +26,11 @@ def _get_cisco_ios_ssh_version(filename: str) -> str:
             r'^ip ssh version\s+(\S+)', default='')
         return version
     else:
-        return None
+        return ""
 
 
 def get_cisco_ios_ssh(issues: list, filename: str):
-    if (not _has_cisco_ios_ssh(filename) or _get_cisco_ios_ssh_version(filename) is None or _get_cisco_ios_ssh_version(filename) != 2):
+    if (not _has_cisco_ios_ssh(filename) or _get_cisco_ios_ssh_version(filename) == "" or _get_cisco_ios_ssh_version(filename) != "2"):
         ssh_version_issue = CiscoIOSIssue(
             "SSH Protocol Version",
             "The SSH service is commonly used for encrypted command-based remote device management. There are multiple SSH protocol versions and SSH servers will often support multiple versions to maintain backwards compatibility. Although flaws have been identified in implementations of version 2 of the SSH protocol, fundamental flaws exist in SSH protocol version 1.",
@@ -51,12 +51,12 @@ def _get_cisco_ios_ssh_retries(filename: str) -> str:
             r'^ip ssh authentication-retries\s+(\S+)', default='')
         return max_retries
     else:
-        return None
+        return ""
 
 
 def get_cisco_ios_ssh_reties(issues: list, filename: str):
     retries = _get_cisco_ios_ssh_retries(filename)
-    if (retries is None or retries > 5):
+    if (retries == "" or retries > 5):
         ssh_retries_issue = CiscoIOSIssue(
             "SSH retries misconfiguration",
             "The SSH service must have a defined number of retries, the recommended is between 0 and 5.",
@@ -69,7 +69,7 @@ def get_cisco_ios_ssh_reties(issues: list, filename: str):
 # Number of seconds of ssh timeout
 
 
-def _get_cisco_ios_ssh_timeout(filename: str) -> str:
+def _get_cisco_ios_ssh_timeout(filename: str) -> int:
     parser = parse_cisco_ios_config_file(filename)
     timeout = parser.find_objects("ip ssh time-out")
     if (len(timeout) > 0):
@@ -77,12 +77,12 @@ def _get_cisco_ios_ssh_timeout(filename: str) -> str:
             r'^ip ssh time-out\s+(\S+)', default='')
         return int(seconds)
     else:
-        return None
+        return 0
 
 
 def get_cisco_ios_ssh_timeout(issues: list, filename: str):
     timeout = _get_cisco_ios_ssh_timeout(filename)
-    if (timeout is None or timeout > 120):
+    if (timeout == 0 or timeout > 120):
         ssh_iface_issue = CiscoIOSIssue(
             "SSH timeout misconfiguration",
             "The SSH service must have a defined timeout between 0 and 60 seconds.",
@@ -103,11 +103,11 @@ def _get_cisco_ios_ssh_interface(filename: str) -> str:
             r'^ip ssh source-interface\s+(\S+)', default='')
         return interface
     else:
-        return None
+        return ""
 
 
 def get_cisco_ios_ssh_interface(issues: list, filename: str):
-    if (_get_cisco_ios_ssh_interface(filename) is None):
+    if (_get_cisco_ios_ssh_interface(filename) == ""):
         ssh_iface_issue = CiscoIOSIssue(
             "SSH source-interface enabled",
             "The SSH service must have a controlated set of source interfaces to manage the device",

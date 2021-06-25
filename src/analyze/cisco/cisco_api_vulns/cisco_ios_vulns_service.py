@@ -6,6 +6,7 @@ from tqdm import tqdm
 ACCESS_URI = "https://cloudsso.cisco.com/as/token.oauth2?client_id="
 API_URI = "https://api.cisco.com/security/advisories/ios?version="
 
+API_DATA_FILENAME = "api-data.dat"
 
 def _get_access_token(client_id: str, client_secret: str) -> str:
     headers = {}
@@ -37,15 +38,15 @@ def get_cisco_ios_vulns_data(version: str, client_id: str, client_secret: str, d
     progress_bar = tqdm(total=total_size_in_bytes,
                         unit_divisor=1024, unit='B',
                         unit_scale=True, leave=True)
-    f = open('api-data.dat', 'wb')
+    f = open(API_DATA_FILENAME, 'wb')
     for data in response.iter_content(block_size):
         progress_bar.update(len(data))
         f.write(data)
     progress_bar.close()
     f.close()
 
-    readable_file = open('api-data.dat', 'r')
+    readable_file = open(API_DATA_FILENAME, 'r')
     file_data = readable_file.read()
     readable_file.close()
-    os.remove('api-data.dat')
+    os.remove(API_DATA_FILENAME)
     return json.loads(file_data)
