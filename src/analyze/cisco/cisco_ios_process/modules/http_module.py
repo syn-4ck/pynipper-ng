@@ -31,7 +31,7 @@ def get_cisco_ios_http(issues: list, filename: str) -> CiscoIOSIssue:
 # Number of access list should be used to restrict access to HTTP server
 
 
-def _get_cisco_ios_http_access_list(filename: str) -> str:
+def _get_cisco_ios_http_access_list(filename: str) -> int:
     parser = parse_cisco_ios_config_file(filename)
     access_list = parser.find_objects("ip http access-class")
     if (len(access_list) > 0):
@@ -60,15 +60,15 @@ def _get_cisco_ios_http_auth(filename: str) -> str:
     parser = parse_cisco_ios_config_file(filename)
     timeout = parser.find_objects("ip http auth")
     if (len(timeout) > 0):
-        type = timeout[0].re_match_typed(
+        auth_type = timeout[0].re_match_typed(
             r'^ip http auth(entication)?\s+(\S+)', default='')
-        return type.split()[0]
+        return auth_type.split()[0]
     else:
-        return None
+        return ""
 
 
 def get_cisco_ios_http_auth(issues: list, filename: str) -> CiscoIOSIssue:
-    if (_get_cisco_ios_http_auth(filename) is None):
+    if (_get_cisco_ios_http_auth(filename) == ""):
         http_auth_issue = CiscoIOSIssue(
             "Authentication mode to HTTP service",
             "The HTTP service was not configured with an access-list to restrict network access to the device.",
