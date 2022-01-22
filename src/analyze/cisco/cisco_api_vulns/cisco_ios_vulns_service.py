@@ -8,6 +8,7 @@ API_URI = "https://api.cisco.com/security/advisories/ios?version="
 
 API_DATA_FILENAME = "api-data.dat"
 
+
 def _get_access_token(client_id: str, client_secret: str) -> str:
     headers = {}
     headers["Content-Type"] = "application/x-www-form-urlencoded"
