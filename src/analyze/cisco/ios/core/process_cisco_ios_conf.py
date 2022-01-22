@@ -4,6 +4,7 @@ import pkgutil
 
 from .. import plugins as plugs
 
+
 def _import_modules() -> array:
     pkg = plugs.__package__
     modules = []
@@ -12,7 +13,7 @@ def _import_modules() -> array:
     for importer, modname, ispkg in pkgutil.iter_modules(plugs.__path__):
         if modname != "generic_plugin" and modname.endswith("_plugin"):
             module_name = f"{pkg}.{modname}"
-            
+
             importlib.import_module(module_name)
             spec = importlib.util.find_spec(module_name)
             module = importlib.util.module_from_spec(spec)
@@ -20,10 +21,11 @@ def _import_modules() -> array:
 
             module_names.append(module.__name__)
             modules.append(module)
-    
+
     print(f"[3/4] Scanning configuration file using the following plugins: {module_names}")
 
     return modules
+
 
 def _classesinmodule(module):
     md = module.__dict__
@@ -39,7 +41,7 @@ def process_cisco_ios_conf(filename: str) -> dict:
     i = []
     idx = 0
 
-    for module in _import_modules(): 
+    for module in _import_modules():
         for module_class in _classesinmodule(module):
             m = module_class()
             m.analyze(filename)

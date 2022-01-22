@@ -10,6 +10,7 @@ from ....report.report import generate_report
 
 from ....error.files_errors import PynipperConfigurationFileNotFound
 
+
 def analyze_cisco_device(device, input_filename, output_filename, output_type, configuration, online):
 
     print("[1/4] Initializing pynipper-ng")
@@ -35,5 +36,3 @@ def analyze_cisco_device(device, input_filename, output_filename, output_type, c
     # Generate report
     print("[4/4] Generating report")
     generate_report(output_type, output_filename, issues, vulns, data)
-
-

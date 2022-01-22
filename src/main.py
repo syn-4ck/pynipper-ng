@@ -1,47 +1,54 @@
-import click
+import argparse
 import os
 
+from typing import List
+from typing import Optional
+
 from .common.banner import display_banner
+from .devices.common.types import DeviceType
+from .report.common.types import ReportType
 from .analyze.analyze_device import analyze_device
 
-@click.command()
-@click.option('-d', '--device', 
-              help='Device type to analyze: Cisco IOS devices [IOS_SWITCH, IOS_ROUTER, IOS_CATALYST]', 
-              required=True, 
-              type=click.Choice(["IOS_SWITCH", "IOS_ROUTER", "IOS_CATALYST"], case_sensitive=False)
-            )
-@click.option('-i', '--input-filename', 
-              help='Device configuration file to analyze', 
-              required=True, 
-              type=click.Path(exists=True)
-            )
-@click.option('-f', '--output-filename', 
-              help='Report filename', 
-              required=False, 
-              type=click.Path(exists=False),
-              default="./report.html"
-            )
-@click.option('-o', '--output-type', 
-              help='Report type: HTML (by default), JSON', 
-              required=False, 
-              type=click.Choice(["HTML", "JSON"]),
-              default="HTML"
-            )
-@click.option('-c', '--configuration', 
-              help='Pynipper-ng configuration file', 
-              required=False, 
-              type=click.Path(exists=True),
-              default=os.path.dirname(os.path.abspath(__file__)) + "/common/default.conf"
-            )
-@click.option('-x', '--online', 
-              help='Enable get APIs vulnerabilities data (Cisco API)', 
-              is_flag=True
-            )
-def main(device, input_filename, output_filename, output_type, configuration, online) -> int:
+
+def main(argv: Optional[List[str]] = None) -> int:
 
     display_banner()
 
-    analyze_device(device, input_filename, output_filename, output_type, configuration, online)
+    device_type_list = [dev.name for dev in DeviceType]
+    report_type_list = [report.name for report in ReportType]
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--device', '-d', help="Device type to analyze",
+                        dest="device_type", action="store",
+                        choices=device_type_list, required=True
+                        )
+    parser.add_argument('--input', '-i', help="Device configuration file",
+                        dest="input_file", action="store",
+                        type=str, required=True
+                        )
+    parser.add_argument('--output-filename', '-f', help="Report filename",
+                        dest="output_file", action="store",
+                        type=str, default="./report.html"
+                        )
+    parser.add_argument('--output-type', '-o', help="Report type",
+                        dest="output_type", action="store",
+                        choices=report_type_list, default=ReportType.HTML
+                        )
+    parser.add_argument('--configuration', '-c', help="Configuration file",
+                        dest="conf_file", action="store", type=str,
+                        default=os.path.dirname(os.path.abspath(__file__)) + "/common/default.conf"
+                        )
+    parser.add_argument('--offline', '-x',
+                        help="Disable get APIs vulnerabilities data (Cisco API)",
+                        dest="offline", action='store_true'
+                        )
+
+    args = parser.parse_args()
+
+    args_dict = vars(args)
+
+    analyze_device(args_dict)
 
     return 0
 

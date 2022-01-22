@@ -58,6 +58,7 @@ def _get_cisco_ios_vulns_data(version: str, client_id: str, client_secret: str, 
     os.remove(API_DATA_FILENAME)
     return json.loads(file_data)
 
+
 def _vulns_get_fields(vulns: str) -> array:
     vulns_array = []
     try:
@@ -85,6 +86,7 @@ def _vulns_get_fields(vulns: str) -> array:
         )
 
     return vulns_array
+
 
 def get_api_vulnerabilities(configuration, version_cisco_device, online):
     config_file = configparser.ConfigParser()

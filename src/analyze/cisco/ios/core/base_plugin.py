@@ -5,10 +5,11 @@ from ciscoconfparse import CiscoConfParse
 
 from ..issue.cisco_ios_issue import CiscoIOSIssue
 
+
 class GenericPlugin(object):
 
     def __init__(self):
-        self.issues = [] # A CiscoIOSIssue list with the reported issues
+        self.issues = []  # A CiscoIOSIssue list with the reported issues
 
     def parse_cisco_ios_config_file(self, filename: str) -> CiscoConfParse:
         return CiscoConfParse(filename, syntax='ios')
