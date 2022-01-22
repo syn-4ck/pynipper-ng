@@ -1,18 +1,16 @@
 import os
 
-from ..devices.common.types import DeviceType
 from ..error.files_errors import DeviceConfigurationFileNotFound
 
-from .cisco.analyze_cisco_device import analyze_cisco_device
+from .cisco.ios.analyze_cisco_device import analyze_cisco_device
 
 
-def analyze_device(args: dict) -> None:
+def analyze_device(device, input_filename, output_filename, output_type, configuration, online) -> None:
 
     # Check configuration file exists
-    if not os.path.isfile(args["input_file"]):
+    if not os.path.isfile(input_filename):
         raise DeviceConfigurationFileNotFound(
             "ERROR: Device configuration file doesn't exists")
 
-    # Cisco IOS devices
-    cisco_devices = DeviceType._member_names_[:3]
-    analyze_cisco_device(args, cisco_devices)
+    # Only for Cisco IOS devices yet
+    analyze_cisco_device(device, input_filename, output_filename, output_type, configuration, online)

@@ -1,7 +1,13 @@
 import requests
+import array
+import configparser
 import json
 import os
 from tqdm import tqdm
+
+from .....error.cisco_errors import GenericCiscoError
+
+from ..api.cisco_vuln import CiscoVuln
 
 ACCESS_URI = "https://cloudsso.cisco.com/as/token.oauth2?client_id="
 API_URI = "https://api.cisco.com/security/advisories/ios?version="
@@ -18,8 +24,8 @@ def _get_access_token(client_id: str, client_secret: str) -> str:
     return data['access_token']
 
 
-def get_cisco_ios_vulns_data(version: str, client_id: str, client_secret: str, disable_api: bool) -> json:  # noqa: E501
-    if (disable_api):
+def _get_cisco_ios_vulns_data(version: str, client_id: str, client_secret: str, enable_api: bool) -> json:  # noqa: E501
+    if (not enable_api):
         print("[2/4] Cisco API disable.")
         return json.dumps({})
     if (client_id == "" or client_secret == ""):
@@ -50,3 +56,46 @@ def get_cisco_ios_vulns_data(version: str, client_id: str, client_secret: str, d
     readable_file.close()
     os.remove(API_DATA_FILENAME)
     return json.loads(file_data)
+
+def _vulns_get_fields(vulns: str) -> array:
+    vulns_array = []
+    try:
+        if vulns != '{}':
+            for vuln in vulns["advisories"]:
+                v = CiscoVuln(
+                    vuln["advisoryTitle"],
+                    vuln["summary"],
+                    vuln["cves"],
+                    vuln["cvssBaseScore"],
+                    vuln["publicationUrl"]
+                )
+                vulns_array.append(v)
+    except KeyError:
+        try:
+            if vulns["errorCode"]:
+                raise GenericCiscoError(vulns["errorMessage"])
+        except KeyError:
+            raise GenericCiscoError(
+                "Unexpected error getting vulns from Cisco API"
+            )
+    except Exception:
+        raise GenericCiscoError(
+            "Unexpected error getting vulns from Cisco API"
+        )
+
+    return vulns_array
+
+def get_api_vulnerabilities(configuration, version_cisco_device, online):
+    config_file = configparser.ConfigParser()
+    config_file.read(configuration)
+    client_id = ""
+    if config_file.has_option('Cisco', 'CLIENT_ID'):
+        client_id = config_file['Cisco']['CLIENT_ID']
+    client_secret = ""
+    if config_file.has_option('Cisco', 'CLIENT_SECRET'):
+        client_secret = config_file['Cisco']['CLIENT_SECRET']
+
+    vulns = _get_cisco_ios_vulns_data(
+        version_cisco_device, client_id, client_secret, online)
+    vulns_array = _vulns_get_fields(vulns)
+    return sorted(vulns_array, reverse=True)
