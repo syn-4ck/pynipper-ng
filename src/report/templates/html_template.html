@@ -45,13 +45,13 @@
                     
                     {% for key, value in issues.items() %}
                         <h3>{{key}}</h3>
-                        <b>Observation:</b> {{value.observation}}<br/>
+                        <strong>Observation:</strong> {{value.observation}}<br/>
                         <br/>
-                        <b>Impact:</b> {{value.impact}}<br/>
+                        <strong>Impact:</strong> {{value.impact}}<br/>
                         <br/>
-                        <b>Ease:</b> {{value.ease}}<br/>
+                        <strong>Ease:</strong> {{value.ease}}<br/>
                         <br/>
-                        <b>Recommendation:</b> {{value.recommendation}}<br/>
+                        <strong>Recommendation:</strong> {{value.recommendation}}<br/>
                         <br/>
                     {% endfor %}
                 </hr>
@@ -63,17 +63,17 @@
                         <caption>Table 2: Vulnerabilities</caption>
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Summary</th>
-                                <th>CVEs</th>
-                                <th>CVSS</th>
-                                <th>URL</th>
+                                <th id="title">Title</th>
+                                <th id="summary">Summary</th>
+                                <th id="cves">CVEs</th>
+                                <th id="cvss">CVSS</th>
+                                <th id="url">URL</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for vuln in vulns %}
                                 <tr>
-                                    <td><b>{{vuln.title}}</b></td>
+                                    <td><strong>{{vuln.title}}</strong></td>
                                     <td>{{vuln.summary|safe}}</td>
                                     <td>{{vuln.cves|join(', ')}}</td>
                                     <td class="cvssValue">{{vuln.cvss}}</td>

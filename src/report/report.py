@@ -4,21 +4,36 @@ import datetime
 import array
 import json
 
+from .common.types import ReportType
+
 TEMPLATE_FILE = "html_template.html"
 
 
-def generate_html_report(filename: str, issues: dict, vulns: array, data: dict) -> None:
+def generate_report(output_type, output_filename, issues, vulns_array_sorted, data):
+    if output_type == ReportType._member_names_[0]:
+        _generate_html_report(output_filename,
+                              issues, vulns_array_sorted, data)
+    elif output_type == ReportType._member_names_[1]:
+        _generate_json_report(output_filename,
+                              issues, vulns_array_sorted, data)
+
+
+def _generate_html_report(filename: str, issues: dict, vulns: array, data: dict) -> None:
     html_file = open(filename, "w")
 
     date = datetime.datetime.now().date()
     device_type = data["device-type"]
     hostname = data["hostname"]
 
+<<<<<<< HEAD
     templateLoader = FileSystemLoader(os.path.dirname(
+=======
+    template_loader = FileSystemLoader(os.path.dirname(
+>>>>>>> main
         os.path.abspath(__file__)) + "/templates")
 
     env = Environment(
-        loader=templateLoader,
+        loader=template_loader,
         autoescape=select_autoescape(['html', 'xml'])
     )
 
@@ -36,7 +51,7 @@ def generate_html_report(filename: str, issues: dict, vulns: array, data: dict) 
     html_file.close()
 
 
-def generate_json_report(filename: str, issues: dict, vulns: array, data: dict) -> None:
+def _generate_json_report(filename: str, issues: dict, vulns: array, data: dict) -> None:
     json_file = open(filename, "w")
 
     device_type = data["device-type"]

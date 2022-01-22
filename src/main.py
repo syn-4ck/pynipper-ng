@@ -21,22 +21,28 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     parser.add_argument('--device', '-d', help="Device type to analyze",
                         dest="device_type", action="store",
-                        choices=device_type_list, required=True)
+                        choices=device_type_list, required=True
+                        )
     parser.add_argument('--input', '-i', help="Device configuration file",
                         dest="input_file", action="store",
-                        type=str, required=True)
+                        type=str, required=True
+                        )
     parser.add_argument('--output-filename', '-f', help="Report filename",
                         dest="output_file", action="store",
-                        type=str, default="./report.html")
+                        type=str, default="./report.html"
+                        )
     parser.add_argument('--output-type', '-o', help="Report type",
                         dest="output_type", action="store",
-                        choices=report_type_list, default=ReportType.HTML)
+                        choices=report_type_list, default=ReportType.HTML
+                        )
     parser.add_argument('--configuration', '-c', help="Configuration file",
                         dest="conf_file", action="store", type=str,
-                        default=os.path.dirname(os.path.abspath(__file__)) + "/common/default.conf")  # noqa: E501
+                        default=os.path.dirname(os.path.abspath(__file__)) + "/common/default.conf"
+                        )
     parser.add_argument('--offline', '-x',
-                        help="Disable get APIs vulnerabilities data (Cisco API)",  # noqa: E501
-                        dest="offline", action='store_true')
+                        help="Disable get APIs vulnerabilities data (Cisco API)",
+                        dest="offline", action='store_true'
+                        )
 
     args = parser.parse_args()
 
