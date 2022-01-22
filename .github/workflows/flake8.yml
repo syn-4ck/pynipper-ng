@@ -29,6 +29,6 @@ jobs:
         uses: TrueBrain/actions-flake8@v1.4.1
         with:
           # Path to run flake8 in
-          path: src
+          # path: src
           # Set maximum allowed line length
           max_line_length: 150
