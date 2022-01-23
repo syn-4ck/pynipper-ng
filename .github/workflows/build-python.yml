@@ -1,7 +1,6 @@
 ---
 name: Build pynipper-ng with python3
-
-on:
+on:  # yamllint disable-line rule:truthy
   push:
     branches:
       - main

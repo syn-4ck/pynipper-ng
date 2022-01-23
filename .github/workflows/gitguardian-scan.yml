@@ -1,7 +1,6 @@
 ---
 name: GitGuardian scan
-
-on:
+on:  # yamllint disable-line rule:truthy
   push:
   pull_request:
 
@@ -13,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # fetch all history so multiple commits can be scanned
+          fetch-depth: 0
 
       - name: GitGuardian scan
         uses: GitGuardian/gg-shield-action@master
