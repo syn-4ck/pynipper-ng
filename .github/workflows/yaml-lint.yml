@@ -7,13 +7,14 @@ on:
 
 jobs:
   yamllint:
-    name: yamllint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: yamllint
-        uses: reviewdog/action-yamllint@v1
+      - name: YAML Lint and Annotate
+        uses: Staffbase/yamllint-action@v1.1.0
         with:
-          github_token: ${{ secrets.github_token }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ## The target path is processed recursively
+          target-path: .
