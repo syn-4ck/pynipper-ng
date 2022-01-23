@@ -5,6 +5,8 @@
 [![Snyk SCA analysis](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml)
 [![SonarCloud Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=syn-4ck_pynipper-ng&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=syn-4ck_pynipper-ng)
 [![Flake8 CI](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml)
+[![Build pynipper-ng with python3](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml)
+[![Yaml Lint](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml)
 
 
 ## Table of contents
