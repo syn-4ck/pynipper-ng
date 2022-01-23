@@ -5,11 +5,7 @@ on:
       - main, develop
   pull_request:
     branches:
-<<<<<<< HEAD
-      - master, develop
-=======
       - main, develop
->>>>>>> main
 jobs:
   sonarcloud:
     name: SonarCloud

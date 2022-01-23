@@ -48,7 +48,9 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     args_dict = vars(args)
 
-    analyze_device(args_dict)
+    analyze_device(args_dict["device_type"], args_dict["input_file"], args_dict["output_file"],
+                   args_dict["output_type"], args_dict["conf_file"], args_dict["offline"]
+                   )
 
     return 0
 

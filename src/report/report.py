@@ -25,11 +25,7 @@ def _generate_html_report(filename: str, issues: dict, vulns: array, data: dict)
     device_type = data["device-type"]
     hostname = data["hostname"]
 
-<<<<<<< HEAD
-    templateLoader = FileSystemLoader(os.path.dirname(
-=======
     template_loader = FileSystemLoader(os.path.dirname(
->>>>>>> main
         os.path.abspath(__file__)) + "/templates")
 
     env = Environment(
