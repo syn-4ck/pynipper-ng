@@ -1,10 +1,15 @@
 ---
-name: Build pynipper-ng with python3 
+name: Build pynipper-ng with python3
+
 on:
   push:
-    branches: [ main, develop ]
+    branches:
+      - main
+      - develop
   pull_request:
-    branches: [ main, develop ]
+    branches:
+      - main
+      - develop
 
 jobs:
   build:
@@ -14,19 +19,19 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup python
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-        cache: 'pip'
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
 
-    - name: Build
-      run: |
-        pip install -r requirements.txt 
-        python setup.py build install
+      - name: Build
+        run: |
+          pip install -r requirements.txt
+          python setup.py build install
 
-    - name: Run
-      run: pynipper-ng -h
+      - name: Run
+        run: pynipper-ng -h
