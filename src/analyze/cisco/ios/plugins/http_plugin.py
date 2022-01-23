@@ -21,7 +21,7 @@ class PluginHTTP(GenericPlugin):
         else:
             return True  # by default IOS Cisco devices has HTTP
 
-    def get_cisco_ios_http(self, filename: str) -> CiscoIOSIssue:
+    def get_cisco_ios_http(self, filename: str):
         if (self._has_http(filename)):
             return CiscoIOSIssue(
                 "HyperText Transport Protocol Service",
@@ -34,7 +34,7 @@ class PluginHTTP(GenericPlugin):
 
     # Number of access list should be used to restrict access to HTTP server
 
-    def _get_cisco_ios_http_access_list(self, filename: str) -> int:
+    def _get_cisco_ios_http_access_list(self, filename: str):
         parser = self.parse_cisco_ios_config_file(filename)
         access_list = parser.find_objects("ip http access-class")
         if (len(access_list) > 0):
@@ -44,7 +44,7 @@ class PluginHTTP(GenericPlugin):
         else:
             return None
 
-    def get_cisco_ios_http_access_list(self, filename: str) -> CiscoIOSIssue:
+    def get_cisco_ios_http_access_list(self, filename: str):
         if (self._get_cisco_ios_http_access_list(filename) is None):
             return CiscoIOSIssue(
                 "ACL restrict for HTTP service",
@@ -67,7 +67,7 @@ class PluginHTTP(GenericPlugin):
         else:
             return ""
 
-    def get_cisco_ios_http_auth(self, filename: str) -> CiscoIOSIssue:
+    def get_cisco_ios_http_auth(self, filename: str):
         if (self._get_cisco_ios_http_auth(filename) == ""):
             return CiscoIOSIssue(
                 "Authentication mode to HTTP service",
