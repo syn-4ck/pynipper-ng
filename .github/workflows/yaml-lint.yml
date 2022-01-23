@@ -1,0 +1,19 @@
+---
+name: Yaml Lint
+on: 
+  push:
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  yamllint:
+    name: yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: yamllint
+        uses: reviewdog/action-yamllint@v1
+        with:
+          github_token: ${{ secrets.github_token }}

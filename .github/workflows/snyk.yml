@@ -1,3 +1,4 @@
+---
 name: Snyk SCA analysis
 on:
   push:
