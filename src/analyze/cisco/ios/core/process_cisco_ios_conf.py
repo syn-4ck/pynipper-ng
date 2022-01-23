@@ -53,7 +53,6 @@ def process_cisco_ios_conf(filename: str) -> dict:
 
 
 def _generate_section(issues: array, issue_dict: dict, index: int) -> dict:
-    issue_dict = {}
     subindex = 0
     for issue in issues:
         title = "2." + str(index) + "." + str(subindex) + ". " + issue.title

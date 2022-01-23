@@ -33,7 +33,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                         )
     parser.add_argument('--output-type', '-o', help="Report type",
                         dest="output_type", action="store",
-                        choices=report_type_list, default=ReportType.HTML
+                        choices=report_type_list, default=ReportType.HTML._name_
                         )
     parser.add_argument('--configuration', '-c', help="Configuration file",
                         dest="conf_file", action="store", type=str,
