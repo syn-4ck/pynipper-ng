@@ -6,10 +6,12 @@ Reading and following these guidelines will help me make the contribution proces
 
 ## Quicklinks
 
-* [Code of Conduct](#code-of-conduct)
-* [Getting Started](#getting-started)
-    * [Issues](#issues)
-    * [Pull Requests](#pull-requests)
+- [Contributing to pynipper-ng](#contributing-to-pynipper-ng)
+  - [Quicklinks](#quicklinks)
+  - [Code of Conduct](#code-of-conduct)
+  - [Getting Started](#getting-started)
+    - [Issues](#issues)
+    - [Pull Requests](#pull-requests)
 
 ## Code of Conduct
 
@@ -42,7 +44,8 @@ In general, we follow a fork model:
 1. Fork the repository to your own Github account
 2. Clone the project to your machine
 3. Create a branch locally with a succinct but descriptive name
-4. Commit changes to the branch
-5. Following any formatting and testing guidelines specific to this repo
-6. Push changes to your fork
-7. Open a PR in our repository. The PR must be merged into the pynipper-ng **develop** branch.
+4. Install pre-commit with `pip install pre-commit` and configure it with `pre-commit install`.
+5. Commit changes to the branch
+6. Following any formatting and testing guidelines specific to this repo
+7. Push changes to your fork
+8. Open a PR in our repository. The PR must be merged into the pynipper-ng **develop** branch.

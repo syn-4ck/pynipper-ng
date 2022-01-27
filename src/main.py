@@ -33,7 +33,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                         )
     parser.add_argument('--output-type', '-o', help="Report type",
                         dest="output_type", action="store",
-                        choices=report_type_list, default=ReportType.HTML
+                        choices=report_type_list, default=ReportType.HTML._name_
                         )
     parser.add_argument('--configuration', '-c', help="Configuration file",
                         dest="conf_file", action="store", type=str,
@@ -48,7 +48,9 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     args_dict = vars(args)
 
-    analyze_device(args_dict)
+    analyze_device(args_dict["device_type"], args_dict["input_file"], args_dict["output_file"],
+                   args_dict["output_type"], args_dict["conf_file"], args_dict["offline"]
+                   )
 
     return 0
 

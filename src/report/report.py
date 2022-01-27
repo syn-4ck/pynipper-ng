@@ -13,9 +13,13 @@ def generate_report(output_type, output_filename, issues, vulns_array_sorted, da
     if output_type == ReportType._member_names_[0]:
         _generate_html_report(output_filename,
                               issues, vulns_array_sorted, data)
+        print(f"Generated new HTML report file in {output_filename}")
     elif output_type == ReportType._member_names_[1]:
         _generate_json_report(output_filename,
                               issues, vulns_array_sorted, data)
+        print(f"Generated new JSON report file in {output_filename}")
+    else:
+        print("Not a valid file format")
 
 
 def _generate_html_report(filename: str, issues: dict, vulns: array, data: dict) -> None:
