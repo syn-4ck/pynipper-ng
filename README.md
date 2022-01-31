@@ -10,11 +10,10 @@
 
 <br/>
 
-<div style="text-align: center;">
-    <img src="img/pynipper-ng-crop.png" alt="Logo" />
-</div>
+<p align="center">
+  <img src="img/pynipper-ng-crop.png">
+</p>
 
-<br/>
 <br/>
 
 ## Table of contents
