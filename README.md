@@ -1,13 +1,4 @@
-<div style="display: table;">
-    <div style="vertical-align: middle; display: table-cell;">
-        <img src="img/pynipper-ng.png" style="border-radius: 50%; width: 70px;" alt="Logo"> 
-    </div>
-    <div style="vertical-align: middle; display: table-cell; padding-left: 10px; padding-top: 15px;"> 
-        <h1>pynipper-ng 🔧</h1>
-    </div>
-</div>
-
-<br/>
+# pynipper-ng 🔧
 
 [![CodeQL](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml)
 [![GitGuardian scan](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml)
@@ -17,10 +8,17 @@
 [![Build pynipper-ng with python3](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml)
 [![Yaml Lint](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml)
 
+<br/>
+<center>
+    <img src="img/pynipper-ng-crop.png" style="" alt="Logo">
+</center>
+<br/>
+<br/>
+
 ## Table of contents
 1. [What is pynipper-ng](#what-is-pynipper-ng)
 2. [Install](#install)
-3. [Quickstart](#quickstart)
+3. [Quickstart](#quickstart-and-options)
 4. [More information](#more-information)
 5. [References](#references)
 
@@ -56,15 +54,13 @@ python setup.py build install
 
 ## Quickstart and options
 
-<br/>
-<img src="img/demo.gif"  alt="Demo">
-<br/>
-
-### Quickly demo
-
 ```BASH
 pynipper-ng -d IOS_ROUTER -i tests\test_data\cisco_ios_example.conf -o HTML -f ./report.html -x
 ```
+
+<br/>
+<img src="img/demo.gif"  alt="Demo">
+<br/>
 
 ### Options
 
