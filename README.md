@@ -1,4 +1,13 @@
-# pynipper-ng
+<div style="display: table;">
+    <div style="vertical-align: middle; display: table-cell;">
+        <img src="img/pynipper-ng.png" style="border-radius: 50%; width: 70px;" alt="Logo"> 
+    </div>
+    <div style="vertical-align: middle; display: table-cell; padding-left: 10px; padding-top: 15px;"> 
+        <h1>pynipper-ng 🔧</h1>
+    </div>
+</div>
+
+<br/>
 
 [![CodeQL](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml)
 [![GitGuardian scan](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml)
@@ -7,7 +16,6 @@
 [![Flake8 CI](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml)
 [![Build pynipper-ng with python3](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml)
 [![Yaml Lint](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml)
-
 
 ## Table of contents
 1. [What is pynipper-ng](#what-is-pynipper-ng)
@@ -47,6 +55,10 @@ python setup.py build install
 ```
 
 ## Quickstart and options
+
+<br/>
+<img src="img/demo.gif"  alt="Demo">
+<br/>
 
 ### Quickly demo
 
@@ -108,6 +120,12 @@ Available plugins: [check here](src/analyze/README.md)
 You can implements your own modules. You should clone the repository and create the plugins in `src/analyze/cisco/<device_type>/plugins`. To improve the pynipper-ng tool you can contribute adding your work :).
 
 To create your own plugins, follow [this guidelines](src/analyze/README.md)
+
+## Image
+
+<br/>
+<img src="img/logo-pynipper-ng.jpg"  alt="Logo">
+<br/>
 
 ## References
 [nipper-ng](https://github.com/arpitn30/nipper-ng)
