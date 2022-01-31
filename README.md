@@ -9,9 +9,11 @@
 [![Yaml Lint](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml)
 
 <br/>
-<center>
-    <img src="img/pynipper-ng-crop.png" style="" alt="Logo">
-</center>
+
+<div style="text-align: center;">
+    <img src="img/pynipper-ng-crop.png" alt="Logo" />
+</div>
+
 <br/>
 <br/>
 
