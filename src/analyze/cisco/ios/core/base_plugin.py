@@ -25,3 +25,8 @@ class GenericPlugin(object):
     @abstractmethod
     def analyze(self, config_file) -> None:
         pass
+
+    # The plugins should implement the name() method with the name plugin
+    @abstractmethod
+    def name(self) -> None:
+        pass

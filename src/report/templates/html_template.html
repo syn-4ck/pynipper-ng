@@ -12,53 +12,78 @@
     <body class="mainbody">
         <div class="pagebody">
             <div id="title_header" style="text-align:center">
-                <h1>pynipper-ng</h1>
-                <h1>{{ device_type }} Security Report</h1>
+                <h1>&#128295; pynipper-ng &#128295;</h1>
+                <h1>&#128270; {{ device_type }} Security Report &#128270;</h1>
                 <h3>of the</h3>
                 <h1>{{ hostname }} {{ device_type }}</h1>
+            </div>
+            <div id="index">
+                <hr>
+                <h2>Contents</h2>
+                <ol>  
+                    <li><a href="#report">About This Report</a></li>  
+                    {% if issues %}
+                        <li><a href="#security-issues">Security Audit</a></li>  
+                    {% endif %}
+                    {% if vulns %}
+                        <li><a href="#security-vulns">Vulnerabilities</a></li>
+                    {% endif %}    
+                </ol>  
             </div>
             <div id="report">
                 <div id="about_div">
                     <hr>
-                        <h2>1. <a>About This Report</a></h3>
-                        This Cisco Router {{ hostname }} report was produced by Nipper on {{ date }}. The report contains the following sections:<br>
-                        &nbsp;<br>
-                        
+                        <h2>1. About This Report</h3>
+                        <p>This Cisco Router {{ hostname }} report was produced by Nipper on {{ date }}. The report contains the following sections:</p><br>
                         <ul>
-                            <li>a security audit report section that details any identified security-related issues. Each security issue includes a description of the issue, its impact, how easy it would be to exploit and a recommendation. The recommendations include, where appropriate, the command(s) to resolve the issue;</li>
-                            <li>a configuration report section that details the configuration settings;</li>
+                            {% if issues %}
+                                <li>a <strong>security audit report</strong> section that details any identified security-related issues. Each security issue includes a description of the issue, its impact, how easy it would be to exploit and a recommendation. The recommendations include, where appropriate, the command(s) to resolve the issue;</li>
+                            {% endif %} 
+                            {% if vulns %}
+                                <li>a <strong>vulnerabilities section</strong> (optional) with all CVEs related with the device type and version</li>
+                            {% endif %} 
+                            <!-- <li>a configuration report section that details the configuration settings;</li>
                             <li>an abbreviations appendix section that expands any abbreviations used within the report;</li>
                             <li>a common ports appendix section that details the TCP and UDP port numbers for the common services outlined within the report;</li>
                             <li>an appendix section detailing the logging severity levels used by the logging facility;</li>
                             <li>a time zones appendix section that details a number of the most commonly used time zones;</li>
-                            <li>an appendix section detailing the software used to produce this report.</li>
+                            <li>an appendix section detailing the software used to produce this report.</li> -->
                         </ul>
-    
-
                 </div>
             </div>
+            {% if issues %}
             <div id="security-issues">
                 <hr>
                     <h2>2. Security Audit</h2>
                     <h3>2.1. Introduction</h3>
-                    Nipper performed a security audit of the {{ device_type }} {{ hostname }} on {{ date }}. This section details the findings of the security audit together with the impact and recommendations.
-                    
-                    {% for key, value in issues.items() %}
-                        <h3>{{key}}</h3>
-                        <strong>Observation:</strong> {{value.observation}}<br/>
-                        <br/>
-                        <strong>Impact:</strong> {{value.impact}}<br/>
-                        <br/>
-                        <strong>Ease:</strong> {{value.ease}}<br/>
-                        <br/>
-                        <strong>Recommendation:</strong> {{value.recommendation}}<br/>
-                        <br/>
+                    <div id="security-audit-text">
+                        <p>
+                            Nipper performed a security audit of the {{ device_type }} {{ hostname }} on {{ date }}. This section details the findings of the security audit together with the impact and recommendations.
+                        </p>
+                    </div>
+                    {% for title_plugin, issue_list in issues.items() %}
+                        <h3>{{title_plugin}}</h3>
+                        {% for key, value in issue_list.items() %}
+                            <div id="security-audit-text">
+                                <h4>{{key}}</h4>
+                                <strong>&#128065; Observation:</strong> {{value.observation}}<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> {{value.impact}}<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> {{value.ease}}<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> {{value.recommendation}}<br/>
+                                <br/>
+                            </div>
+                        {% endfor %}
                     {% endfor %}
                 </hr>
             </div>
+            {% endif %}
+            {% if vulns %}
+            <h2>3. Vulnerabilities</h2>
             <div id="security-vulns">
                 <hr>
-                    <h2>3. Vulnerabilities</h2>
                     <table class="table" id="vulnTable">
                         <caption>Table 2: Vulnerabilities</caption>
                         <thead>
@@ -84,7 +109,11 @@
                     </table>
                 </hr>
             </div>
+            {% endif %}
         </div>
+        <footer>
+            <p>This report was generated by pynipper-ng</p>
+          </footer>
         <script type="text/javascript">
             {% include "impact-color.js" %}
         </script>

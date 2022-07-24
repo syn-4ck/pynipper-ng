@@ -8,6 +8,9 @@ class PluginHTTP(GenericPlugin):
     def __init__(self):
         super().__init__()
 
+    def name(self):
+        return "HyperText Transfer Protocol (HTTP)"
+
     # If the device has http configured -> true
 
     def _has_http(self, filename: str) -> bool:

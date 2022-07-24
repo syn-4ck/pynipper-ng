@@ -41,3 +41,11 @@ body {
     font-size: 100%;
     background-color: #BEB8FB;
 }
+footer {
+    text-align: center;
+    background-color: #EFEFEF;
+    width: 90%;
+    margin: 0px auto;
+    padding: 12px;
+    border: solid 1px rgb(100,100,100);
+}
