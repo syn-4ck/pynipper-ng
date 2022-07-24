@@ -23,7 +23,7 @@ def generate_report(output_type, output_filename, issues, vulns_array_sorted, da
 
 
 def _generate_html_report(filename: str, issues: dict, vulns: array, data: dict) -> None:
-    html_file = open(filename, "w")
+    html_file = open(filename, "w", encoding="utf8")
 
     date = datetime.datetime.now().date()
     device_type = data["device-type"]
@@ -52,7 +52,7 @@ def _generate_html_report(filename: str, issues: dict, vulns: array, data: dict)
 
 
 def _generate_json_report(filename: str, issues: dict, vulns: array, data: dict) -> None:
-    json_file = open(filename, "w")
+    json_file = open(filename, "w", encoding="utf8")
 
     device_type = data["device-type"]
     hostname = data["hostname"]
