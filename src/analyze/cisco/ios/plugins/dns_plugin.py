@@ -7,7 +7,7 @@ class PluginDNS(GenericPlugin):
 
     def __init__(self):
         super().__init__()
-    
+
     def name(self):
         return "Domain Name System (DNS)"
 
