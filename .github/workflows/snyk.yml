@@ -5,10 +5,14 @@ on:  # yamllint disable-line rule:truthy
     branches:
       - main
       - develop
+    paths:
+      - "requirements.txt"
   pull_request:
     branches:
       - main
       - develop
+    paths:
+      - "requirements.txt"
 
 jobs:
   security:
