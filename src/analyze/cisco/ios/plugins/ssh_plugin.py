@@ -8,6 +8,9 @@ class PluginSSH(GenericPlugin):
     def __init__(self):
         super().__init__()
 
+    def name(self):
+        return "Secure Shell (SSH)"
+
     # If the device has ssh configured -> true
 
     def _has_cisco_ios_ssh(self, filename: str) -> bool:

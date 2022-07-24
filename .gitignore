@@ -130,3 +130,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# VS code
+.vscode/
+.vs/
+
+# Sample report
+report.html
