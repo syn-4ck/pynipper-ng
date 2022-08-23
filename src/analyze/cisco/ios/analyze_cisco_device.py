@@ -6,6 +6,7 @@ from .cisco_parser.parse_config import get_cisco_ios_version, get_cisco_ios_host
 from ....devices.common.types import DeviceType
 
 from .core.process_cisco_ios_conf import process_cisco_ios_conf
+from .core.process_password_issues import get_exposed_passwords
 
 from ....report.report import generate_report
 
@@ -29,6 +30,8 @@ def analyze_cisco_device(device, input_filename, output_filename, output_type, c
     print("[3/4] Checking missconfiguration vulnerabilities")
     issues = process_cisco_ios_conf(input_filename)
 
+    passwords = get_exposed_passwords(input_filename)
+
     # Device data to generate report
     data = {}
     data['hostname'] = get_cisco_ios_hostname(input_filename)
@@ -37,4 +40,4 @@ def analyze_cisco_device(device, input_filename, output_filename, output_type, c
 
     # Generate report
     print("[4/4] Generating report")
-    generate_report(output_type, output_filename, issues, vulns, data)
+    generate_report(output_type, output_filename, issues, vulns, passwords, data)

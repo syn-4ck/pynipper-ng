@@ -78,7 +78,7 @@ pynipper-ng -d IOS_ROUTER -i tests\test_data\cisco_ios_example.conf -o HTML -f .
 
 (1) Check [here](src/devices/README.md) the devices supported
 
-(2) Check [Pynipper-ng configuration file](#config-file) to know more about it.
+(2) Check [Pynipper-ng configuration file](#pynipper-ng-configuration-file) to know more about it.
 
 ## More information ℹ️
 
