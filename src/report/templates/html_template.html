@@ -74,18 +74,19 @@
                                 <br/>
                                 <strong>&#128272; Recommendation:</strong> {{value.recommendation}}<br/>
                                 <br/>
+                                <strong>&#9997; Line number:</strong> {{value.line_number}}<br/>
+                                <br/>
                             </div>
                         {% endfor %}
                     {% endfor %}
                 </hr>
             </div>
             {% endif %}
-            {% if vulns %}
             <h2>3. Vulnerabilities</h2>
+            {% if vulns %}
             <div id="security-vulns">
                 <hr>
                     <table class="table" id="vulnTable">
-                        <caption>Table 2: Vulnerabilities</caption>
                         <thead>
                             <tr>
                                 <th id="title">Title</th>
@@ -109,6 +110,39 @@
                     </table>
                 </hr>
             </div>
+            {% else %}
+                <p>No vulnerabilities retrieved</p>
+            {% endif %}
+            <h2>4. Exposed and insecure passwords</h2>
+            {% if exposed_passwords %}
+            <div id="exposed-secrets">
+                <hr>
+                    <table class="table" id="passwordsTable">
+                        <thead>
+                            <tr>
+                                <th id="password_value">Password value</th>
+                                <th id="username">Username</th>
+                                <th id="secure_password">Is a secure password?</th>
+                                <th id="password_type">Password type</th>
+                                <th id="encrypted_password">Encrypted password (if applies)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for passwd in exposed_passwords %}
+                                <tr>
+                                    <td><strong>{{passwd.password}}</strong></td>
+                                    <td>{{passwd.username}}</td>
+                                    <td>{{passwd.status}}</td>
+                                    <td>{{passwd.password_type}}</td>
+                                    <td>{{passwd.encrypted_password}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </hr>
+            </div>
+            {% else %}
+                <p>No exposed secrets detected</p>
             {% endif %}
         </div>
         <footer>

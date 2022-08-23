@@ -10,7 +10,7 @@ def _import_modules() -> array:
     modules = []
     module_names = []
 
-    for importer, modname, ispkg in pkgutil.iter_modules(plugs.__path__):
+    for _, modname, _ in pkgutil.iter_modules(plugs.__path__):
         if modname != "generic_plugin" and modname.endswith("_plugin"):
             module_name = f"{pkg}.{modname}"
 
@@ -21,8 +21,6 @@ def _import_modules() -> array:
 
             module_names.append(module.__name__)
             modules.append(module)
-
-    print(f"[3/4] Scanning configuration file using the following plugins: {module_names}")
 
     return modules
 

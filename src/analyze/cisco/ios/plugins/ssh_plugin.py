@@ -37,12 +37,14 @@ class PluginSSH(GenericPlugin):
 
     def get_cisco_ios_ssh(self, filename: str):
         if (not self._has_cisco_ios_ssh(filename) or self._get_cisco_ios_ssh_version(filename) == "" or self._get_cisco_ios_ssh_version(filename) != "2"):
+            parser = self.parse_cisco_ios_config_file(filename)
             return CiscoIOSIssue(
                 "SSH Protocol Version",
                 "The SSH service is commonly used for encrypted command-based remote device management. There are multiple SSH protocol versions and SSH servers will often support multiple versions to maintain backwards compatibility. Although flaws have been identified in implementations of version 2 of the SSH protocol, fundamental flaws exist in SSH protocol version 1.",  # noqa: E501
                 "An attacker who was able to intercept SSH protocol version 1 traffic would be able to perform a man-in-the-middle style attack. The attacker could then capture network traffic and possibly authentication credentials.",  # noqa: E501
                 "Although vulnerabilities are widely known, exploiting the vulnerabilities in the SSH protocol can be difficult.",
-                "When SSH protocol version 2 support is configured on Cisco IOS devices, support for version 1 will be disabled. This can be configured with the following command: ip ssh version 2"  # noqa: E501
+                "When SSH protocol version 2 support is configured on Cisco IOS devices, support for version 1 will be disabled. This can be configured with the following command: ip ssh version 2",  # noqa: E501
+                parser.find_objects("ip ssh version")[0].linenum if len(parser.find_objects("ip ssh version")) > 0 else 0
             )
         return None
 
@@ -61,12 +63,14 @@ class PluginSSH(GenericPlugin):
     def get_cisco_ios_ssh_reties(self, filename: str):
         retries = self._get_cisco_ios_ssh_retries(filename)
         if (retries == "" or retries > 5):
+            parser = self.parse_cisco_ios_config_file(filename)
             return CiscoIOSIssue(
                 "SSH retries misconfiguration",
                 "The SSH service must have a defined number of retries, the recommended is between 0 and 5.",
                 "Set a retries number allows to reduce the bruteforce and dictionary attacks. If a retry number is defined, the attacker can not test with an user multiple passwords.",  # noqa: E501
                 "This issue improve the hardening of passwords in the network device.",
-                "This can be configured with the following command: ip ssh authentication-retries <retry-number>."
+                "This can be configured with the following command: ip ssh authentication-retries <retry-number>.",
+                parser.find_objects("ip ssh authentication-retries")[0].linenum if len(parser.find_objects("ip ssh authentication-retries")) else 0
             )
         return None
 
@@ -85,12 +89,14 @@ class PluginSSH(GenericPlugin):
     def get_cisco_ios_ssh_timeout(self, filename: str):
         timeout = self._get_cisco_ios_ssh_timeout(filename)
         if (timeout == 0 or timeout > 120):
+            parser = self.parse_cisco_ios_config_file(filename)
             return CiscoIOSIssue(
                 "SSH timeout misconfiguration",
                 "The SSH service must have a defined timeout between 0 and 60 seconds.",
                 "Set a timeout allows disable not used or malicious sessions in background.",
                 "This issue only increase the device management security, it is not exploitable.",
-                "This can be configured with the following command: ip ssh time-out <timeout-in-seconds>."
+                "This can be configured with the following command: ip ssh time-out <timeout-in-seconds>.",
+                parser.find_objects("ip ssh time-out")[0].linenum if len(parser.find_objects("ip ssh time-out")) > 0 else 0
             )
         return None
 
@@ -108,12 +114,14 @@ class PluginSSH(GenericPlugin):
 
     def get_cisco_ios_ssh_interface(self, filename: str):
         if (self._get_cisco_ios_ssh_interface(filename) == ""):
+            parser = self.parse_cisco_ios_config_file(filename)
             return CiscoIOSIssue(
                 "SSH source-interface enabled",
                 "The SSH service must have a controlated set of source interfaces to manage the device",
                 "To reduce bruteforce attacks is usefull have a set of source interfaces, logged and filtered, to access to SSH device management.",
                 "This issue only increase the device management security, it is not exploitable, but it reduce bruteforce attacks.",
-                "This can be configured with the following command: ip ssh source-interface <interface> "
+                "This can be configured with the following command: ip ssh source-interface <interface> ",
+                parser.find_objects("ip ssh source-interface")[0].linenum if len(parser.find_objects("ip ssh source-interface")) > 0 else 0
             )
         return None
 
