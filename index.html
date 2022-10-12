@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>WebVulnCTF page</title>
+        <title>pynipper-ng website</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -70,8 +70,8 @@
                         <h2 class="text-white mt-0">Check the vulnerabilities and misconfigurations of routers, firewalls and switches reporting the issues in a simple way.</h2>
                         <hr class="divider light my-4" />
 						<p class="text-white-50 mb-4">This tool is based on nipper-ng, updated and translated to Python. The project wants to improve the set of rules that detect security misconfigurations of the network devices using multiple standard benchmarks (like CIS Benchmark) and integrating the tool with APIs (like PSIRT Cisco API) to scan known vulnerabilities.</p>
-						<img src="assets/img/logo.jpg" class="rounded mx-auto d-block" alt="pynipper-ng logo"/>
-                        <p class="text-white-50 mb-4">pynipper-ng is a free and opensource tool available in <a href="https://github.com/repoJFM/pynipper-ng" style="color:black">this repository</a><p>
+						<img src="assets/img/logo.jpg" class="rounded mx-auto d-block" style="max-width: 100%;" alt="pynipper-ng logo"/>
+                        <p class="text-white-50 mb-4" style="padding:1em;">pynipper-ng is a free and opensource tool available in <a href="https://github.com/repoJFM/pynipper-ng" style="color:black">this repository</a><p>
                         <a class="btn btn-light btn-xl js-scroll-trigger" href="#install">Get Started!</a>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
 				<div class="tab-content">
 					<div class="tab-pane active" id="build">
 						<br/><br/>
-						<h2 class="text-center mt-0">Intall</h2>
+						<h2 class="text-center mt-0">Install</h2>
 						<hr class="divider my-4" />
 						
 						<p>To install pynipper-ng is necessary:</p>
@@ -163,14 +163,12 @@
 		
         <!-- Quickstart -->
         <section class="page-section" id="quickstart">
-            <p>To try the tool, you can use the test configuration file: <code>pynipper-ng -d IOS_ROUTER -i pynipper-ng\tests\test_data\cisco_ios_example.conf -o HTML -f pynipper-ng\report.html</code></p>
-		    <!--  <img src="assets/img/logo.jpg" class="rounded mx-auto d-block" alt="pynipper-ng logo"/> -->
-		
-		<hr class="divider my-4" />
-
             <div class="container text-center">
                 <h2 class="mb-4">Start with pynipper-ng!</h2>
+                <hr class="divider my-4" />
                 <a class="btn btn-light btn-xl" href="https://github.com/repoJFM/pynipper-ng">Clone, install and hack!</a>
+                <p>To try the tool, you can use the test configuration file: <code>pynipper-ng -d IOS_ROUTER -i pynipper-ng\tests\test_data\cisco_ios_example.conf -o HTML -f pynipper-ng\report.html</code></p>
+		        <!--  <img src="assets/img/logo.jpg" class="rounded mx-auto d-block" alt="pynipper-ng logo"/> -->
             </div>
         </section>
 
@@ -189,7 +187,10 @@
 
         <section class="page-section" id="About">
             <div>
-                <h2 class="mt-0">About the owner of the project</h2>
+                <div class="container text-center">
+                    <h2 class="mt-0">About the creator</h2>
+                    <hr class="divider my-4" />
+                </div>
                 <div class="row">
                     <div class="col-lg-4 mr-auto text-center">
                         <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
