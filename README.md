@@ -1,12 +1,23 @@
 # pynipper-ng 🔧
 
+_Repository stats:_
+
+[![Documentation Status](https://readthedocs.org/projects/pynipper-ng/badge/?version=latest)](https://pynipper-ng.readthedocs.io/?badge=latest)
+![Latest release](https://img.shields.io/github/v/release/syn-4ck/pynipper-ng)
+![Latest release date](https://img.shields.io/github/release-date/syn-4ck/pynipper-ng)
+![License](https://img.shields.io/github/license/syn-4ck/pynipper-ng)
+![GitHub stars](https://img.shields.io/github/stars/syn-4ck/pynipper-ng?style=social)
+
+_Code stats:_
+
 [![CodeQL](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml)
 [![GitGuardian scan](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml)
 [![Snyk SCA analysis](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml)
 [![SonarCloud Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=syn-4ck_pynipper-ng&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=syn-4ck_pynipper-ng)
 [![Flake8 CI](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml)
-[![Build pynipper-ng with python3](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml)
 [![Yaml Lint](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml)
+[![Build pynipper-ng with python3](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml)
+
 
 <br/>
 
@@ -26,32 +37,14 @@
 ## What is pynipper-ng? ❔
 pynipper-ng is a **configuration security analyzer for network devices**. The goal of this tool is check the vulnerabilities and misconfigurations of routers, firewalls and switches reporting the issues in a simple way.
 
-This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), updated and translated to Python. The project wants to improve the set of rules that detect security misconfigurations of the network devices using multiple standard benchmarks (like [CIS Benchmark](https://www.cisecurity.org/cis-benchmarks/)) and integrate the tool with APIs (like [PSIRT Cisco API](https://developer.cisco.com/docs/psirt/#!overview/overview)) to scan known vulnerabilities. 
+This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), updated and translated to Python. The project wants to improve the set of rules that detect security misconfigurations of the network devices using multiple standard benchmarks (like [CIS Benchmark](https://www.cisecurity.org/cis-benchmarks/)) and integrate the tool with APIs (like [PSIRT Cisco API](https://developer.cisco.com/docs/psirt/#!overview/overview)) to scan known vulnerabilities.
+
+* Official documentation: https://pynipper-ng.readthedocs.io/
+* Web page: https://syn-4ck.github.io/pynipper-ng/
 
 ## Install 🧰
 
-The requirements are:
-
-* Python 3
-* Pip to Python 3
-
-### Python install 🐍
-
-You can install pynipper-ng with pip using the wheel package linked in each version of the tool.
-
-```BASH
-pip install pynipper_ng-<VERSION>-py3-none-any.whl
-```
-
-_It will be in `pypi` registry soon._
-
-### Source code install 🗃️
-
-Clone this repository and run:
-
-```BASH
-python setup.py build install
-```
+If you want to install the tool, please review the [installation docs](https://pynipper-ng.readthedocs.io/installation/).
 
 ## Quickstart and options 💻
 
