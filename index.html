@@ -18,7 +18,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
 		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	
 		<style>
@@ -69,8 +69,8 @@
                     <div class="col-lg-8 text-center">
                         <h2 class="text-white mt-0">Check the vulnerabilities and misconfigurations of routers, firewalls and switches reporting the issues in a simple way.</h2>
                         <hr class="divider light my-4" />
-						<p class="text-white-50 mb-4">This tool is based on nipper-ng, updated and translated to Python. The project wants to improve the set of rules that detect security misconfigurations of the network devices using multiple standard benchmarks (like CIS Benchmark) and integrating the tool with APIs (like PSIRT Cisco API) to scan known vulnerabilities.</p>
-						<img src="assets/img/logo.jpg" class="rounded mx-auto d-block" style="max-width: 100%;" alt="pynipper-ng logo"/>
+						<p class="text-white-50 mb-4">This tool is based on <a href="https://github.com/arpitn30/nipper-ng">nipper-ng</a>, updated and translated to Python. The project wants to improve the set of rules that <b>detect security misconfigurations</b> of the network devices using multiple standard benchmarks (like CIS Benchmark) and integrating the tool with APIs (like PSIRT Cisco API) to <b>scan known vulnerabilities</b>.</p>
+						<img src="assets/img/logo.jpg" class="rounded mx-auto d-block" style="max-width: 80%;" alt="pynipper-ng logo"/>
                         <p class="text-white-50 mb-4" style="padding:1em;">pynipper-ng is a free and opensource tool available in <a href="https://github.com/repoJFM/pynipper-ng" style="color:black">this repository</a><p>
                         <a class="btn btn-light btn-xl js-scroll-trigger" href="#install">Get Started!</a>
                     </div>
@@ -167,7 +167,7 @@
                 <h2 class="mb-4">Start with pynipper-ng!</h2>
                 <hr class="divider my-4" />
                 <a class="btn btn-light btn-xl" href="https://github.com/repoJFM/pynipper-ng">Clone, install and hack!</a>
-                <p>To try the tool, you can use the test configuration file: <code>pynipper-ng -d IOS_ROUTER -i pynipper-ng\tests\test_data\cisco_ios_example.conf -o HTML -f pynipper-ng\report.html</code></p>
+                <p class="text-muted mb-0" style="padding-top:1em;">To try the tool, you can use the test configuration file: <code>pynipper-ng -d IOS_ROUTER -i pynipper-ng\tests\test_data\cisco_ios_example.conf -o HTML -f pynipper-ng\report.html</code></p>
 		        <!--  <img src="assets/img/logo.jpg" class="rounded mx-auto d-block" alt="pynipper-ng logo"/> -->
             </div>
         </section>
