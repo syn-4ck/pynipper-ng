@@ -19,9 +19,6 @@ on:  # yamllint disable-line rule:truthy
     paths:
       - 'src/**'
   pull_request:
-    branches:
-      - main
-      - develop
     paths:
       - 'src/**'
 
