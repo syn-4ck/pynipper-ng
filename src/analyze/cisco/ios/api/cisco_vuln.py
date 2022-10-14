@@ -17,7 +17,6 @@ class CiscoVuln:
         print("CVSS: " + self.cvss)
         print("Publication URL: " + self.url)
         print("\n---------------------------------------------------------------------------------------------------")  # noqa: E501
-        return("")
 
     def __eq__(self, other):
         return self.title == other.title

@@ -5,36 +5,43 @@ from .rockyou_top_1000 import ROCKYOU_LIST
 
 MINIMUM_LENGTH = 8
 
+
 def _minimum_length(password: str) -> bool:
     if (len(password) > MINIMUM_LENGTH):
         return True
     return False
+
 
 def _special_character(password: str) -> bool:
     if (re.search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~"+r'"]', password)):
         return True
     return False
 
+
 def _lowercase_char(password: str) -> bool:
     if (re.search(r'[a-z]', password)):
         return True
     return False
+
 
 def _uppercase_char(password: str) -> bool:
     if (re.search(r'[A-Z]', password)):
         return True
     return False
 
+
 def _digit(password: str) -> bool:
     if (re.search(r'\d', password)):
         return True
     return False
+
 
 def _not_rockyou(password: str) -> bool:
     for top_password in ROCKYOU_LIST:
         if (password.lower() == top_password.lower()):
             return False
     return True
+
 
 '''
     This method checks the following conditions:
@@ -46,20 +53,20 @@ def _not_rockyou(password: str) -> bool:
             - >=1 digit
             - Not top 1000 in rockyou passwords dictionary
 '''
-def check_password(password: str) -> bool:
-    if (_minimum_length(password) and _special_character(password) and _lowercase_char(password)
-        and _uppercase_char(password) and _digit(password)):
+def check_password(password: str) -> bool:  # noqa: E302
+    if (_minimum_length(password) and _special_character(password) and _lowercase_char(password) and _uppercase_char(password) and _digit(password)):  # noqa: E501
         if (_not_rockyou(password)):
             return True
         return False
     return False
+
 
 # Based on https://github.com/richardstrnad/cisco7decrypt/blob/master/cisco7decrypt.py
 def decrypt_cisco_password_7(encrypted_password: str) -> str:
 
     # This is the well known used salt for the cisco type 7 encryption
     salt = 'dsfd;kfoA,.iyewrkldJKDHSUBsgvca69834ncxv9873254k;fg87'
- 
+
     # The first 2 digits represent the salt index salt[index]
     index = int(encrypted_password[:2])
     # The rest of the string is the encrypted password

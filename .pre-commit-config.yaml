@@ -10,3 +10,8 @@ repos:
     sha: v1.26.3
     hooks:
       - id: yamllint
+  - repo: https://github.com/PyCQA/flake8
+    rev: 5.0.4
+    hooks:
+    -   id: flake8
+        args: [--max-line-length=150]

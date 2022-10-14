@@ -7,28 +7,23 @@ on:  # yamllint disable-line rule:truthy
       - develop
     paths:
       - "requirements.txt"
-  pull_request:
-    branches:
-      - main
-      - develop
-    paths:
-      - "requirements.txt"
+      - "src/**"
 
 jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
 
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python-3.7@master
-        continue-on-error: true
+        uses: snyk/actions/python@master
+        continue-on-error: true # To make sure that SARIF upload gets called
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --sarif-file-output=snyk.sarif
 
       - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk.sarif

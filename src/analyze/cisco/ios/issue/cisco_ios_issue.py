@@ -17,7 +17,6 @@ class CiscoIOSIssue:
         print("Recommendation: " + self.recommendation)
         print("Line number: " + self.line_number)
         print("\n---------------------------------------------------------------------------------------------------")  # noqa: E501
-        return("")
 
     def __dict__(self):
         d = {}
