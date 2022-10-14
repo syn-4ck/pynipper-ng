@@ -14,7 +14,7 @@ class CiscoVuln:
         print("===================================================================================================")  # noqa: E501
         print("Summary: " + self.summary)
         print("CVEs: " + str(self.cves))
-        print("CVSS: " + self.cvss)
+        print("CVSS: " + str(self.cvss))
         print("Publication URL: " + self.url)
         print("\n---------------------------------------------------------------------------------------------------")  # noqa: E501
 
