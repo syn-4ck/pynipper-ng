@@ -1,6 +1,6 @@
 tqdm==4.56.2
 requests==2.25.1
 Jinja2==2.11.3
-ciscoconfparse==1.5.29
+ciscoconfparse==1.7.0
 click==8.0.3
 markupsafe==2.0.1
