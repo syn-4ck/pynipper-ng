@@ -19,6 +19,9 @@ on:  # yamllint disable-line rule:truthy
     paths:
       - 'src/**'
   pull_request:
+    branches-ignore:
+      - docs
+      - gh-pages
     paths:
       - 'src/**'
 
