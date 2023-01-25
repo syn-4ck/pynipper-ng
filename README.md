@@ -10,7 +10,7 @@ _Repository stats:_
 
 _Code stats:_
 
-[![CodeQL](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/syn-4ck/pynipper-ng/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/github-code-scanning/codeql)
 [![GitGuardian scan](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml)
 [![Snyk SCA analysis](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml)
 [![SonarCloud Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=syn-4ck_pynipper-ng&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=syn-4ck_pynipper-ng)
