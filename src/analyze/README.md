@@ -14,6 +14,8 @@ Plugins are python classes with a `analyze` method that searches in the configur
 |----------------------|--------------------------------------------------|
 | http_plugin          | Detect HTTP misconfigurations                    |
 | ssh_plugin           | Detect SSH misconfigurations                     |
+| dns_plugin           | Detect DNS misconfigurations                     |
+| username_plugin      | Detect misconfigurated passwords in OS           |
 
 ### Create new plugins
 
