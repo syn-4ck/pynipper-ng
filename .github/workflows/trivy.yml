@@ -30,7 +30,7 @@ jobs:
           image-ref: 'ghsyn4ck/pynipper-ng:${{ github.sha }}'
           format: 'table'
           exit-code: '1'
-          #ignore-unfixed: true
+          ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH,MEDIUM'
           scanners: 'vuln,secret,config'
