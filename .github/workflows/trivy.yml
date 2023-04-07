@@ -1,9 +1,17 @@
 name: Trivy
 on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - Dockerfile
   pull_request:
     branches:
       - main
       - develop
+    paths:
+      - Dockerfile
   workflow_dispatch:
 
 jobs:
