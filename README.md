@@ -44,6 +44,8 @@ This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), update
 
 If you want to install the tool, please review the [installation docs](https://pynipper-ng.readthedocs.io/installation/).
 
+Available using Python and Docker!
+
 ## Quickstart and options 💻
 
 ```BASH
