@@ -8,15 +8,6 @@ _Repository stats:_
 ![License](https://img.shields.io/github/license/syn-4ck/pynipper-ng)
 ![GitHub stars](https://img.shields.io/github/stars/syn-4ck/pynipper-ng?style=social)
 
-_Code stats:_
-
-[![CodeQL](https://github.com/syn-4ck/pynipper-ng/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/github-code-scanning/codeql)
-[![SonarCloud Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=syn-4ck_pynipper-ng&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=syn-4ck_pynipper-ng)
-[![Flake8 CI](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml/badge.svg?event=push)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml)
-[![Build pynipper-ng with python3](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml)
-[![Trivy](https://github.com/syn-4ck/pynipper-ng/actions/workflows/trivy.yml/badge.svg?branch=develop&event=push)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/trivy.yml)
-
-
 <br/>
 
 <p align="center">
