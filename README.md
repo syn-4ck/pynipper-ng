@@ -8,6 +8,15 @@ _Repository stats:_
 ![License](https://img.shields.io/github/license/syn-4ck/pynipper-ng)
 ![GitHub stars](https://img.shields.io/github/stars/syn-4ck/pynipper-ng?style=social)
 
+_This project passes:_
+
+✔️ Snyk code & open-source
+✔️ SonarCloud
+✔️ Trivy
+✔️ GitGuardian
+✔️ CodeQL
+✔️ Flake8
+
 <br/>
 
 <p align="center">
