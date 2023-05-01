@@ -26,14 +26,12 @@ class PluginHTTP(GenericPlugin):
 
     def get_cisco_ios_http(self, filename: str):
         if (self._has_http(filename)):
-            parser = self.parse_cisco_ios_config_file(filename)
             return CiscoIOSIssue(
                 "HyperText Transport Protocol Service",
                 "Recent Cisco IOS-based devices support web-based administration using the HTTP protocol. Cisco web-based administration facilities can sometimes be basic but they do provide a simple method of administering remote devices. However, HTTP is a clear-text protocol and is vulnerable to various packet-capture techniques.",  # noqa: E501
                 "An attacker who was able to monitor network traffic could capture authentication credentials.",  # noqa: E501
                 "Network packet and password sniffing tools are widely available on the Internet. Once authentication credentials have been captured it is trivial to use the credentials to log in using the captured credentials.",  # noqa: E501
-                "It is recommended that, if not required, the HTTP service be disabled. If a remote method of access to the device is required, consider using HTTPS or SSH. The encrypted HTTPS and SSH services may require a firmware or hardware upgrade. The HTTP service can be disabled with the following IOS command: no ip http server. If it is not possible to upgrade the device to use the encrypted HTTPS or SSH services, additional security can be configured.",  # noqa: E501
-                parser.find_objects("ip http server")[0].linenum if len(parser.find_objects("ip http server")) > 0 else 0
+                "It is recommended that, if not required, the HTTP service be disabled. If a remote method of access to the device is required, consider using HTTPS or SSH. The encrypted HTTPS and SSH services may require a firmware or hardware upgrade. The HTTP service can be disabled with the following IOS command: no ip http server. If it is not possible to upgrade the device to use the encrypted HTTPS or SSH services, additional security can be configured."  # noqa: E501
             )
         return None
 
@@ -51,14 +49,12 @@ class PluginHTTP(GenericPlugin):
 
     def get_cisco_ios_http_access_list(self, filename: str):
         if (self._get_cisco_ios_http_access_list(filename) is None):
-            parser = self.parse_cisco_ios_config_file(filename)
             return CiscoIOSIssue(
                 "ACL restrict for HTTP service",
                 "The HTTP service was not configured with an access-list to restrict network access to the device.",
                 "An attacker who was able to monitor network traffic could capture authentication credentials. This issue is made more serious with the enable password being used for authentication as this would give the attacker full administrative access to the device with the captured credentials. This issue is mitigated slightly by employing an access list to restrict network access to the device.",  # noqa: E501
                 "Network packet and password sniffing tools are widely available on the Internet. Once authentication credentials have been captured it is trivial to use the credentials to log in using the captured credentials. Furthermore, it may be possible for an attacker to masquerade as the administrators host in order to bypass configured network access restrictions.",  # noqa: E501
-                "If you can't disable HTTP, an access list can be configured to restrict access to the device. An access list can be specified with the following command:ip http access-class <access-list-number>",  # noqa: E501
-                parser.find_objects("ip http access-class")[0].linenum if len(parser.find_objects("ip http access-class")) > 0 else 0
+                "If you can't disable HTTP, an access list can be configured to restrict access to the device. An access list can be specified with the following command:ip http access-class <access-list-number>"  # noqa: E501
             )
         return None
 
@@ -76,14 +72,12 @@ class PluginHTTP(GenericPlugin):
 
     def get_cisco_ios_http_auth(self, filename: str):
         if (self._get_cisco_ios_http_auth(filename) == ""):
-            parser = self.parse_cisco_ios_config_file(filename)
             return CiscoIOSIssue(
                 "Authentication mode to HTTP service",
                 "The HTTP service was not configured with an access-list to restrict network access to the device.",
                 "An attacker who was able to monitor network traffic could capture authentication credentials. This issue is made more serious with the enable password being used for authentication as this would give the attacker full administrative access to the device with the captured credentials. This issue is mitigated slightly by employing an access list to restrict network access to the device.",  # noqa: E501
                 "Network packet and password sniffing tools are widely available on the Internet. Once authentication credentials have been captured it is trivial to use the credentials to log in using the captured credentials. Furthermore, it may be possible for an attacker to masquerade as the administrators host in order to bypass configured network access restrictions.",  # noqa: E501
-                "If you can't disable HTTP, the authentication method can be changed using the following command (where the authentication method is either local, enable, tacacs or aaa): ip http authentication <authentication-method>",  # noqa: E501
-                parser.find_objects("ip http auth")[0].linenum if len(parser.find_objects("ip http auth")) > 0 else 0
+                "If you can't disable HTTP, the authentication method can be changed using the following command (where the authentication method is either local, enable, tacacs or aaa): ip http authentication <authentication-method>"  # noqa: E501
             )
         return None
 

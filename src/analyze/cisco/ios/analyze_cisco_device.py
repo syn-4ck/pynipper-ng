@@ -35,7 +35,6 @@ def analyze_cisco_device(device, input_filename, output_filename, output_type, c
     # Device data to generate report
     data = {}
     data['hostname'] = get_cisco_ios_hostname(input_filename)
-
     data['device-type'] = [dev.value for dev in DeviceType if dev.name == device][0]
 
     # Generate report
