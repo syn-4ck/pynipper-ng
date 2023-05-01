@@ -1,0 +1,36 @@
+name: Trivy
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - Dockerfile
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - Dockerfile
+  workflow_dispatch:
+
+jobs:
+  container-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Build docker image
+        run: |
+          docker build . -t ghsyn4ck/pynipper-ng:${{ github.sha }}
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'ghsyn4ck/pynipper-ng:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+          scanners: 'vuln,secret,config'
