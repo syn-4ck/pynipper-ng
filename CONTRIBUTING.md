@@ -113,6 +113,7 @@ Finally, use the `analyze_<device-type>_device.py` main file to process the anal
 
 5. Add the new device in `analyze_device` method into `src/analyze/analyze_device.py`.
 
+6. Document the information in the `SUPPORTED_DEVICES.md`.
 
 __This guideline is under construction and continuos improvement. Any change in this procedure is welcome!__ 
 
