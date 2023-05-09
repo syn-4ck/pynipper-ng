@@ -104,15 +104,11 @@ Get your credentials and put into the configuration file.
 
 Pynipper-ng detects device configuration weaknesses based on plugins. Pynipper plugins checks into the network device configuration with regex if a property is set or not, and report it when this is not secure.
 
-#### Pynipper plugins summary 📁
-
-Available plugins: [check here](src/analyze/README.md)
-
 #### Implements your plugins 🖱️
 
 You can implements your own plugins. You should clone the repository and create the plugins in `src/analyze/cisco/<device_type>/plugins`. To improve the pynipper-ng tool you can contribute adding your work :).
 
-To create your own plugins, follow [this guidelines](src/analyze/README.md)
+To create your own plugins, follow [this guidelines](CONTRIBUTING.md)
 
 ---
 
