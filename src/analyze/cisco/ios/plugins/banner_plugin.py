@@ -1,7 +1,7 @@
 # flake8: noqa
 
 from ..core.base_plugin import GenericPlugin
-from ..issue.cisco_ios_issue import CiscoIOSIssue
+from ....common.issue.issue import Issue
 
 class PluginBanner(GenericPlugin):
     
@@ -21,7 +21,7 @@ class PluginBanner(GenericPlugin):
     
     def get_banner_login_text(self, filename: str):
         if not self._has_banner_login_defined(filename):
-            return CiscoIOSIssue(
+            return Issue(
                 "Banner Login",
                 "Network banners are electronic messages that provide notice of legal rights to users of computer networks. When a user connects to the router, the message-of-the-day (MOTD) banner (if configured) appears first, followed by the login banner and prompts. After the user successfully logs into the router, the EXEC banner or incoming banner will be displayed, depending on the type of connection",  # noqa: E501
                 "Organizations should provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a 'banner-text' for the banner login command",  # noqa: E501
@@ -39,7 +39,7 @@ class PluginBanner(GenericPlugin):
     
     def get_banner_motd_text(self, filename: str):
         if not self._has_banner_motd_defined(filename):
-            return CiscoIOSIssue(
+            return Issue(
                 "Banner MOTD",
                 "Network banners are electronic messages that provide notice to users of computer networks. The MOTD banner is displayed to all terminals connected and is useful for sending messages that affect all users (such as impending system shutdowns).",  # noqa: E501
                 "Organizations should provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a 'banner-text' for the banner motd command.",  # noqa: E501
@@ -57,7 +57,7 @@ class PluginBanner(GenericPlugin):
     
     def get_banner_webauth_text(self, filename: str):
         if not self._has_banner_webauth_defined(filename):
-            return CiscoIOSIssue(
+            return Issue(
                 "Banner WebAuth",
                 "Network banners are electronic messages that provide notice to users of computer networks. The WebAuth banner is displayed to all terminals connected and is useful for sending messages that affect all users connected by HTTP.",  # noqa: E501
                 "Organizations should provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a 'banner-text' for the banner webauth command.",  # noqa: E501

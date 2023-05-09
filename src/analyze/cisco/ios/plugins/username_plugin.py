@@ -1,7 +1,7 @@
 # flake8: noqa
 
 from ..core.base_plugin import GenericPlugin
-from ..issue.cisco_ios_issue import CiscoIOSIssue
+from ....common.issue.issue import Issue
 
 class PluginUsername(GenericPlugin):
 
@@ -25,7 +25,7 @@ class PluginUsername(GenericPlugin):
     
     def get_users_without_password_encryption(self, filename: str):
         if (not self._has_password_encryption(filename)):
-            return CiscoIOSIssue(
+            return Issue(
                 "Service Password Encryption",
                 "Cisco service passwords are stored by default in their clear-text form rather than being encrypted. However, it is possible to have these passwords stored using the reversible Cisco encryption.",  # noqa: E501
                 "If a malicious user were to see a Cisco configuration that contained clear-text passwords, they could use the passwords to access the device. However, an attacker who had access to a Cisco configuration file would easily be able to reverse the passwords.",  # noqa: E501
@@ -44,7 +44,7 @@ class PluginUsername(GenericPlugin):
     
     def get_users_with_password_0(self, filename: str):
         if (self._has_cisco_password_0(filename)):
-            return CiscoIOSIssue(
+            return Issue(
                 "Cisco type-0 passwords",
                 "Cisco passwords are stored in their clear-text form rather than being encrypted when we use the type 0. However, it is possible to have these passwords stored using the reversible Cisco encryption.",
                 "If a malicious user were to see a Cisco configuration that contained clear-text passwords, they could use the passwords to access the device. However, an attacker who had access to a Cisco configuration file would easily be able to reverse the passwords.",  # noqa: E501
@@ -63,7 +63,7 @@ class PluginUsername(GenericPlugin):
     
     def get_users_with_password_7(self, filename: str):
         if (self._has_cisco_password_7(filename)):
-            return CiscoIOSIssue(
+            return Issue(
                 "Cisco type-7 passwords",
                 "Cisco passwords are stored using an old and broken algorithm when we use the type 7 (Vigenere cypher). However, it is possible to have these passwords stored using stronger algorithms, like AES.",  # noqa: E501
                 "If a malicious user were to see a Cisco configuration that contained Vigenere encrypted passwords, they could crack the passwords to access the device. However, an attacker who had access to a Cisco configuration file would easily be able to decrypt the passwords.",  # noqa: E501
@@ -82,7 +82,7 @@ class PluginUsername(GenericPlugin):
     
     def get_users_with_password_5(self, filename: str):
         if (self._has_cisco_password_5(filename)):
-            return CiscoIOSIssue(
+            return Issue(
                 "Cisco type-5 passwords",
                 "Cisco passwords are stored using an old and broken algorithm when we use the type 5 (salted MD5 hashing). However, it is possible to have these passwords stored using stronger algorithms, like AES.",  # noqa: E501
                 "If a malicious user were to see a Cisco configuration that contained MD5 hashed passwords, they could crack the passwords to access the device using HashCat. However, an attacker who had access to a Cisco configuration file would easily be able to get the passwords.",  # noqa: E501

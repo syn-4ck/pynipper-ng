@@ -1,4 +1,4 @@
-class CiscoIOSIssue:
+class Issue:
 
     def __init__(self, title, observation, impact, ease, recommendation):
         self.title = title

@@ -1,7 +1,7 @@
 # flake8: noqa
 
 from ..core.base_plugin import GenericPlugin
-from ..issue.cisco_ios_issue import CiscoIOSIssue
+from ....common.issue.issue import Issue
 
 class PluginTelnet(GenericPlugin):
 
@@ -23,7 +23,7 @@ class PluginTelnet(GenericPlugin):
     
     def get_telnet_configuration(self, filename: str):
         if (self._get_cisco_ios_telnet(filename)):
-            return CiscoIOSIssue(
+            return Issue(
                 "Telnet",
                 "Telnet is widely used to provide remote command-based access to a variety of devices and is commonly used on network devices for remote administration. However, Telnet is a clear-text protocol and is vulnerable to various packet capture techniques.",  # noqa: E501
                 "An attacker who was able to monitor network traffic could capture sensitive information or authentication credentials.",  # noqa: E501

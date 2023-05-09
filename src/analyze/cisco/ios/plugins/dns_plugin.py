@@ -1,6 +1,6 @@
 
 from ..core.base_plugin import GenericPlugin
-from ..issue.cisco_ios_issue import CiscoIOSIssue
+from ....common.issue.issue import Issue
 
 
 class PluginDNS(GenericPlugin):
@@ -29,7 +29,7 @@ class PluginDNS(GenericPlugin):
 
     def get_domain_name(self, filename: str):
         if (not self._has_dns_enabled(filename) and not self._has_no_domain_lookup(filename)):
-            return CiscoIOSIssue(
+            return Issue(
                 "Domain Lookups",
                 "Cisco IOS-based devices support name lookups using the DNS. However, if a DNS server has not been configured, then the DNS request is broadcast.It is determined that name lookups had not been disabled and no DNS servers had been configured.",  # noqa: E501
                 "An attacker who was able to capture network traffic could monitor DNS queries from the device. Furthermore, Cisco devices can connect to Telnet servers by supplying only the hostname or IP address of the server. A mistyped Cisco command could be interpreted as an attempt to connect to a Telnet server and broadcast on the network.",  # noqa: E501
