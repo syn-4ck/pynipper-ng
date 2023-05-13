@@ -1,9 +1,9 @@
 # flake8: noqa
 
-from ..core.base_plugin import GenericPlugin
+from ..core.base_plugin import BasePlugin
 from ....common.issue.issue import Issue
 
-class PluginUsername(GenericPlugin):
+class PluginUsername(BasePlugin):
 
     def __init__(self):
         super().__init__()

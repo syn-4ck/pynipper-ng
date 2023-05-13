@@ -1,9 +1,9 @@
 # flake8: noqa
 
-from ..core.base_plugin import GenericPlugin
+from ..core.base_plugin import BasePlugin
 from ....common.issue.issue import Issue
 
-class PluginRouting(GenericPlugin):
+class PluginRouting(BasePlugin):
     
     def __init__(self):
         super().__init__()
@@ -65,7 +65,7 @@ class PluginRouting(GenericPlugin):
                 "Remove any tunnel interfaces: no interface tunnel {nstance}"  # noqa: E501
             )
     
-    def _has_FIB(self, filename: str) -> bool:
+    def _has_uRPF(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
         fib = parser.find_objects("ip verify unicast source reachable-via rx")
         if (len(fib) > 0):
@@ -73,8 +73,8 @@ class PluginRouting(GenericPlugin):
         else:
             return False
     
-    def get_FIB(self, filename: str):
-        if self._has_FIB(filename):
+    def get_uRPF(self, filename: str):
+        if not self._has_uRPF(filename):
             return Issue(
                 "uRPF",
                 "Examines incoming packets to determine whether the source address is in the Forwarding Information Base (FIB) and permits the packet only if the source is reachable through the interface on which the packet was received (sometimes referred to as strict mode).",  # noqa: E501
@@ -82,3 +82,15 @@ class PluginRouting(GenericPlugin):
                 "Enabled uRPF helps mitigate IP spoofing by ensuring only packet source IP addresses only originate from expected interfaces. Configure unicast reverse-path forwarding (uRPF) on all external or high risk interfaces.",  # noqa: E501
                 "Configure uRPF in all interfaces: ip verify unicast source reachable-via rx"  # noqa: E501
             )
+    
+    def analyze(self, config_file) -> None:
+        issues = []
+
+        issues.append(self.get_ip_source_route(config_file))
+        issues.append(self.get_ip_proxy_arp(config_file))
+        issues.append(self.get_tunnel_interface(config_file))
+        issues.append(self.get_uRPF(config_file))
+
+        for issue in issues:
+            if issue is not None:
+                self.add_issue(issue)

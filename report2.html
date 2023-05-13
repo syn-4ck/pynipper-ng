@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cisco IOS-based Router retail Security Report</title>
+        <style type="text/css">
+            body {
+    font-size: 80%;
+    margin: 0px;
+    padding: 0px;
+    font-family: arial, sans-serif;
+}
+.mainbody {
+    background-color: #EFEFEF;
+}
+.pagebody {
+    width: 90%;
+    margin: 0px auto;
+    padding: 12px;
+    background-color: #FFFFFF;
+    border: solid 1px rgb(100,100,100);
+}
+.table {
+    clear: left;
+    border: solid 1px rgb(150,150,150);
+    empty-cells: show;
+    border-collapse: collapse;
+    background-color: rgb(233,232,244);
+    width: 100%
+}
+.table tr {
+    margin: 0px;
+    padding: 0px;
+}
+.table td {
+    padding: 2px 7px 2px 7px;
+    border: solid 1px rgb(150,150,150);
+    text-align: left;
+    font-size: small;
+}
+.table th {
+    margin: 0px;
+    padding: 2px 7px 2px 7px;
+    border: solid 1px rgb(150,150,150);
+    empty-cells: show;
+    text-align: left;
+    font-size: 100%;
+    background-color: #BEB8FB;
+}
+footer {
+    text-align: center;
+    background-color: #EFEFEF;
+    width: 90%;
+    margin: 0px auto;
+    padding: 12px;
+    border: solid 1px rgb(100,100,100);
+}
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    </head>
+
+    <body class="mainbody">
+        <div class="pagebody">
+            <div id="title_header" style="text-align:center">
+                <h1>&#128295; pynipper-ng &#128295;</h1>
+                <h1>&#128270; Cisco IOS-based Router Security Report &#128270;</h1>
+                <h3>of the</h3>
+                <h1>retail Cisco IOS-based Router</h1>
+            </div>
+            <div id="index">
+                <hr>
+                <h2>Contents</h2>
+                <ol>  
+                    <li><a href="#report">About This Report</a></li>  
+                    
+                        <li><a href="#security-issues">Security Audit</a></li>  
+                    
+                    
+                    
+                        <li><a href="#exposed-secrets">Exposed passwords</a></li>
+                    
+                </ol>  
+            </div>
+            <div id="report">
+                <div id="about_div">
+                    <hr>
+                        <h2>1. About This Report</h3>
+                        <p>This Cisco Router retail report was produced by Nipper on 2023-05-13. The report contains the following sections:</p><br>
+                        <ul>
+                            
+                                <li>a <strong>security audit report</strong> section that details any identified security-related issues. Each security issue includes a description of the issue, its impact, how easy it would be to exploit and a recommendation. The recommendations include, where appropriate, the command(s) to resolve the issue;</li>
+                             
+                             
+                            
+                                <li>a <strong>exposed password section</strong> that details the exposed secrets detected by pynipper-ng;</li>
+                            
+                            <!-- <li>a configuration report section that details the configuration settings;</li>
+                            <li>an abbreviations appendix section that expands any abbreviations used within the report;</li>
+                            <li>a common ports appendix section that details the TCP and UDP port numbers for the common services outlined within the report;</li>
+                            <li>an appendix section detailing the logging severity levels used by the logging facility;</li>
+                            <li>a time zones appendix section that details a number of the most commonly used time zones;</li>
+                            <li>an appendix section detailing the software used to produce this report.</li> -->
+                        </ul>
+                </div>
+            </div>
+            
+            <div id="security-issues">
+                <hr>
+                    <h2>2. Security Audit</h2>
+                    <h3>2.1. Introduction</h3>
+                    <div id="security-audit-text">
+                        <p>
+                            Nipper performed a security audit of the Cisco IOS-based Router retail on 2023-05-13. This section details the findings of the security audit together with the impact and recommendations.
+                        </p>
+                    </div>
+                    
+                        <h3>2.2 Banner</h3>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.2.0. Banner Login</h4>
+                                <strong>&#128065; Observation:</strong> Network banners are electronic messages that provide notice of legal rights to users of computer networks. When a user connects to the router, the message-of-the-day (MOTD) banner (if configured) appears first, followed by the login banner and prompts. After the user successfully logs into the router, the EXEC banner or incoming banner will be displayed, depending on the type of connection<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> Organizations should provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a &#39;banner-text&#39; for the banner login command<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Not have a Login Banner with law impact is a bad practice to an organization. Users that access to the device should know the impact of their actions.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> Configure the device so a login banner presented to a user attempting to access the device: banner login &lt;char&gt;<br/>
+                                <br/>
+                            </div>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.2.1. Banner MOTD</h4>
+                                <strong>&#128065; Observation:</strong> Network banners are electronic messages that provide notice to users of computer networks. The MOTD banner is displayed to all terminals connected and is useful for sending messages that affect all users (such as impending system shutdowns).<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> Organizations should provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a &#39;banner-text&#39; for the banner motd command.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Not have a MOTD Banner with law impact is a bad practice to an organization. Users that access to the device should know the impact of their actions.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> Configure the message of the day (MOTD) banner presented when a user first connects to the device: banner motd &lt;char&gt;<br/>
+                                <br/>
+                            </div>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.2.2. Banner WebAuth</h4>
+                                <strong>&#128065; Observation:</strong> Network banners are electronic messages that provide notice to users of computer networks. The WebAuth banner is displayed to all terminals connected and is useful for sending messages that affect all users connected by HTTP.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> Organizations should provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a &#39;banner-text&#39; for the banner webauth command.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Not have a MOTD Banner with law impact is a bad practice to an organization. Users that access to the device by HTTP should know the impact of their actions.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> Configure the message of the day (MOTD) WebAuth banner presented when a user first connects to the device: ip admission auth-proxy-banner http &lt;banner-text | filepath&gt;<br/>
+                                <br/>
+                            </div>
+                        
+                    
+                        <h3>2.3 Domain Name System (DNS)</h3>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.3.0. Domain Lookups</h4>
+                                <strong>&#128065; Observation:</strong> Cisco IOS-based devices support name lookups using the DNS. However, if a DNS server has not been configured, then the DNS request is broadcast.It is determined that name lookups had not been disabled and no DNS servers had been configured.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> An attacker who was able to capture network traffic could monitor DNS queries from the device. Furthermore, Cisco devices can connect to Telnet servers by supplying only the hostname or IP address of the server. A mistyped Cisco command could be interpreted as an attempt to connect to a Telnet server and broadcast on the network.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> It would be trivial for an attacker to capture network traffic broadcast from a device. Furthermore, network traffic capture tools are widely available on the Internet.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> It is recommends that domain lookups be disabled. Domain lookups can be disabled with the following command: no ip domain-lookup. If domain lookups are required, It is recommends that DNS be configured. DNS can be configured with the following command: ip name-server &lt;IP address&gt;.<br/>
+                                <br/>
+                            </div>
+                        
+                    
+                        <h3>2.4 HyperText Transfer Protocol (HTTP)</h3>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.4.0. HyperText Transport Protocol Service</h4>
+                                <strong>&#128065; Observation:</strong> Recent Cisco IOS-based devices support web-based administration using the HTTP protocol. Cisco web-based administration facilities can sometimes be basic but they do provide a simple method of administering remote devices. However, HTTP is a clear-text protocol and is vulnerable to various packet-capture techniques.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> An attacker who was able to monitor network traffic could capture authentication credentials.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Network packet and password sniffing tools are widely available on the Internet. Once authentication credentials have been captured it is trivial to use the credentials to log in using the captured credentials.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> It is recommended that, if not required, the HTTP service be disabled. If a remote method of access to the device is required, consider using HTTPS or SSH. The encrypted HTTPS and SSH services may require a firmware or hardware upgrade. The HTTP service can be disabled with the following IOS command: no ip http server. If it is not possible to upgrade the device to use the encrypted HTTPS or SSH services, additional security can be configured.<br/>
+                                <br/>
+                            </div>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.4.1. ACL restrict for HTTP service</h4>
+                                <strong>&#128065; Observation:</strong> The HTTP service was not configured with an access-list to restrict network access to the device.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> An attacker who was able to monitor network traffic could capture authentication credentials. This issue is made more serious with the enable password being used for authentication as this would give the attacker full administrative access to the device with the captured credentials. This issue is mitigated slightly by employing an access list to restrict network access to the device.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Network packet and password sniffing tools are widely available on the Internet. Once authentication credentials have been captured it is trivial to use the credentials to log in using the captured credentials. Furthermore, it may be possible for an attacker to masquerade as the administrators host in order to bypass configured network access restrictions.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> If you can&#39;t disable HTTP, an access list can be configured to restrict access to the device. An access list can be specified with the following command:ip http access-class &lt;access-list-number&gt;<br/>
+                                <br/>
+                            </div>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.4.2. Authentication mode to HTTP service</h4>
+                                <strong>&#128065; Observation:</strong> The HTTP service was not configured with an access-list to restrict network access to the device.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> An attacker who was able to monitor network traffic could capture authentication credentials. This issue is made more serious with the enable password being used for authentication as this would give the attacker full administrative access to the device with the captured credentials. This issue is mitigated slightly by employing an access list to restrict network access to the device.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Network packet and password sniffing tools are widely available on the Internet. Once authentication credentials have been captured it is trivial to use the credentials to log in using the captured credentials. Furthermore, it may be possible for an attacker to masquerade as the administrators host in order to bypass configured network access restrictions.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> If you can&#39;t disable HTTP, the authentication method can be changed using the following command (where the authentication method is either local, enable, tacacs or aaa): ip http authentication &lt;authentication-method&gt;<br/>
+                                <br/>
+                            </div>
+                        
+                    
+                        <h3>2.5 Secure Shell (SSH)</h3>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.5.0. SSH Protocol Version</h4>
+                                <strong>&#128065; Observation:</strong> The SSH service is commonly used for encrypted command-based remote device management. There are multiple SSH protocol versions and SSH servers will often support multiple versions to maintain backwards compatibility. Although flaws have been identified in implementations of version 2 of the SSH protocol, fundamental flaws exist in SSH protocol version 1.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> An attacker who was able to intercept SSH protocol version 1 traffic would be able to perform a man-in-the-middle style attack. The attacker could then capture network traffic and possibly authentication credentials.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Although vulnerabilities are widely known, exploiting the vulnerabilities in the SSH protocol can be difficult.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> When SSH protocol version 2 support is configured on Cisco IOS devices, support for version 1 will be disabled. This can be configured with the following command: ip ssh version 2<br/>
+                                <br/>
+                            </div>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.5.1. SSH retries misconfiguration</h4>
+                                <strong>&#128065; Observation:</strong> The SSH service must have a defined number of retries, the recommended is between 0 and 5.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> Set a retries number allows to reduce the bruteforce and dictionary attacks. If a retry number is defined, the attacker can not test with an user multiple passwords.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> This issue improve the hardening of passwords in the network device.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> This can be configured with the following command: ip ssh authentication-retries &lt;retry-number&gt;.<br/>
+                                <br/>
+                            </div>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.5.2. SSH timeout misconfiguration</h4>
+                                <strong>&#128065; Observation:</strong> The SSH service must have a defined timeout between 0 and 60 seconds.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> Set a timeout allows disable not used or malicious sessions in background.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> This issue only increase the device management security, it is not exploitable.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> This can be configured with the following command: ip ssh time-out &lt;timeout-in-seconds&gt;.<br/>
+                                <br/>
+                            </div>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.5.3. SSH source-interface enabled</h4>
+                                <strong>&#128065; Observation:</strong> The SSH service must have a controlated set of source interfaces to manage the device<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> To reduce bruteforce attacks is usefull have a set of source interfaces, logged and filtered, to access to SSH device management.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> This issue only increase the device management security, it is not exploitable, but it reduce bruteforce attacks.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> This can be configured with the following command: ip ssh source-interface &lt;interface&gt; <br/>
+                                <br/>
+                            </div>
+                        
+                    
+                        <h3>2.6 Telnet configuration</h3>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.6.0. Telnet</h4>
+                                <strong>&#128065; Observation:</strong> Telnet is widely used to provide remote command-based access to a variety of devices and is commonly used on network devices for remote administration. However, Telnet is a clear-text protocol and is vulnerable to various packet capture techniques.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> An attacker who was able to monitor network traffic could capture sensitive information or authentication credentials.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Network packet and password sniffing tools are widely available on the Internet and some of the tools are specifically designed to capture clear-text protocol authentication credentials. However, in a switched environment an attacker may not be able to capture network traffic destined for other devices without employing an attack such as Address Resolution Protocol (ARP) spoofing.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> Nipper recommends that, if possible, Telnet be disabled. If remote administrative access to the device is required, Nipper recommends that SSH be configured. The Telnet service can be disabled on individual lines with the following command: transport input none. The following Cisco IOS command can be used to disable Telnet on individual lines, but enable SSH: transport input ssh<br/>
+                                <br/>
+                            </div>
+                        
+                    
+                        <h3>2.7 Username credentials</h3>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.7.0. Service Password Encryption</h4>
+                                <strong>&#128065; Observation:</strong> Cisco service passwords are stored by default in their clear-text form rather than being encrypted. However, it is possible to have these passwords stored using the reversible Cisco encryption.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> If a malicious user were to see a Cisco configuration that contained clear-text passwords, they could use the passwords to access the device. However, an attacker who had access to a Cisco configuration file would easily be able to reverse the passwords.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Encryption provide a greater level of security than clear-text passwords.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> The Cisco password encryption service be enabled. The Cisco password encryption service can be started with the following Cisco IOS commands: service password-encryption or password encryption aes<br/>
+                                <br/>
+                            </div>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.7.1. Cisco type-0 passwords</h4>
+                                <strong>&#128065; Observation:</strong> Cisco passwords are stored in their clear-text form rather than being encrypted when we use the type 0. However, it is possible to have these passwords stored using the reversible Cisco encryption.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> If a malicious user were to see a Cisco configuration that contained clear-text passwords, they could use the passwords to access the device. However, an attacker who had access to a Cisco configuration file would easily be able to reverse the passwords.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Encryption provide a greater level of security than clear-text passwords.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> The Cisco user passwords should be type 6, 8 or 9, and you can use the following Cisco IOS commands: username &lt;username&gt; password [6|8|9] &lt;encrypted-password&gt;<br/>
+                                <br/>
+                            </div>
+                        
+                            <div id="security-audit-text">
+                                <h4>2.7.2. Cisco type-7 passwords</h4>
+                                <strong>&#128065; Observation:</strong> Cisco passwords are stored using an old and broken algorithm when we use the type 7 (Vigenere cypher). However, it is possible to have these passwords stored using stronger algorithms, like AES.<br/>
+                                <br/>
+                                <strong>&#128680; Impact:</strong> If a malicious user were to see a Cisco configuration that contained Vigenere encrypted passwords, they could crack the passwords to access the device. However, an attacker who had access to a Cisco configuration file would easily be able to decrypt the passwords.<br/>
+                                <br/>
+                                <strong>&#128127; Ease:</strong> Newer and strong encryption provide a greater level of security than Vigenere cyphered passwords.<br/>
+                                <br/>
+                                <strong>&#128272; Recommendation:</strong> The Cisco user passwords should be type 6, 8 or 9, and you can use the following Cisco IOS commands: username &lt;username&gt; password [6|8|9] &lt;encrypted-password&gt;<br/>
+                                <br/>
+                            </div>
+                        
+                    
+                </hr>
+            </div>
+            
+            <h2>3. Vulnerabilities</h2>
+            
+                <p>No vulnerabilities retrieved</p>
+            
+            <h2>4. Exposed and insecure passwords</h2>
+            
+            <div id="exposed-secrets">
+                <hr>
+                    <table class="table" id="passwordsTable">
+                        <thead>
+                            <tr>
+                                <th id="password_value">Password value</th>
+                                <th id="username">Username</th>
+                                <th id="secure_password">Is a secure password?</th>
+                                <th id="password_type">Password type</th>
+                                <th id="encrypted_password">Encrypted password (if applies)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <tr>
+                                    <td><strong>cg6#107X</strong></td>
+                                    <td>jsomeone</td>
+                                    <td>Insecure password</td>
+                                    <td>0</td>
+                                    <td></td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><strong>P@ssw0rd</strong></td>
+                                    <td>admin</td>
+                                    <td>Insecure password</td>
+                                    <td>7</td>
+                                    <td>0236244818115F3348</td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </hr>
+            </div>
+            
+        </div>
+        <footer>
+            <p>This report was generated by pynipper-ng</p>
+          </footer>
+        <script type="text/javascript">
+            $('#vulnTable tr td').each(function(){
+    var cellValue = $(this).html();
+    if(!isNaN(parseFloat(cellValue))) {
+        if (cellValue > 9) {
+        $(this).css('background-color','purple');
+        } else {
+            if (cellValue < 4) {
+                $(this).css('background-color','white');
+            } else {
+                if (cellValue >=9) {
+                    $(this).css('background-color','red');
+                } else {
+                    $(this).css('background-color','yellow');
+                }
+            }
+        }
+    }
+});
+        </script>
+    </body>
+</html>
