@@ -1,7 +1,7 @@
 import array
 from abc import abstractmethod
 
-from ..issue import Issue
+from ..issue.issue import Issue
 
 
 class GenericPlugin(object):
