@@ -1,10 +1,10 @@
 import array
 from abc import abstractmethod
 
-from ..issue import Issue
+from ..issue.issue import Issue
 
 
-class BasePlugin(object):
+class GenericPlugin(object):
 
     def __init__(self):
         self.issues = []  # A Issue list with the reported issues

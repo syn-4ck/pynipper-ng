@@ -1,9 +1,9 @@
 
-from ..core.base_plugin import GenericPlugin
+from ..core.base_plugin import BasePlugin
 from ....common.issue.issue import Issue
 
 
-class PluginDNS(GenericPlugin):
+class PluginDNS(BasePlugin):
 
     def __init__(self):
         super().__init__()

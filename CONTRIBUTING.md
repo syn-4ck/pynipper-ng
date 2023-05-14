@@ -131,7 +131,7 @@ To create your own plugins you need to create a new file in `./<device_type>/plu
 Example of plugin
 
 ```python
-class MyNewPlugin(GenericPlugin):
+class MyNewPlugin(BasePlugin):
   def _get_cisco_ios_ssh_interface(self, filename: str) -> str:
     parser = self.parse_configuration(filename)
     vulnerability_regex = parser.find("non-compliant conf")
