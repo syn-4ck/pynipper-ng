@@ -1,4 +1,4 @@
-tqdm==4.56.2
+tqdm==4.66.3
 requests==2.31.0
 Jinja2==2.11.3
 ciscoconfparse==1.5.29
