@@ -27,7 +27,10 @@
                     {% endif %}
                     {% if vulns %}
                         <li><a href="#security-vulns">Vulnerabilities</a></li>
-                    {% endif %}    
+                    {% endif %}
+                    {% if exposed_passwords %}
+                        <li><a href="#exposed-secrets">Exposed passwords</a></li>
+                    {% endif %}
                 </ol>  
             </div>
             <div id="report">
@@ -42,6 +45,9 @@
                             {% if vulns %}
                                 <li>a <strong>vulnerabilities section</strong> (optional) with all CVEs related with the device type and version</li>
                             {% endif %} 
+                            {% if exposed_passwords %}
+                                <li>a <strong>exposed password section</strong> that details the exposed secrets detected by pynipper-ng;</li>
+                            {% endif %}
                             <!-- <li>a configuration report section that details the configuration settings;</li>
                             <li>an abbreviations appendix section that expands any abbreviations used within the report;</li>
                             <li>a common ports appendix section that details the TCP and UDP port numbers for the common services outlined within the report;</li>
@@ -73,8 +79,6 @@
                                 <strong>&#128127; Ease:</strong> {{value.ease}}<br/>
                                 <br/>
                                 <strong>&#128272; Recommendation:</strong> {{value.recommendation}}<br/>
-                                <br/>
-                                <strong>&#9997; Line number:</strong> {{value.line_number}}<br/>
                                 <br/>
                             </div>
                         {% endfor %}

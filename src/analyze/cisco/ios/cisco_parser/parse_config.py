@@ -110,20 +110,3 @@ def get_cisco_ios_tcp_keep_alives_out(filename: str) -> bool:
         return True
     else:
         return False
-
-# Services configuration
-# -----------------------
-# TODO: Migrate to specific module
-
-# If the device has telnet configured -> true
-
-
-def get_cisco_ios_telnet(filename: str) -> bool:
-    parser = parse_cisco_ios_config_file(filename)
-    transport_disable = parser.find_objects("transport input none")
-    ssh_enable = parser.find_objects("transport input ssh")
-    telnet_disable = parser.find_objects("no transport input telnet")
-    if (len(transport_disable) > 0 or len(ssh_enable) > 0 or len(telnet_disable) > 0):  # noqa: E501
-        return False
-    else:
-        return True
