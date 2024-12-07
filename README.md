@@ -1,7 +1,5 @@
 # pynipper-ng 🔧
 
-_Repository stats:_
-
 [![Documentation Status](https://readthedocs.org/projects/pynipper-ng/badge/?version=latest)](https://pynipper-ng.readthedocs.io/?badge=latest)
 ![Latest release](https://img.shields.io/github/v/release/syn-4ck/pynipper-ng)
 ![Latest release date](https://img.shields.io/github/release-date/syn-4ck/pynipper-ng)

@@ -7,13 +7,16 @@ Reading and following these guidelines will help me make the contribution proces
 ## Quicklinks
 
 - [Contributing to pynipper-ng](#contributing-to-pynipper-ng)
+  - [Quicklinks](#quicklinks)
   - [Code of Conduct](#code-of-conduct)
   - [Getting Started](#getting-started)
     - [Issues](#issues)
     - [Pull Requests](#pull-requests)
   - [Core changes](#core-changes)
-    - [Implement a new device](#new-device)
-    - [Implement a new plugin](#new-plugin)
+    - [New device](#new-device)
+    - [New plugin](#new-plugin)
+  - [Doubts or issues contributing](#doubts-or-issues-contributing)
+>>>>>>> main
 
 ## Code of Conduct
 
