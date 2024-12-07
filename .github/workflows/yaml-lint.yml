@@ -1,20 +1,31 @@
 ---
-name: Yaml Lint
-on:  # yamllint disable-line rule:truthy
+name: Super Lint
+on: 
   push:
   pull_request:
   workflow_dispatch:
 
 jobs:
-  yamllint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+  build:
+    name: Lint
+    runs-on: ubuntu-24.04
 
-      - name: YAML Lint and Annotate
-        uses: Staffbase/yamllint-action@v1.1.0
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ## The target path is processed recursively
-          target-path: .
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v7.2.0 # x-release-please-version
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
