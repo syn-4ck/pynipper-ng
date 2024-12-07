@@ -13,13 +13,14 @@ on:  # yamllint disable-line rule:truthy
       - gh-pages
     paths:
       - 'src/**'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-24.04, macos-latest, windows-latest]
         python-version: ['3.7', '3.8', '3.9', '3.10']
     steps:
       - name: Checkout code
