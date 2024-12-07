@@ -1,4 +1,4 @@
-from ciscoconfparse import CiscoConfParse
+from ciscoconfparse2 import CiscoConfParse
 import re
 
 

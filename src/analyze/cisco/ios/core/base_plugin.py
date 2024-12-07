@@ -1,7 +1,7 @@
 import array
 from abc import abstractmethod
 
-from ciscoconfparse import CiscoConfParse
+from ciscoconfparse2 import CiscoConfParse
 
 from ..issue.cisco_ios_issue import CiscoIOSIssue
 

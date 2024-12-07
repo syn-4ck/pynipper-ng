@@ -1,5 +1,5 @@
 # Pynipper-ng Docker construction
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 RUN pip install pip --upgrade
 RUN pip install setuptools --upgrade

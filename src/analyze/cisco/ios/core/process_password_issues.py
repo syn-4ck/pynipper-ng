@@ -1,4 +1,4 @@
-from ciscoconfparse import CiscoConfParse
+from ciscoconfparse2 import CiscoConfParse
 
 from ....common.passwords.password_utils import decrypt_cisco_password_7, check_password
 
