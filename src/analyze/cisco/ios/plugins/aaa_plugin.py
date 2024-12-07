@@ -1,6 +1,6 @@
 
 from ..core.base_plugin import GenericPlugin
-from ..issue.cisco_ios_issue import CiscoIOSIssue
+from ....common.issue.issue import Issue
 
 
 class AAAPlugin(GenericPlugin):
@@ -18,7 +18,7 @@ class AAAPlugin(GenericPlugin):
     
     def has_aaa_new_model(self, config):
         if not self._has_aaa_new_model(config):
-            return CiscoIOSIssue(
+            return Issue(
                 "AAA new-model",
                 "The aaa new-model command should be enabled to enforce AAA security.",
                 "Implementing Cisco AAA is significantly disruptive as former access methods are immediately disabled. This can result in a loss of access to the device if the configuration is not correct.", # noqa: E501
@@ -37,7 +37,7 @@ class AAAPlugin(GenericPlugin):
 
     def has_aaa_authentication_login(self, config):
         if not self._has_aaa_authentication_login(config):
-            return CiscoIOSIssue(
+            return Issue(
                 "AAA authentication login",
                 "The aaa authentication login command should be enabled to enforce AAA security.",
                 "Implementing Cisco AAA is significantly disruptive as former access methods are immediately disabled. This can result in a loss of access to the device if the configuration is not correct.", # noqa: E501
@@ -56,7 +56,7 @@ class AAAPlugin(GenericPlugin):
     
     def has_authentication_enable_default(self, config):
         if not self._has_authentication_enable_default(config):
-            return CiscoIOSIssue(
+            return Issue(
                 "AAA authentication enabled by default",
                 "The aaa authentication enable command should be enabled to enforce AAA security.",
                 "Enabling Cisco AAA 'authentication enable' mode is significantly disruptive as former access methods are immediately disabled.", # noqa: E501
@@ -75,7 +75,7 @@ class AAAPlugin(GenericPlugin):
     
     def has_login_authentication_line_console_0(self, config):
         if not self._has_login_authentication_line_console_0(config):
-            return CiscoIOSIssue(
+            return Issue(
                 "AAA authentication login console 0",
                 "The login authentication console 0 command should be enabled to enforce AAA security.",
                 "Enabling Cisco AAA 'line login' is significantly disruptive as former access methods are immediately disabled.", # noqa: E501
