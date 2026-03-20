@@ -1,76 +1,78 @@
 # flake8: noqa
+# CIS Cisco IOS Benchmark references:
+#   1.5.1  - Ensure 'banner login' is set
+#   1.5.2  - Ensure 'banner motd' is set
+#   1.5.3  - Ensure 'ip admission auth-proxy-banner http' is set (WebAuth banner)
 
 from ..core.base_plugin import BasePlugin
 from ....common.issue.issue import Issue
 
+
 class PluginBanner(BasePlugin):
-    
+
     def __init__(self):
         super().__init__()
 
     def name(self):
-        return "Banner"
-    
-    def _has_banner_login_defined(self, filename: str) -> bool:
-        parser = self.parse_cisco_ios_config_file(filename)
-        banner_text_defined = parser.find_objects("banner login ")
-        if (len(banner_text_defined) > 0):
-            return True
-        else:
-            return False
-    
-    def get_banner_login_text(self, filename: str):
-        if not self._has_banner_login_defined(filename):
-            return Issue(
-                "Banner Login",
-                "Network banners are electronic messages that provide notice of legal rights to users of computer networks. When a user connects to the router, the message-of-the-day (MOTD) banner (if configured) appears first, followed by the login banner and prompts. After the user successfully logs into the router, the EXEC banner or incoming banner will be displayed, depending on the type of connection",  # noqa: E501
-                "Organizations should provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a 'banner-text' for the banner login command",  # noqa: E501
-                "Not have a Login Banner with law impact is a bad practice to an organization. Users that access to the device should know the impact of their actions.",  # noqa: E501
-                "Configure the device so a login banner presented to a user attempting to access the device: banner login <char>"  # noqa: E501
-            )
-    
-    def _has_banner_motd_defined(self, filename: str) -> bool:
-        parser = self.parse_cisco_ios_config_file(filename)
-        banner_text_defined = parser.find_objects("banner motd ")
-        if (len(banner_text_defined) > 0):
-            return True
-        else:
-            return False
-    
-    def get_banner_motd_text(self, filename: str):
-        if not self._has_banner_motd_defined(filename):
-            return Issue(
-                "Banner MOTD",
-                "Network banners are electronic messages that provide notice to users of computer networks. The MOTD banner is displayed to all terminals connected and is useful for sending messages that affect all users (such as impending system shutdowns).",  # noqa: E501
-                "Organizations should provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a 'banner-text' for the banner motd command.",  # noqa: E501
-                "Not have a MOTD Banner with law impact is a bad practice to an organization. Users that access to the device should know the impact of their actions.",  # noqa: E501
-                "Configure the message of the day (MOTD) banner presented when a user first connects to the device: banner motd <char>"  # noqa: E501
-            )
+        return "Banners"
 
-    def _has_banner_webauth_defined(self, filename: str) -> bool:
+    # CIS 1.5.1 - Ensure 'banner login' is set
+    def _has_banner_login(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
-        banner_text_defined = parser.find_objects("ip admission auth-proxy-banner http ")
-        if (len(banner_text_defined) > 0):
-            return True
-        else:
-            return False
-    
-    def get_banner_webauth_text(self, filename: str):
-        if not self._has_banner_webauth_defined(filename):
+        return len(parser.find_objects(r"^banner login")) > 0
+
+    def get_banner_login(self, filename: str):
+        if not self._has_banner_login(filename):
             return Issue(
-                "Banner WebAuth",
-                "Network banners are electronic messages that provide notice to users of computer networks. The WebAuth banner is displayed to all terminals connected and is useful for sending messages that affect all users connected by HTTP.",  # noqa: E501
-                "Organizations should provide appropriate legal notice(s) and warning(s) to persons accessing their networks by using a 'banner-text' for the banner webauth command.",  # noqa: E501
-                "Not have a MOTD Banner with law impact is a bad practice to an organization. Users that access to the device by HTTP should know the impact of their actions.",  # noqa: E501
-                "Configure the message of the day (MOTD) WebAuth banner presented when a user first connects to the device: ip admission auth-proxy-banner http <banner-text | filepath>"  # noqa: E501
+                "Login banner not configured",
+                "No 'banner login' is configured. The login banner is displayed before authentication and must include a legal warning notifying users that unauthorised access is prohibited.",  # noqa: E501
+                "Without a legal warning banner, organisations may lose the right to prosecute intruders. Courts may rule that access to a system without a warning banner implies consent.",  # noqa: E501
+                "Absence of a login banner is easily detected by connecting to any management interface. No active attack is required.",  # noqa: E501
+                "Configure a login banner with an appropriate legal disclaimer:\n\n```\nbanner login ^\nUnauthorized access is prohibited. All activities are monitored and logged.\n^\n```",  # noqa: E501
+                "CIS 1.5.1"
             )
-    
+        return None
+
+    # CIS 1.5.2 - Ensure 'banner motd' is set
+    def _has_banner_motd(self, filename: str) -> bool:
+        parser = self.parse_cisco_ios_config_file(filename)
+        return len(parser.find_objects(r"^banner motd")) > 0
+
+    def get_banner_motd(self, filename: str):
+        if not self._has_banner_motd(filename):
+            return Issue(
+                "MOTD banner not configured",
+                "No 'banner motd' is configured. The Message-Of-The-Day (MOTD) banner is displayed on all terminals upon connection and should communicate the legal status of the device.",  # noqa: E501
+                "Without an MOTD banner, there is no legal notice to warn unauthorised users before they interact with the device. This may weaken the legal standing of the organisation in the event of a breach.",  # noqa: E501
+                "Absence of an MOTD banner is detected immediately on any connection to the device.",  # noqa: E501
+                "Configure a message-of-the-day banner with a legal disclaimer:\n\n```\nbanner motd ^\nUnauthorized access is prohibited. All activities are monitored and logged.\n^\n```",  # noqa: E501
+                "CIS 1.5.2"
+            )
+        return None
+
+    # CIS 1.5.3 - Ensure 'ip admission auth-proxy-banner http' is set
+    def _has_banner_webauth(self, filename: str) -> bool:
+        parser = self.parse_cisco_ios_config_file(filename)
+        return len(parser.find_objects(r"^ip admission auth-proxy-banner http")) > 0
+
+    def get_banner_webauth(self, filename: str):
+        if not self._has_banner_webauth(filename):
+            return Issue(
+                "WebAuth banner not configured",
+                "The HTTP authentication proxy banner ('ip admission auth-proxy-banner http') is not configured. Users authenticating via the web-based auth proxy will not receive a legal warning.",  # noqa: E501
+                "Without a WebAuth banner, users accessing HTTP management interfaces receive no legal warning, which may undermine the organisation's ability to enforce acceptable-use policies.",  # noqa: E501
+                "Absence of this banner is detectable by connecting through the HTTP auth-proxy interface.",  # noqa: E501
+                "Configure the WebAuth banner with a legal notice:\n\n```\nip admission auth-proxy-banner http ^Unauthorized access is prohibited.^",  # noqa: E501
+                "CIS 1.5.3"
+            )
+        return None
+
     def analyze(self, config_file) -> None:
         issues = []
 
-        issues.append(self.get_banner_login_text(config_file))
-        issues.append(self.get_banner_motd_text(config_file))
-        issues.append(self.get_banner_webauth_text(config_file))
+        issues.append(self.get_banner_login(config_file))
+        issues.append(self.get_banner_motd(config_file))
+        issues.append(self.get_banner_webauth(config_file))
 
         for issue in issues:
             if issue is not None:

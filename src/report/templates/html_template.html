@@ -1,159 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>{{ device_type }} {{ hostname }} Security Report</title>
-        <style type="text/css">
-            {% include "style.css" %}
-        </style>
-        <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ device_type }} {{ hostname }} &mdash; Security Report</title>
+    <style>{% include "style.css" %}</style>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+</head>
+<body class="mainbody">
+    <div class="pagebody">
 
-    <body class="mainbody">
-        <div class="pagebody">
-            <div id="title_header" style="text-align:center">
-                <h1>&#128295; pynipper-ng &#128295;</h1>
-                <h1>&#128270; {{ device_type }} Security Report &#128270;</h1>
-                <h3>of the</h3>
-                <h1>{{ hostname }} {{ device_type }}</h1>
-            </div>
-            <div id="index">
-                <hr>
-                <h2>Contents</h2>
-                <ol>  
-                    <li><a href="#report">About This Report</a></li>  
+        <div class="report-header">
+            <div class="logo-label">pynipper-ng &mdash; Security Analysis</div>
+            <h1>{{ device_type }} Security Report</h1>
+            <div class="subtitle">Device: <strong>{{ hostname }}</strong> &nbsp;&middot;&nbsp; {{ date }}</div>
+        </div>
+
+        <div class="content-area">
+
+            <div id="index" class="section toc">
+                <h2 class="section-title">Contents</h2>
+                <ol>
+                    <li><a href="#report">About This Report</a></li>
                     {% if issues %}
-                        <li><a href="#security-issues">Security Audit</a></li>  
+                    <li>
+                        <a href="#security-issues">Security Audit</a>
+                        <ol>
+                            {% for title_plugin, issue_list in issues.items() %}
+                            <li>
+                                <a href="#plugin-{{ loop.index }}">{{ title_plugin }}</a>
+                                <span class="badge">{{ issue_list | length }}</span>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </li>
+                    {% endif %}
+                    {% if vulns %}<li><a href="#security-vulns">Vulnerabilities</a></li>{% endif %}
+                    {% if exposed_passwords %}<li><a href="#exposed-secrets">Exposed Passwords</a></li>{% endif %}
+                </ol>
+            </div>
+
+            <div id="report" class="section">
+                <h2 class="section-title">1. About This Report</h2>
+                <p class="section-intro">
+                    This {{ device_type }} {{ hostname }} report was produced by pynipper-ng on {{ date }}.
+                    The report contains the following sections:
+                </p>
+                <ul class="about-list">
+                    {% if issues %}
+                    <li>A <strong>Security Audit</strong> section detailing identified security issues, including description, impact, exploitability, and remediation guidance.</li>
                     {% endif %}
                     {% if vulns %}
-                        <li><a href="#security-vulns">Vulnerabilities</a></li>
+                    <li>A <strong>Vulnerabilities</strong> section listing all CVEs associated with the device type and firmware version.</li>
                     {% endif %}
                     {% if exposed_passwords %}
-                        <li><a href="#exposed-secrets">Exposed passwords</a></li>
+                    <li>An <strong>Exposed Passwords</strong> section detailing credentials found in plain-text or weakly encrypted form.</li>
                     {% endif %}
-                </ol>  
+                </ul>
             </div>
-            <div id="report">
-                <div id="about_div">
-                    <hr>
-                        <h2>1. About This Report</h3>
-                        <p>This Cisco Router {{ hostname }} report was produced by Nipper on {{ date }}. The report contains the following sections:</p><br>
-                        <ul>
-                            {% if issues %}
-                                <li>a <strong>security audit report</strong> section that details any identified security-related issues. Each security issue includes a description of the issue, its impact, how easy it would be to exploit and a recommendation. The recommendations include, where appropriate, the command(s) to resolve the issue;</li>
-                            {% endif %} 
-                            {% if vulns %}
-                                <li>a <strong>vulnerabilities section</strong> (optional) with all CVEs related with the device type and version</li>
-                            {% endif %} 
-                            {% if exposed_passwords %}
-                                <li>a <strong>exposed password section</strong> that details the exposed secrets detected by pynipper-ng;</li>
-                            {% endif %}
-                            <!-- <li>a configuration report section that details the configuration settings;</li>
-                            <li>an abbreviations appendix section that expands any abbreviations used within the report;</li>
-                            <li>a common ports appendix section that details the TCP and UDP port numbers for the common services outlined within the report;</li>
-                            <li>an appendix section detailing the logging severity levels used by the logging facility;</li>
-                            <li>a time zones appendix section that details a number of the most commonly used time zones;</li>
-                            <li>an appendix section detailing the software used to produce this report.</li> -->
-                        </ul>
-                </div>
-            </div>
+
             {% if issues %}
-            <div id="security-issues">
-                <hr>
-                    <h2>2. Security Audit</h2>
-                    <h3>2.1. Introduction</h3>
-                    <div id="security-audit-text">
-                        <p>
-                            Nipper performed a security audit of the {{ device_type }} {{ hostname }} on {{ date }}. This section details the findings of the security audit together with the impact and recommendations.
-                        </p>
+            <div id="security-issues" class="section">
+                <h2 class="section-title">2. Security Audit</h2>
+                <p class="section-intro">
+                    Security audit of {{ device_type }} {{ hostname }} performed on {{ date }}.
+                    Each finding includes an impact assessment and recommended remediation steps.
+                </p>
+                {% for title_plugin, issue_list in issues.items() %}
+                <div class="plugin-group" id="plugin-{{ loop.index }}">
+                    <div class="plugin-group-title">{{ title_plugin }}</div>
+                    {% for key, value in issue_list.items() %}
+                    <div class="issue-card">
+                        <div class="issue-card-header">
+                            <h4>{{ key }}</h4>
+                            {% if value.cis_section and value.cis_section != 'N/A' %}
+                            <span class="cis-badge">{{ value.cis_section }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="issue-field">
+                            <span class="issue-label">Observation</span>
+                            <span class="issue-value">{{ value.observation | md }}</span>
+                        </div>
+                        <div class="issue-field">
+                            <span class="issue-label">Impact</span>
+                            <span class="issue-value">{{ value.impact | md }}</span>
+                        </div>
+                        <div class="issue-field">
+                            <span class="issue-label">Ease</span>
+                            <span class="issue-value">{{ value.ease | md }}</span>
+                        </div>
+                        <div class="issue-field">
+                            <span class="issue-label">Recommendation</span>
+                            <span class="issue-value">{{ value.recommendation | md }}</span>
+                        </div>
                     </div>
-                    {% for title_plugin, issue_list in issues.items() %}
-                        <h3>{{title_plugin}}</h3>
-                        {% for key, value in issue_list.items() %}
-                            <div id="security-audit-text">
-                                <h4>{{key}}</h4>
-                                <strong>&#128065; Observation:</strong> {{value.observation}}<br/>
-                                <br/>
-                                <strong>&#128680; Impact:</strong> {{value.impact}}<br/>
-                                <br/>
-                                <strong>&#128127; Ease:</strong> {{value.ease}}<br/>
-                                <br/>
-                                <strong>&#128272; Recommendation:</strong> {{value.recommendation}}<br/>
-                                <br/>
-                            </div>
-                        {% endfor %}
                     {% endfor %}
-                </hr>
+                </div>
+                {% endfor %}
             </div>
             {% endif %}
-            <h2>3. Vulnerabilities</h2>
-            {% if vulns %}
-            <div id="security-vulns">
-                <hr>
+
+            <div class="section">
+                <h2 class="section-title">3. Vulnerabilities</h2>
+                {% if vulns %}
+                <div id="security-vulns">
                     <table class="table" id="vulnTable">
                         <thead>
                             <tr>
-                                <th id="title">Title</th>
-                                <th id="summary">Summary</th>
-                                <th id="cves">CVEs</th>
-                                <th id="cvss">CVSS</th>
-                                <th id="url">URL</th>
+                                <th>Title</th>
+                                <th>Summary</th>
+                                <th>CVEs</th>
+                                <th>CVSS</th>
+                                <th>URL</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for vuln in vulns %}
-                                <tr>
-                                    <td><strong>{{vuln.title}}</strong></td>
-                                    <td>{{vuln.summary|safe}}</td>
-                                    <td>{{vuln.cves|join(', ')}}</td>
-                                    <td class="cvssValue">{{vuln.cvss}}</td>
-                                    <td><a href={{vuln.url}}>{{vuln.url}}</a></td>
-                                </tr>
+                            <tr>
+                                <td><strong>{{ vuln.title }}</strong></td>
+                                <td>{{ vuln.summary|safe }}</td>
+                                <td>{{ vuln.cves|join(', ') }}</td>
+                                <td class="cvssValue">{{ vuln.cvss }}</td>
+                                <td><a href="{{ vuln.url }}">{{ vuln.url }}</a></td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-                </hr>
+                </div>
+                {% else %}
+                <p class="empty-state">No vulnerabilities retrieved.</p>
+                {% endif %}
             </div>
-            {% else %}
-                <p>No vulnerabilities retrieved</p>
-            {% endif %}
-            <h2>4. Exposed and insecure passwords</h2>
-            {% if exposed_passwords %}
-            <div id="exposed-secrets">
-                <hr>
+
+            <div class="section">
+                <h2 class="section-title">4. Exposed and Insecure Passwords</h2>
+                {% if exposed_passwords %}
+                <div id="exposed-secrets">
                     <table class="table" id="passwordsTable">
                         <thead>
                             <tr>
-                                <th id="password_value">Password value</th>
-                                <th id="username">Username</th>
-                                <th id="secure_password">Is a secure password?</th>
-                                <th id="password_type">Password type</th>
-                                <th id="encrypted_password">Encrypted password (if applies)</th>
+                                <th>Password</th>
+                                <th>Username</th>
+                                <th>Status</th>
+                                <th>Type</th>
+                                <th>Encrypted Value</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for passwd in exposed_passwords %}
-                                <tr>
-                                    <td><strong>{{passwd.password}}</strong></td>
-                                    <td>{{passwd.username}}</td>
-                                    <td>{{passwd.status}}</td>
-                                    <td>{{passwd.password_type}}</td>
-                                    <td>{{passwd.encrypted_password}}</td>
-                                </tr>
+                            <tr>
+                                <td><code>{{ passwd.password }}</code></td>
+                                <td>{{ passwd.username }}</td>
+                                <td>{{ passwd.status }}</td>
+                                <td>{{ passwd.password_type }}</td>
+                                <td><code>{{ passwd.encrypted_password }}</code></td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-                </hr>
+                </div>
+                {% else %}
+                <p class="empty-state">No exposed credentials detected.</p>
+                {% endif %}
             </div>
-            {% else %}
-                <p>No exposed secrets detected</p>
-            {% endif %}
+
         </div>
-        <footer>
-            <p>This report was generated by pynipper-ng</p>
-          </footer>
-        <script type="text/javascript">
-            {% include "impact-color.js" %}
-        </script>
-    </body>
+    </div>
+
+    <footer>
+        <p>Generated by pynipper-ng</p>
+    </footer>
+
+    <script>{% include "impact-color.js" %}</script>
+</body>
 </html>

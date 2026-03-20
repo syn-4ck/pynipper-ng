@@ -1,21 +1,4 @@
-# pynipper-ng 🔧
-
-[![Documentation Status](https://readthedocs.org/projects/pynipper-ng/badge/?version=latest)](https://pynipper-ng.readthedocs.io/?badge=latest)
-![Latest release](https://img.shields.io/github/v/release/syn-4ck/pynipper-ng)
-![Latest release date](https://img.shields.io/github/release-date/syn-4ck/pynipper-ng)
-![License](https://img.shields.io/github/license/syn-4ck/pynipper-ng)
-![GitHub stars](https://img.shields.io/github/stars/syn-4ck/pynipper-ng?style=social)
-
-_This project passes:_
-
-✔️ Snyk code & open-source
-✔️ SonarCloud
-✔️ Trivy
-✔️ GitGuardian
-✔️ CodeQL
-✔️ Flake8
-
-<br/>
+<br/><br/>
 
 <p align="center">
   <img src="img/pynipper-ng-crop.png">
@@ -34,19 +17,64 @@ This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), update
 
 ---
 
-## Install 🧰
+## Installation
 
-If you want to install the tool, please review the [installation docs](https://pynipper-ng.readthedocs.io/installation/).
+### Using pip (Python 3.10+)
 
-Available using Python and Docker!
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/syn-4ck/pynipper-ng.git
+cd pynipper-ng
+pip install -r requirements.txt
+pip install .
+```
+
+### Using Docker
+
+Build the Docker image:
+
+```bash
+docker build -t pynipper-ng .
+```
 
 ---
 
-## Quickstart and options 💻
+## Usage
 
-```BASH
-pynipper-ng -d IOS_ROUTER -i tests\test_data\cisco_ios_example.conf -o HTML -f ./report.html -x
+### With pip (local install)
+
+Run the tool from your terminal:
+
+```bash
+pynipper-ng --device IOS_ROUTER \
+            --input tests/test_data/cisco_ios_example.conf \
+            --output-type HTML \
+            --output-filename ./report.html \
+            --offline
 ```
+
+### With Docker
+
+Mount your config and output directories, then run:
+
+```bash
+docker run --rm \
+  -v "$(pwd)/config_file_dir:/data:ro" \
+  -v "/tmp:/output" \
+  pynipper-ng \
+  --device IOS_ROUTER \
+  --input /data/cisco_ios_example.conf \
+  --output-type HTML \
+  --output-filename /output/report.html \
+  --offline
+```
+
+Replace the input and output paths as needed for your environment.
+
+---
+
+## Demo 💻
 
 <br/>
 <img src="img/demo.gif"  alt="Demo">

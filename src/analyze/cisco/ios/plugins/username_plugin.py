@@ -1,7 +1,13 @@
 # flake8: noqa
+# CIS Cisco IOS Benchmark references:
+#   1.3.1  - Ensure 'service password-encryption' is enabled
+#   1.3.2  - Ensure no username uses password type 0 (cleartext)
+#   1.3.3  - Ensure no username uses password type 7 (reversible Vigenere)
+#   1.3.4  - Ensure no username uses password type 5 (weak MD5); prefer type 8/9
 
 from ..core.base_plugin import BasePlugin
 from ....common.issue.issue import Issue
+
 
 class PluginUsername(BasePlugin):
 
@@ -10,94 +16,87 @@ class PluginUsername(BasePlugin):
 
     def name(self):
         return "Username credentials"
-    
-    def _has_password_encryption(self, filename: str) -> bool:
+
+    # CIS 1.3.1 - Ensure 'service password-encryption' is enabled
+    def _has_service_password_encryption(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
-        no_pas_enc = parser.find_objects("no service password-encryption")
-        if (len(no_pas_enc) > 0):
+        if len(parser.find_objects(r"^no service password-encryption")) > 0:
             return False
-        else:
-            pas_enc = parser.find_objects("service password-encryption")
-            pas_enc_aes = parser.find_objects("password encryption aes")
-            if (len(pas_enc) > 0 or len(pas_enc_aes) > 0):
-                return True
-        return False
-    
-    def get_users_without_password_encryption(self, filename: str):
-        if (not self._has_password_encryption(filename)):
+        return (
+            len(parser.find_objects(r"^service password-encryption")) > 0
+            or len(parser.find_objects(r"^password encryption aes")) > 0
+        )
+
+    def get_service_password_encryption(self, filename: str):
+        if not self._has_service_password_encryption(filename):
             return Issue(
-                "Service Password Encryption",
-                "Cisco service passwords are stored by default in their clear-text form rather than being encrypted. However, it is possible to have these passwords stored using the reversible Cisco encryption.",  # noqa: E501
-                "If a malicious user were to see a Cisco configuration that contained clear-text passwords, they could use the passwords to access the device. However, an attacker who had access to a Cisco configuration file would easily be able to reverse the passwords.",  # noqa: E501
-                "Encryption provide a greater level of security than clear-text passwords.",
-                "The Cisco password encryption service be enabled. The Cisco password encryption service can be started with the following Cisco IOS commands: service password-encryption or password encryption aes"  # noqa: E501
+                "Service password-encryption not enabled",
+                "The 'service password-encryption' command is not enabled. Line passwords, CHAP passwords, and other non-secret passwords are stored in cleartext in the running configuration.",  # noqa: E501
+                "Cleartext passwords visible in the running configuration can be read by anyone with access to the configuration file, such as via TFTP backup, 'show running-config', or physical access.",  # noqa: E501
+                "Reading a device configuration via 'show run' or a backup file is sufficient to expose all unencrypted passwords.",  # noqa: E501
+                "Enable service password-encryption (type-7 reversible). Prefer `enable secret` and `username secret` over `enable password` / `username password`:\n\n```\nservice password-encryption\n```",  # noqa: E501
+                "CIS 1.3.1"
             )
         return None
-    
-    def _has_cisco_password_0(self, filename: str) -> bool:
+
+    # CIS 1.3.2 - No type-0 (cleartext) username passwords
+    def _has_type0_password(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
-        password0_list= parser.find_objects(r'username .+ password 0 .+')
-        if (len(password0_list) > 0):
-            return True
-        else:
-            return False
-    
-    def get_users_with_password_0(self, filename: str):
-        if (self._has_cisco_password_0(filename)):
+        return len(parser.find_objects(r"^username\s+\S+\s+password\s+0\s+")) > 0
+
+    def get_type0_passwords(self, filename: str):
+        if self._has_type0_password(filename):
             return Issue(
-                "Cisco type-0 passwords",
-                "Cisco passwords are stored in their clear-text form rather than being encrypted when we use the type 0. However, it is possible to have these passwords stored using the reversible Cisco encryption.",
-                "If a malicious user were to see a Cisco configuration that contained clear-text passwords, they could use the passwords to access the device. However, an attacker who had access to a Cisco configuration file would easily be able to reverse the passwords.",  # noqa: E501
-                "Encryption provide a greater level of security than clear-text passwords.",
-                "The Cisco user passwords should be type 6, 8 or 9, and you can use the following Cisco IOS commands: username <username> password [6|8|9] <encrypted-password>"  # noqa: E501
+                "Username with type-0 (cleartext) password",
+                "One or more usernames are configured with a type-0 cleartext password. Type-0 passwords are stored in plaintext in the device configuration.",  # noqa: E501
+                "Cleartext passwords in the configuration file are directly readable by anyone who obtains the configuration, including backups and TFTP transfers.",  # noqa: E501
+                "No cracking is required — type-0 passwords are immediately usable by anyone who views the configuration.",  # noqa: E501
+                "Replace all type-0 (clear-text) passwords with type-8 or type-9 hashed passwords:\n\n```\nusername <name> algorithm-type sha256 secret <password>\n```",  # noqa: E501
+                "CIS 1.3.2"
             )
         return None
-    
-    def _has_cisco_password_7(self, filename: str) -> bool:
+
+    # CIS 1.3.3 - No type-7 (reversible Vigenere) username passwords
+    def _has_type7_password(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
-        password7_list= parser.find_objects(r'username .+ password 7 .+')
-        if (len(password7_list) > 0):
-            return True
-        else:
-            return False
-    
-    def get_users_with_password_7(self, filename: str):
-        if (self._has_cisco_password_7(filename)):
+        return len(parser.find_objects(r"^username\s+\S+\s+password\s+7\s+")) > 0
+
+    def get_type7_passwords(self, filename: str):
+        if self._has_type7_password(filename):
             return Issue(
-                "Cisco type-7 passwords",
-                "Cisco passwords are stored using an old and broken algorithm when we use the type 7 (Vigenere cypher). However, it is possible to have these passwords stored using stronger algorithms, like AES.",  # noqa: E501
-                "If a malicious user were to see a Cisco configuration that contained Vigenere encrypted passwords, they could crack the passwords to access the device. However, an attacker who had access to a Cisco configuration file would easily be able to decrypt the passwords.",  # noqa: E501
-                "Newer and strong encryption provide a greater level of security than Vigenere cyphered passwords.",
-                "The Cisco user passwords should be type 6, 8 or 9, and you can use the following Cisco IOS commands: username <username> password [6|8|9] <encrypted-password>"  # noqa: E501
+                "Username with type-7 (reversible) password",
+                "One or more usernames are configured with a type-7 password. Type-7 uses the Vigenere cipher, which is reversible and provides no real security.",  # noqa: E501
+                "Type-7 passwords can be instantly reversed by freely available online tools and scripts. Once the configuration is obtained, the original password is trivially recovered.",  # noqa: E501
+                "Decryption of type-7 passwords is trivial — dozens of online tools and scripts exist that reverse them in milliseconds.",  # noqa: E501
+                "Replace all type-7 (reversible) passwords with type-8 or type-9 hashed passwords:\n\n```\nusername <name> algorithm-type sha256 secret <password>\n```",  # noqa: E501
+                "CIS 1.3.3"
             )
         return None
-    
-    def _has_cisco_password_5(self, filename: str) -> bool:
+
+    # CIS 1.3.4 - No type-5 (MD5) username passwords
+    def _has_type5_password(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
-        password5_list= parser.find_objects(r'username .+ password 5 .+')
-        if (len(password5_list) > 0):
-            return True
-        else:
-            return False
-    
-    def get_users_with_password_5(self, filename: str):
-        if (self._has_cisco_password_5(filename)):
+        return len(parser.find_objects(r"^username\s+\S+\s+(?:password|secret)\s+5\s+")) > 0
+
+    def get_type5_passwords(self, filename: str):
+        if self._has_type5_password(filename):
             return Issue(
-                "Cisco type-5 passwords",
-                "Cisco passwords are stored using an old and broken algorithm when we use the type 5 (salted MD5 hashing). However, it is possible to have these passwords stored using stronger algorithms, like AES.",  # noqa: E501
-                "If a malicious user were to see a Cisco configuration that contained MD5 hashed passwords, they could crack the passwords to access the device using HashCat. However, an attacker who had access to a Cisco configuration file would easily be able to get the passwords.",  # noqa: E501
-                "Newer and strong encryption provide a greater level of security than salted MD5 hashed passwords.",
-                "The Cisco user passwords should be type 6, 8 or 9, and you can use the following Cisco IOS commands: username <username> password [6|8|9] <encrypted-password>"  # noqa: E501
+                "Username with type-5 (MD5) password — weak hash",
+                "One or more usernames are configured with a type-5 password, which uses salted MD5. MD5 is a fast hash algorithm that can be brute-forced with modern GPU hardware.",  # noqa: E501
+                "Type-5 passwords, while not reversible, are susceptible to offline brute-force and dictionary attacks using tools such as Hashcat, especially for short or common passwords.",  # noqa: E501
+                "GPU-accelerated cracking tools such as Hashcat can test billions of MD5 candidates per second, making type-5 passwords vulnerable to offline attacks.",  # noqa: E501
+                "Upgrade type-5 (MD5) passwords to type-8 (PBKDF2-SHA256) or type-9 (scrypt):\n\n```\nusername <name> algorithm-type sha256 secret <password>\n```",  # noqa: E501
+                "CIS 1.3.4"
             )
         return None
-    
+
     def analyze(self, config_file) -> None:
         issues = []
 
-        issues.append(self.get_users_without_password_encryption(config_file))
-        issues.append(self.get_users_with_password_0(config_file))
-        issues.append(self.get_users_with_password_7(config_file))
-        issues.append(self.get_users_with_password_5(config_file))
+        issues.append(self.get_service_password_encryption(config_file))
+        issues.append(self.get_type0_passwords(config_file))
+        issues.append(self.get_type7_passwords(config_file))
+        issues.append(self.get_type5_passwords(config_file))
 
         for issue in issues:
             if issue is not None:

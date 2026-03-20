@@ -1,95 +1,99 @@
 # flake8: noqa
+# CIS Cisco IOS Benchmark references:
+#   2.1.1  - Ensure 'no ip source-route' is set
+#   2.1.2  - Ensure 'no ip proxy-arp' is set on all interfaces
+#   2.1.3  - Ensure no tunnel interfaces are defined (review required)
+#   2.1.4  - Ensure 'ip verify unicast source reachable-via rx' (uRPF) is set
 
 from ..core.base_plugin import BasePlugin
 from ....common.issue.issue import Issue
 
+
 class PluginRouting(BasePlugin):
-    
+
     def __init__(self):
         super().__init__()
 
     def name(self):
-        return "Routing rules"
-    
-    def _has_ip_sourceroute(self, filename: str) -> bool:
+        return "Routing Security"
+
+    # CIS 2.1.1 - Ensure 'no ip source-route' is set
+    def _has_ip_source_route(self, filename: str) -> bool:
+        """Return True if IP source routing is enabled (not disabled)."""
         parser = self.parse_cisco_ios_config_file(filename)
-        no_source_route_defined = parser.find_objects("no ip source-route")
-        if (len(no_source_route_defined) > 0):
-            return False
-        else:
-            return True
-    
+        return len(parser.find_objects(r"^no ip source-route")) == 0
+
     def get_ip_source_route(self, filename: str):
-        if self._has_ip_sourceroute(filename):
+        if self._has_ip_source_route(filename):
             return Issue(
-                "Handling of IP datagrams",
-                "Disable the handling of IP datagrams with source routing header options.",  # noqa: E501
-                "Organizations should plan and implement network policies to ensure unnecessary services are explicitly disabled. The 'ip source-route' feature has been used in several attacks and should be disabled.",  # noqa: E501
-                "Source routing is a feature of IP whereby individual packets can specify routes. This feature is used in several kinds of attacks. Cisco routers normally accept and process source routes. Unless a network depends on source routing, it should be disabled.",  # noqa: E501
-                "Disable source routing: no ip source-route"  # noqa: E501
+                "IP source routing not disabled",
+                "IP source routing is enabled. This feature allows individual IP packets to specify their own route through the network, which has been used in several historical attacks.",  # noqa: E501
+                "Source routing can be abused by attackers to bypass access controls, to probe internal network topology, and to redirect traffic along attacker-specified paths.",  # noqa: E501
+                "Crafting source-routed packets requires only standard packet-forging tools that are freely available.",  # noqa: E501
+                "Disable IP source routing globally:\n\n```\nno ip source-route\n```",  # noqa: E501
+                "CIS 2.1.1"
             )
-    
-    def _has_ip_proxy_arp(self, filename: str) -> bool:
+        return None
+
+    # CIS 2.1.2 - Ensure 'no ip proxy-arp' is set on all interfaces
+    def _has_proxy_arp(self, filename: str) -> bool:
+        """Return True if proxy ARP is not explicitly disabled on any interface."""
         parser = self.parse_cisco_ios_config_file(filename)
-        no_proxy_arp = parser.find_objects("no ip proxy-arp")
-        if (len(no_proxy_arp) > 0):
-            return False
-        else:
-            return True
-    
+        return len(parser.find_objects(r"no ip proxy-arp")) == 0
+
     def get_ip_proxy_arp(self, filename: str):
-        if self._has_ip_proxy_arp(filename):
+        if self._has_proxy_arp(filename):
             return Issue(
-                "Proxy ARP",
-                "Disable proxy ARP on all interfaces.",  # noqa: E501
-                "Address Resolution Protocol (ARP) provides resolution between IP and MAC Addresses (or other Network and Link Layer addresses on none IP networks) within a Layer 2 network. Proxy ARP is a service where a device connected to one network (in this case the Cisco router) answers ARP Requests which are addressed to a host on another network, replying with its own MAC Address and forwarding the traffic on to the intended host. Sometimes used for extending broadcast domains across WAN links, in most cases Proxy ARP on enterprise networks is used to enable communication for hosts with misconfigured subnet masks, a situation which should no longer be a common problem. Proxy ARP effectively breaks the LAN Security Perimeter, extending a network across multiple Layer 2 segments. Using Proxy ARP can also allow other security controls such as PVLAN to be bypassed.",  # noqa: E501
-                "Organizations should plan and implement network policies to ensure unnecessary services are explicitly disabled. The 'ip proxy-arp' feature effectively breaks the LAN security perimeter and should be disabled.",  # noqa: E501
-                "Disable proxy ARP on all interfaces: no ip proxy-arp"  # noqa: E501
+                "Proxy ARP not disabled on interfaces",
+                "Proxy ARP is not explicitly disabled. Proxy ARP allows the router to respond to ARP requests on behalf of hosts on other subnets, effectively bridging Layer 2 boundaries.",  # noqa: E501
+                "Proxy ARP breaks the Layer 2 security perimeter, enabling hosts with misconfigured gateways to reach unauthorised networks. It can also be used to bypass PVLAN restrictions.",  # noqa: E501
+                "Exploiting Proxy ARP requires sending crafted ARP requests from a directly connected segment — no special tools beyond basic networking are needed.",  # noqa: E501
+                "Disable Proxy ARP on all interfaces where it is not required:\n\n```\ninterface <type> <number>\n no ip proxy-arp\n```",  # noqa: E501
+                "CIS 2.1.2"
             )
-    
+        return None
+
+    # CIS 2.1.3 - Ensure no unnecessary tunnel interfaces are defined
     def _has_tunnel_interface(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
-        tunnel_interface = parser.find_objects("interface tunnel-ipsec")
-        if (len(tunnel_interface) > 0):
-            return True
-        else:
-            return False
-    
+        return len(parser.find_objects(r"^interface [Tt]unnel")) > 0
+
     def get_tunnel_interface(self, filename: str):
         if self._has_tunnel_interface(filename):
             return Issue(
-                "Tunnel interfaces",
-                "Verify no tunnel interfaces are defined.",  # noqa: E501
-                "Organizations should plan and implement enterprise network security policies that disable insecure and unnecessary features that increase attack surfaces such as 'tunnel interfaces'.",  # noqa: E501
-                "Tunnel interfaces should not exist in general. They can be used for malicious purposes. If they are necessary, the network admin's should be well aware of them and their purpose.",  # noqa: E501
-                "Remove any tunnel interfaces: no interface tunnel {nstance}"  # noqa: E501
+                "Tunnel interfaces detected",
+                "One or more tunnel interfaces are configured on the device. Unless explicitly required and documented, tunnel interfaces expand the attack surface and can be used as covert channels.",  # noqa: E501
+                "Undocumented tunnel interfaces can be used as covert communication channels by an attacker who has gained partial access to the network.",  # noqa: E501
+                "Identifying and creating tunnel interfaces requires network access and some knowledge of IOS — but their presence may be overlooked during routine audits.",  # noqa: E501
+                "Remove unnecessary tunnel interfaces. If tunnels are required, document, authenticate with IPsec, and review regularly:\n\n```\nno interface tunnel <n>\n```",  # noqa: E501
+                "CIS 2.1.3"
             )
-    
-    def _has_uRPF(self, filename: str) -> bool:
+        return None
+
+    # CIS 2.1.4 - Ensure uRPF is configured on all external/high-risk interfaces
+    def _has_urpf(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
-        fib = parser.find_objects("ip verify unicast source reachable-via rx")
-        if (len(fib) > 0):
-            return True
-        else:
-            return False
-    
-    def get_uRPF(self, filename: str):
-        if not self._has_uRPF(filename):
+        return len(parser.find_objects(r"ip verify unicast source reachable-via rx")) > 0
+
+    def get_urpf(self, filename: str):
+        if not self._has_urpf(filename):
             return Issue(
-                "uRPF",
-                "Examines incoming packets to determine whether the source address is in the Forwarding Information Base (FIB) and permits the packet only if the source is reachable through the interface on which the packet was received (sometimes referred to as strict mode).",  # noqa: E501
-                "Organizations should plan and implement enterprise security policies that protect the confidentiality, integrity, and availability of network devices. The 'unicast Reverse-Path Forwarding' (uRPF) feature dynamically uses the router table to either accept or drop packets when arriving on an interface.",  # noqa: E501
-                "Enabled uRPF helps mitigate IP spoofing by ensuring only packet source IP addresses only originate from expected interfaces. Configure unicast reverse-path forwarding (uRPF) on all external or high risk interfaces.",  # noqa: E501
-                "Configure uRPF in all interfaces: ip verify unicast source reachable-via rx"  # noqa: E501
+                "Unicast Reverse Path Forwarding (uRPF) not configured",
+                "uRPF (ip verify unicast source reachable-via rx) is not configured. Without it, the device forwards packets with spoofed source addresses.",  # noqa: E501
+                "Without uRPF, an attacker can send packets with forged source IP addresses. This enables IP spoofing attacks, reflection/amplification DDoS attacks, and makes it harder to trace attack traffic.",  # noqa: E501
+                "IP spoofing is straightforward using raw-socket tools. Without uRPF the device will forward spoofed traffic unchecked.",  # noqa: E501
+                "Enable strict uRPF on all external-facing or high-risk interfaces:\n\n```\ninterface <type> <number>\n ip verify unicast source reachable-via rx\n``` Use loose mode only where asymmetric routing prevents strict mode.",  # noqa: E501
+                "CIS 2.1.4"
             )
-    
+        return None
+
     def analyze(self, config_file) -> None:
         issues = []
 
         issues.append(self.get_ip_source_route(config_file))
         issues.append(self.get_ip_proxy_arp(config_file))
         issues.append(self.get_tunnel_interface(config_file))
-        issues.append(self.get_uRPF(config_file))
+        issues.append(self.get_urpf(config_file))
 
         for issue in issues:
             if issue is not None:
