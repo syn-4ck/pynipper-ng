@@ -10,7 +10,7 @@ def _import_modules() -> array:
     modules = []
     module_names = []
 
-    for importer, modname, ispkg in pkgutil.iter_modules(plugs.__path__):
+    for _, modname, _ in pkgutil.iter_modules(plugs.__path__):
         if modname != "generic_plugin" and modname.endswith("_plugin"):
             module_name = f"{pkg}.{modname}"
 
@@ -21,8 +21,6 @@ def _import_modules() -> array:
 
             module_names.append(module.__name__)
             modules.append(module)
-
-    print(f"[3/4] Scanning configuration file using the following plugins: {module_names}")
 
     return modules
 
@@ -37,19 +35,21 @@ def _classesinmodule(module):
 
 
 def process_cisco_ios_conf(filename: str) -> dict:
-    issues = {}
+    reported_issues = {}
     i = []
-    idx = 0
+    idx = 2
 
     for module in _import_modules():
+        issues = {}
         for module_class in _classesinmodule(module):
             m = module_class()
             m.analyze(filename)
             i = m.get_issues()
             issues = _generate_section(i, issues, idx)
+            reported_issues[f"2.{idx} {m.name()}"] = issues
             idx += 1
 
-    return issues
+    return reported_issues
 
 
 def _generate_section(issues: array, issue_dict: dict, index: int) -> dict:

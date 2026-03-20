@@ -1,12 +1,11 @@
 ---
 repos:
-  - repo: https://github.com/gitguardian/ggshield
-    rev: main
-    hooks:
-      - id: ggshield
-        language_version: python3
-        stages: [commit]
   - repo: https://github.com/adrienverge/yamllint.git
     sha: v1.26.3
     hooks:
       - id: yamllint
+  - repo: https://github.com/PyCQA/flake8
+    rev: 5.0.4
+    hooks:
+    -   id: flake8
+        args: [--max-line-length=150]

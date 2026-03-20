@@ -4,9 +4,9 @@ from enum import Enum
 
 
 class DeviceType(Enum):
-    IOS_SWITCH = 1  # Cisco IOS-based Switch
-    IOS_ROUTER = 2  # Cisco IOS-based Router (default)
-    IOS_CATALYST = 3  # Cisco IOS-based Catalyst
+    IOS_SWITCH = "Cisco IOS-based Switch"
+    IOS_ROUTER = "Cisco IOS-based Router"  # default
+    IOS_CATALYST = "Cisco IOS-based Catalyst"
     '''
     # PIX=4           #Cisco PIX-based Firewall
     # ASA=5           #Cisco ASA-based Firewall

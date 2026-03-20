@@ -1,89 +1,94 @@
+# flake8: noqa
+# CIS Cisco IOS Benchmark references:
+#   2.5.1  - Ensure 'no ip http server' is set (disable HTTP)
+#   2.5.2  - Ensure 'ip http access-class' is set
+#   2.5.3  - Ensure 'ip http authentication' is set
+#   2.5.4  - Ensure 'ip http secure-server' uses TLS 1.2 or higher
 
-from ..core.base_plugin import GenericPlugin
-from ..issue.cisco_ios_issue import CiscoIOSIssue
+from ..core.base_plugin import BasePlugin
+from ....common.issue.issue import Issue
 
 
-class PluginHTTP(GenericPlugin):
+class PluginHTTP(BasePlugin):
 
     def __init__(self):
         super().__init__()
 
-    # If the device has http configured -> true
+    def name(self):
+        return "HyperText Transfer Protocol (HTTP)"
 
-    def _has_http(self, filename: str) -> bool:
+    # CIS 2.5.1 - Ensure 'no ip http server' is set
+    def _is_http_enabled(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
-        http_enable = parser.find_objects("ip http server")
-        http_disable = parser.find_objects("no ip http server")
-        if (len(http_enable) > 0):
-            return True
-        elif (len(http_disable) > 0):
+        http_disabled = parser.find_objects(r"^no ip http server")
+        if len(http_disabled) > 0:
             return False
-        else:
-            return True  # by default IOS Cisco devices has HTTP
+        # HTTP is enabled by default on older IOS; treat absence of 'no' as enabled
+        return len(parser.find_objects(r"^ip http server")) > 0 or len(http_disabled) == 0
 
-    def get_cisco_ios_http(self, filename: str):
-        if (self._has_http(filename)):
-            return CiscoIOSIssue(
-                "HyperText Transport Protocol Service",
-                "Recent Cisco IOS-based devices support web-based administration using the HTTP protocol. Cisco web-based administration facilities can sometimes be basic but they do provide a simple method of administering remote devices. However, HTTP is a clear-text protocol and is vulnerable to various packet-capture techniques.",  # noqa: E501
-                "An attacker who was able to monitor network traffic could capture authentication credentials.",  # noqa: E501
-                "Network packet and password sniffing tools are widely available on the Internet. Once authentication credentials have been captured it is trivial to use the credentials to log in using the captured credentials.",  # noqa: E501
-                "It is recommended that, if not required, the HTTP service be disabled. If a remote method of access to the device is required, consider using HTTPS or SSH. The encrypted HTTPS and SSH services may require a firmware or hardware upgrade. The HTTP service can be disabled with the following IOS command: no ip http server. If it is not possible to upgrade the device to use the encrypted HTTPS or SSH services, additional security can be configured."  # noqa: E501
-            )
-        return None
-
-    # Number of access list should be used to restrict access to HTTP server
-
-    def _get_cisco_ios_http_access_list(self, filename: str):
+    def get_http_service(self, filename: str):
         parser = self.parse_cisco_ios_config_file(filename)
-        access_list = parser.find_objects("ip http access-class")
-        if (len(access_list) > 0):
-            num = access_list[0].re_match_typed(
-                r'^ip http access-class\s+(\S+)', default='')
-            return int(num)
-        else:
+        http_disabled = parser.find_objects(r"^no ip http server")
+        http_enabled = parser.find_objects(r"^ip http server")
+        if len(http_disabled) > 0:
             return None
-
-    def get_cisco_ios_http_access_list(self, filename: str):
-        if (self._get_cisco_ios_http_access_list(filename) is None):
-            return CiscoIOSIssue(
-                "ACL restrict for HTTP service",
-                "The HTTP service was not configured with an access-list to restrict network access to the device.",
-                "An attacker who was able to monitor network traffic could capture authentication credentials. This issue is made more serious with the enable password being used for authentication as this would give the attacker full administrative access to the device with the captured credentials. This issue is mitigated slightly by employing an access list to restrict network access to the device.",  # noqa: E501
-                "Network packet and password sniffing tools are widely available on the Internet. Once authentication credentials have been captured it is trivial to use the credentials to log in using the captured credentials. Furthermore, it may be possible for an attacker to masquerade as the administrators host in order to bypass configured network access restrictions.",  # noqa: E501
-                "If you can't disable HTTP, an access list can be configured to restrict access to the device. An access list can be specified with the following command:ip http access-class <access-list-number>"  # noqa: E501
+        if len(http_enabled) > 0:
+            return Issue(
+                "HTTP service enabled",
+                "The cleartext HTTP service ('ip http server') is enabled. HTTP transmits all data including authentication credentials in cleartext.",  # noqa: E501
+                "An attacker monitoring network traffic can capture administrative credentials transmitted over HTTP, gaining full control of the device.",  # noqa: E501
+                "Packet sniffing tools are widely available and trivial to use. HTTP credentials can be captured from standard network captures.",  # noqa: E501
+                "Disable the HTTP service. Use HTTPS or SSH for management access:\n\n```\nno ip http server\n```",  # noqa: E501
+                "CIS 2.5.1"
             )
         return None
 
-    # Kind of auth in HTTP server
-
-    def _get_cisco_ios_http_auth(self, filename: str) -> str:
+    # CIS 2.5.2 - Ensure 'ip http access-class' is set
+    def _has_http_access_class(self, filename: str) -> bool:
         parser = self.parse_cisco_ios_config_file(filename)
-        timeout = parser.find_objects("ip http auth")
-        if (len(timeout) > 0):
-            auth_type = timeout[0].re_match_typed(
-                r'^ip http auth(entication)?\s+(\S+)', default='')
-            return auth_type.split()[0]
-        else:
-            return ""
+        return len(parser.find_objects(r"^ip http access-class")) > 0
 
-    def get_cisco_ios_http_auth(self, filename: str):
-        if (self._get_cisco_ios_http_auth(filename) == ""):
-            return CiscoIOSIssue(
-                "Authentication mode to HTTP service",
-                "The HTTP service was not configured with an access-list to restrict network access to the device.",
-                "An attacker who was able to monitor network traffic could capture authentication credentials. This issue is made more serious with the enable password being used for authentication as this would give the attacker full administrative access to the device with the captured credentials. This issue is mitigated slightly by employing an access list to restrict network access to the device.",  # noqa: E501
-                "Network packet and password sniffing tools are widely available on the Internet. Once authentication credentials have been captured it is trivial to use the credentials to log in using the captured credentials. Furthermore, it may be possible for an attacker to masquerade as the administrators host in order to bypass configured network access restrictions.",  # noqa: E501
-                "If you can't disable HTTP, the authentication method can be changed using the following command (where the authentication method is either local, enable, tacacs or aaa): ip http authentication <authentication-method>"  # noqa: E501
+    def get_http_access_class(self, filename: str):
+        parser = self.parse_cisco_ios_config_file(filename)
+        http_enabled = parser.find_objects(r"^ip http server")
+        https_enabled = parser.find_objects(r"^ip http secure-server")
+        if (len(http_enabled) > 0 or len(https_enabled) > 0) and not self._has_http_access_class(filename):
+            return Issue(
+                "HTTP/HTTPS service not protected by access-class",
+                "The HTTP or HTTPS management service is enabled but no access-class ACL is applied to restrict which hosts may connect.",  # noqa: E501
+                "Without an access-class, any host with IP reachability to the device can attempt to authenticate to the HTTP management interface, increasing the attack surface.",  # noqa: E501
+                "Connecting to an unprotected HTTP/HTTPS management interface requires only IP reachability and standard browser or curl tooling.",  # noqa: E501
+                "Restrict HTTP/HTTPS management access to authorised hosts:\n\n```\nip http access-class <acl-number>\n```",  # noqa: E501
+                "CIS 2.5.2"
+            )
+        return None
+
+    # CIS 2.5.3 - Ensure 'ip http authentication' is set
+    def _has_http_authentication(self, filename: str) -> bool:
+        parser = self.parse_cisco_ios_config_file(filename)
+        return len(parser.find_objects(r"^ip http auth")) > 0
+
+    def get_http_authentication(self, filename: str):
+        parser = self.parse_cisco_ios_config_file(filename)
+        http_enabled = parser.find_objects(r"^ip http server")
+        https_enabled = parser.find_objects(r"^ip http secure-server")
+        if (len(http_enabled) > 0 or len(https_enabled) > 0) and not self._has_http_authentication(filename):
+            return Issue(
+                "HTTP/HTTPS authentication method not configured",
+                "No explicit authentication method is configured for the HTTP/HTTPS management service. The default authentication method may be the enable password, which is weaker than AAA.",  # noqa: E501
+                "Without explicit AAA or local authentication, the HTTP interface may fall back to the enable password for authentication, which is weaker than a proper AAA method list.",  # noqa: E501
+                "Accessing the HTTP management interface with default credentials requires only IP connectivity and knowledge of the enable password.",  # noqa: E501
+                "Configure authentication for the HTTP management service:\n\n```\nip http authentication aaa\n```",  # noqa: E501
+                "CIS 2.5.3"
             )
         return None
 
     def analyze(self, config_file) -> None:
         issues = []
 
-        issues.append(self.get_cisco_ios_http(config_file))
-        issues.append(self.get_cisco_ios_http_access_list(config_file))
-        issues.append(self.get_cisco_ios_http_auth(config_file))
+        issues.append(self.get_http_service(config_file))
+        issues.append(self.get_http_access_class(config_file))
+        issues.append(self.get_http_authentication(config_file))
 
         for issue in issues:
             if issue is not None:

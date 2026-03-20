@@ -1,60 +1,86 @@
-# pynipper-ng
+<br/><br/>
 
-[![CodeQL](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/codeql-analysis.yml)
-[![GitGuardian scan](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/gitguardian-scan.yml)
-[![Snyk SCA analysis](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/snyk.yml)
-[![SonarCloud Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=syn-4ck_pynipper-ng&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=syn-4ck_pynipper-ng)
-[![Flake8 CI](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml/badge.svg?branch=main)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/flake8.yml)
-[![Build pynipper-ng with python3](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/build-python.yml)
-[![Yaml Lint](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml/badge.svg)](https://github.com/syn-4ck/pynipper-ng/actions/workflows/yaml-lint.yml)
+<p align="center">
+  <img src="img/pynipper-ng-crop.png">
+</p>
 
+<br/>
 
-## Table of contents
-1. [What is pynipper-ng](#what-is-pynipper-ng)
-2. [Install](#install)
-3. [Quickstart](#quickstart)
-4. [More information](#more-information)
-5. [References](#references)
+---
 
-## What is pynipper-ng?
+## What is pynipper-ng? ❔
 pynipper-ng is a **configuration security analyzer for network devices**. The goal of this tool is check the vulnerabilities and misconfigurations of routers, firewalls and switches reporting the issues in a simple way.
 
-This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), updated and translated to Python. The project wants to improve the set of rules that detect security misconfigurations of the network devices using multiple standard benchmarks (like [CIS Benchmark](https://www.cisecurity.org/cis-benchmarks/)) and integrate the tool with APIs (like [PSIRT Cisco API](https://developer.cisco.com/docs/psirt/#!overview/overview)) to scan known vulnerabilities. 
+This tool is based on [nipper-ng](https://github.com/arpitn30/nipper-ng), updated and translated to Python. The project wants to improve the set of rules that detect security misconfigurations of the network devices using multiple standard benchmarks (like [CIS Benchmark](https://www.cisecurity.org/cis-benchmarks/)) and integrate the tool with APIs (like [PSIRT Cisco API](https://developer.cisco.com/docs/psirt/#!overview/overview)) to scan known vulnerabilities.
 
-## Install
+* Official documentation: https://pynipper-ng.readthedocs.io/
 
-The requirements are:
+---
 
-* Python 3
-* Pip to Python 3
+## Installation
 
-### Python install
+### Using pip (Python 3.10+)
 
-You can install pynipper-ng with pip using the wheel package linked in each version of the tool.
+Clone the repository and install dependencies:
 
-```BASH
-pip install pynipper_ng-<VERSION>-py3-none-any.whl
+```bash
+git clone https://github.com/syn-4ck/pynipper-ng.git
+cd pynipper-ng
+pip install -r requirements.txt
+pip install .
 ```
 
-_It will be in `pypi` registry soon._
+### Using Docker
 
-### Source code install
+Build the Docker image:
 
-Clone this repository and run:
-
-```BASH
-python setup.py build install
+```bash
+docker build -t pynipper-ng .
 ```
 
-## Quickstart and options
+---
 
-### Quickly demo
+## Usage
 
-```BASH
-pynipper-ng -d IOS_ROUTER -i tests\test_data\cisco_ios_example.conf -o HTML -f ./report.html -x
+### With pip (local install)
+
+Run the tool from your terminal:
+
+```bash
+pynipper-ng --device IOS_ROUTER \
+            --input tests/test_data/cisco_ios_example.conf \
+            --output-type HTML \
+            --output-filename ./report.html \
+            --offline
 ```
 
-### Options
+### With Docker
+
+Mount your config and output directories, then run:
+
+```bash
+docker run --rm \
+  -v "$(pwd)/config_file_dir:/data:ro" \
+  -v "/tmp:/output" \
+  pynipper-ng \
+  --device IOS_ROUTER \
+  --input /data/cisco_ios_example.conf \
+  --output-type HTML \
+  --output-filename /output/report.html \
+  --offline
+```
+
+Replace the input and output paths as needed for your environment.
+
+---
+
+## Demo 💻
+
+<br/>
+<img src="img/demo.gif"  alt="Demo">
+<br/>
+
+### Options ☑️
 
 | Flag | OPTION        | DESCRIPTION                                                                                                      | MANDATORY? | DEFAULT VALUE |
 |------|---------------|------------------------------------------------------------------------------------------------------------------|------------|--------------|
@@ -69,15 +95,15 @@ pynipper-ng -d IOS_ROUTER -i tests\test_data\cisco_ios_example.conf -o HTML -f .
 
 (1) Check [here](src/devices/README.md) the devices supported
 
-(2) Check [Pynipper-ng configuration file](#config-file) to know more about it.
+(2) Check [Pynipper-ng configuration file](#pynipper-ng-configuration-file) to know more about it.
 
-## More information
+---
 
-### Pynipper-ng Configuration File
+### Pynipper-ng Configuration File 📂
 
 The configuration file is used to define some properties and customize the scans.
 
-#### Pynipper-ng Configuration File: PSIRT Cisco API
+#### Pynipper-ng Configuration File: PSIRT Cisco API 📁
 
 To use the PSIRT Cisco API you must provide the API keys. To get it: [https://apiconsole.cisco.com/](https://apiconsole.cisco.com/)
 
@@ -87,27 +113,40 @@ CLIENT_ID = <your-client-id>
 CLIENT_SECRET = <your-client-secret-token>
 ```
 
-### Contributing
+---
+
+### Contributing 👪
 
 Contribution are welcome! Please follow the steps defined in CONTRIBUTING file and share your improvements with the community.
 
-### CISCO IOS API integration
+### CISCO IOS API integration 🗺️
 
 Get your credentials and put into the configuration file.
 
-### Pynipper modules
+---
 
-Pynipper-ng detects device configuration weaknesses based on modules. Pynipper modules checks into the network device configuration with regex if a property is set or not, and report it when this is not secure.
+### Pynipper plugins 🏗️
 
-#### Pynipper modules summary
+Pynipper-ng detects device configuration weaknesses based on plugins. Pynipper plugins checks into the network device configuration with regex if a property is set or not, and report it when this is not secure.
 
-Available plugins: [check here](src/analyze/README.md)
+#### Implements your plugins 🖱️
 
-#### Implements your modules
+You can implements your own plugins. You should clone the repository and create the plugins in `src/analyze/cisco/<device_type>/plugins`. To improve the pynipper-ng tool you can contribute adding your work :).
 
-You can implements your own modules. You should clone the repository and create the plugins in `src/analyze/cisco/<device_type>/plugins`. To improve the pynipper-ng tool you can contribute adding your work :).
+To create your own plugins, follow [this guidelines](CONTRIBUTING.md)
 
-To create your own plugins, follow [this guidelines](src/analyze/README.md)
+---
 
-## References
+## Security and Quality
+
+This project passes:
+
+✔️ Snyk code & open-source
+✔️ SonarCloud
+✔️ Trivy
+✔️ GitGuardian
+✔️ CodeQL
+✔️ Flake8
+
+## References 🔗
 [nipper-ng](https://github.com/arpitn30/nipper-ng)

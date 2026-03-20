@@ -45,14 +45,14 @@ def _get_cisco_ios_vulns_data(version: str, client_id: str, client_secret: str, 
     progress_bar = tqdm(total=total_size_in_bytes,
                         unit_divisor=1024, unit='B',
                         unit_scale=True, leave=True)
-    f = open(API_DATA_FILENAME, 'wb')
+    f = open(API_DATA_FILENAME, 'wb', encoding="utf8")
     for data in response.iter_content(block_size):
         progress_bar.update(len(data))
         f.write(data)
     progress_bar.close()
     f.close()
 
-    readable_file = open(API_DATA_FILENAME, 'r')
+    readable_file = open(API_DATA_FILENAME, 'r', encoding="utf8")
     file_data = readable_file.read()
     readable_file.close()
     os.remove(API_DATA_FILENAME)

@@ -5,14 +5,19 @@ on:  # yamllint disable-line rule:truthy
     branches:
       - main
       - develop
+    paths:
+      - "src/**"
   pull_request:
-    branches:
-      - main
-      - develop
+    branches-ignore:
+      - docs
+      - gh-pages
+    paths:
+      - "src/**"
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v2
